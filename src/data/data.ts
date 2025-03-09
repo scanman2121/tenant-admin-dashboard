@@ -11,11 +11,11 @@ export const roles: { value: string; label: string }[] = [
   },
   {
     value: "viewer",
-    label: "Viewer",
+    label: "Tenant admin",
   },
   {
     value: "contributor",
-    label: "Contributor",
+    label: "Property admin",
   },
 ]
 
