@@ -104,7 +104,7 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
                 { role: 'assistant', content: 'Hello! How can I help you today?' }
             ])
         }
-    }, [])
+    }, [messages.length])
 
     // Scroll to bottom of messages when new messages are added
     useEffect(() => {
@@ -143,7 +143,7 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
 
     // Close previous chats dropdown when clicking outside
     useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
+        const handleClickOutside = () => {
             if (showPreviousChats) {
                 setShowPreviousChats(false)
             }
