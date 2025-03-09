@@ -12,6 +12,9 @@ export type KpiEntry = {
   value: number | string;
   target: number;
   percentage: number;
+  current: number | string;
+  allowed: number | string;
+  unit: string;
 };
 
 // Type definition for KpiEntryExtended
