@@ -4,6 +4,7 @@ import { Button } from "@/components/Button"
 import { TabNavigation, TabNavigationLink } from "@/components/TabNavigation"
 import { DataTable } from "@/components/ui/data-table/DataTable"
 import { RiAddLine } from "@remixicon/react"
+import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
@@ -20,6 +21,7 @@ const vendorsData = [
     {
         id: "1",
         name: "Maintenance Pro",
+        logoUrl: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         category: "Maintenance",
         contact: "John Smith",
         email: "john@maintenancepro.com",
@@ -30,6 +32,7 @@ const vendorsData = [
     {
         id: "2",
         name: "Clean Team Services",
+        logoUrl: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=2673&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         category: "Cleaning",
         contact: "Sarah Johnson",
         email: "sarah@cleanteam.com",
@@ -40,6 +43,7 @@ const vendorsData = [
     {
         id: "3",
         name: "Security Solutions",
+        logoUrl: "https://images.unsplash.com/photo-1611095973763-414019e72400?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         category: "Security",
         contact: "Michael Brown",
         email: "michael@securitysolutions.com",
@@ -50,6 +54,7 @@ const vendorsData = [
     {
         id: "4",
         name: "Green Landscaping",
+        logoUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         category: "Landscaping",
         contact: "Lisa Green",
         email: "lisa@greenlandscaping.com",
@@ -60,6 +65,7 @@ const vendorsData = [
     {
         id: "5",
         name: "Tech Support Inc",
+        logoUrl: "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         category: "IT Services",
         contact: "David Lee",
         email: "david@techsupport.com",
@@ -74,6 +80,24 @@ const vendorsColumns = [
     {
         accessorKey: "name",
         header: "Vendor Name",
+        cell: ({ row }: { row: any }) => {
+            const name = row.getValue("name") as string;
+            const logoUrl = row.original.logoUrl as string;
+
+            return (
+                <div className="flex items-center gap-3">
+                    <div className="relative size-8 overflow-hidden rounded-full">
+                        <Image
+                            src={logoUrl}
+                            alt={name}
+                            fill
+                            className="object-cover"
+                        />
+                    </div>
+                    <span>{name}</span>
+                </div>
+            );
+        },
     },
     {
         accessorKey: "category",
