@@ -3,6 +3,17 @@
 import { RiAddLine, RiAlertLine, RiArrowDownLine, RiArrowUpLine, RiCheckLine, RiDownload2Line, RiInformationLine } from "@remixicon/react";
 import { AreaChart, Badge, Button, Callout, Card, DonutChart, Flex, Grid, Icon, Metric, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, Title } from "@tremor/react";
 
+// Type definitions
+export type PeriodValue = "previous-period" | "last-year" | "no-comparison";
+
+// Type definition for KpiEntry
+export type KpiEntry = {
+  title: string;
+  value: number | string;
+  target: number;
+  percentage: number;
+};
+
 // Type definition for KpiEntryExtended
 export type KpiEntryExtended = {
   title: string;

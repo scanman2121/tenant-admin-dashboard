@@ -30,7 +30,12 @@ const nextConfig = {
   swcMinify: true,
   // Configure allowed image domains
   images: {
-    domains: ['images.unsplash.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
   },
 };
 

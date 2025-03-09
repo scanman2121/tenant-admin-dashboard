@@ -63,7 +63,6 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${roboto.variable}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
       </head>
       <body className="font-sans antialiased text-[#2D3338]">
         <ThemeProvider defaultTheme="system" attribute="class">
