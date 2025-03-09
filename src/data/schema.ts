@@ -1,10 +1,29 @@
 export type Usage = {
-  owner: string
+  requestSubmitted?: string
+  requestedResource?: string
+  requestedDate?: string
+  requestedTime?: string
+  requesterName?: string
+  email?: string
+  bookingInfo?: string
   status: string
-  costs: number
-  region: string
-  stability: number
-  lastEdited: string
+  totalPrice?: number
+  owner?: string
+  costs?: number
+  region?: string
+  stability?: number
+  lastEdited?: string
+}
+
+export type Visitor = {
+  checkInTime: string
+  visitorName: string
+  company: string
+  hostName: string
+  purpose: string
+  status: string
+  checkOutTime: string | null
+  badgeNumber: string
 }
 
 export type OverviewData = {

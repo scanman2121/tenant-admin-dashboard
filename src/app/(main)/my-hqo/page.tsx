@@ -16,39 +16,39 @@ const categories: {
   title: keyof OverviewData
   type: "currency" | "unit"
 }[] = [
-  {
-    title: "Rows read",
-    type: "unit",
-  },
-  {
-    title: "Rows written",
-    type: "unit",
-  },
-  {
-    title: "Queries",
-    type: "unit",
-  },
-  {
-    title: "Payments completed",
-    type: "currency",
-  },
-  {
-    title: "Sign ups",
-    type: "unit",
-  },
-  {
-    title: "Logins",
-    type: "unit",
-  },
-  {
-    title: "Sign outs",
-    type: "unit",
-  },
-  {
-    title: "Support calls",
-    type: "unit",
-  },
-]
+    {
+      title: "Rows read",
+      type: "unit",
+    },
+    {
+      title: "Rows written",
+      type: "unit",
+    },
+    {
+      title: "Queries",
+      type: "unit",
+    },
+    {
+      title: "Payments completed",
+      type: "currency",
+    },
+    {
+      title: "Sign ups",
+      type: "unit",
+    },
+    {
+      title: "Logins",
+      type: "unit",
+    },
+    {
+      title: "Sign outs",
+      type: "unit",
+    },
+    {
+      title: "Support calls",
+      type: "unit",
+    },
+  ]
 
 export type KpiEntry = {
   title: string
@@ -137,7 +137,7 @@ const data3: KpiEntryExtended[] = [
 const overviewsDates = overviews.map((item) => toDate(item.date).getTime())
 const maxDate = toDate(Math.max(...overviewsDates))
 
-export default function Overview() {
+export default function MyHqO() {
   const [selectedDates, setSelectedDates] = React.useState<
     DateRange | undefined
   >({
@@ -152,15 +152,19 @@ export default function Overview() {
   )
 
   return (
-    <>
-      <section aria-labelledby="current-billing-cycle">
-        <h1
+    <div>
+      <h1 className="text-lg font-semibold text-gray-900 sm:text-xl dark:text-gray-50">
+        My HqO
+      </h1>
+
+      <section aria-labelledby="current-billing-cycle" className="mt-4">
+        <h2
           id="current-billing-cycle"
-          className="scroll-mt-10 text-lg font-semibold text-gray-900 sm:text-xl dark:text-gray-50"
+          className="scroll-mt-10 text-base font-medium text-gray-900 dark:text-gray-50"
         >
           Current billing cycle
-        </h1>
-        <div className="mt-4 grid grid-cols-1 gap-14 sm:mt-8 sm:grid-cols-2 lg:mt-10 xl:grid-cols-3">
+        </h2>
+        <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
           <ProgressBarCard
             title="Usage"
             change="+0.2%"
@@ -194,14 +198,15 @@ export default function Overview() {
           />
         </div>
       </section>
-      <section aria-labelledby="usage-overview">
-        <h1
+
+      <section aria-labelledby="usage-overview" className="mt-8">
+        <h2
           id="usage-overview"
-          className="mt-16 scroll-mt-8 text-lg font-semibold text-gray-900 sm:text-xl dark:text-gray-50"
+          className="scroll-mt-8 text-base font-medium text-gray-900 dark:text-gray-50"
         >
           Overview
-        </h1>
-        <div className="sticky top-16 z-20 flex items-center justify-between border-b border-gray-200 bg-white pb-4 pt-4 sm:pt-6 lg:top-0 lg:mx-0 lg:px-0 lg:pt-8 dark:border-gray-800 dark:bg-gray-950">
+        </h2>
+        <div className="sticky top-6 z-20 flex items-center justify-between border-b border-gray-200 bg-white pb-4 pt-4 dark:border-gray-800 dark:bg-gray-950">
           <Filterbar
             maxDate={maxDate}
             minDate={new Date(2024, 0, 1)}
@@ -216,7 +221,7 @@ export default function Overview() {
         </div>
         <dl
           className={cx(
-            "mt-10 grid grid-cols-1 gap-14 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3",
+            "mt-6 grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3",
           )}
         >
           {categories
@@ -234,6 +239,6 @@ export default function Overview() {
             })}
         </dl>
       </section>
-    </>
+    </div>
   )
 }

@@ -24,25 +24,24 @@ const buttonVariants = tv({
         // text color
         "text-white dark:text-gray-900",
         // background color
-        "bg-indigo-600 dark:bg-indigo-500",
+        "bg-primary dark:bg-primary-400",
         // hover color
-        "hover:bg-indigo-500 dark:hover:bg-indigo-600",
+        "hover:bg-primary-dark dark:hover:bg-primary",
         // disabled
-        "disabled:bg-indigo-100 disabled:text-gray-400",
-        "disabled:dark:bg-indigo-800 disabled:dark:text-indigo-400",
+        "disabled:bg-primary-100 disabled:text-gray-400",
+        "disabled:dark:bg-primary-800 disabled:dark:text-primary-400",
       ],
       secondary: [
         // border
         "border-gray-300 dark:border-gray-800",
         // text color
-        "text-gray-900 dark:text-gray-50",
+        "text-gray-700 dark:text-gray-300",
         // background color
         "bg-white dark:bg-gray-950",
         //hover color
-        "hover:bg-gray-50 dark:hover:bg-gray-900/60",
+        "hover:bg-gray-50 dark:hover:bg-gray-900",
         // disabled
-        "disabled:text-gray-400",
-        "disabled:dark:text-gray-600",
+        "disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-400 dark:disabled:border-gray-800 dark:disabled:bg-gray-900 dark:disabled:text-gray-600",
       ],
       light: [
         // base
@@ -94,7 +93,7 @@ const buttonVariants = tv({
 
 interface ButtonProps
   extends React.ComponentPropsWithoutRef<"button">,
-    VariantProps<typeof buttonVariants> {
+  VariantProps<typeof buttonVariants> {
   asChild?: boolean
   isLoading?: boolean
   loadingText?: string

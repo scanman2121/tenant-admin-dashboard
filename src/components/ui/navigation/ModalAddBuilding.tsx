@@ -32,25 +32,25 @@ export const databases: {
   description: string
   isRecommended: boolean
 }[] = [
-  {
-    label: "Base performance",
-    value: "base-performance",
-    description: "1/8 vCPU, 1 GB RAM",
-    isRecommended: true,
-  },
-  {
-    label: "Advanced performance",
-    value: "advanced-performance",
-    description: "1/4 vCPU, 2 GB RAM",
-    isRecommended: false,
-  },
-  {
-    label: "Turbo performance",
-    value: "turbo-performance",
-    description: "1/2 vCPU, 4 GB RAM",
-    isRecommended: false,
-  },
-]
+    {
+      label: "Base performance",
+      value: "base-performance",
+      description: "1/8 vCPU, 1 GB RAM",
+      isRecommended: true,
+    },
+    {
+      label: "Advanced performance",
+      value: "advanced-performance",
+      description: "1/4 vCPU, 2 GB RAM",
+      isRecommended: false,
+    },
+    {
+      label: "Turbo performance",
+      value: "turbo-performance",
+      description: "1/2 vCPU, 4 GB RAM",
+      isRecommended: false,
+    },
+  ]
 
 export type ModalProps = {
   itemName: string
@@ -58,7 +58,7 @@ export type ModalProps = {
   onOpenChange: (open: boolean) => void
 }
 
-export function ModalAddWorkspace({
+export function ModalAddBuilding({
   itemName,
   onSelect,
   onOpenChange,
@@ -79,19 +79,19 @@ export function ModalAddWorkspace({
         <DialogContent className="sm:max-w-2xl">
           <form>
             <DialogHeader>
-              <DialogTitle>Add new workspace</DialogTitle>
+              <DialogTitle>Add new building</DialogTitle>
               <DialogDescription className="mt-1 text-sm leading-6">
-                With free plan, you can add up to 10 workspaces.
+                With free plan, you can add up to 10 buildings.
               </DialogDescription>
               <div className="mt-4 grid grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="workspace-name" className="font-medium">
-                    Workspace name
+                  <Label htmlFor="building-name" className="font-medium">
+                    Building name
                   </Label>
                   <Input
-                    id="workspace-name"
-                    name="workspace-name"
-                    placeholder="my_workspace"
+                    id="building-name"
+                    name="building-name"
+                    placeholder="my_building"
                     className="mt-2"
                   />
                 </div>
@@ -99,7 +99,7 @@ export function ModalAddWorkspace({
                   <Label htmlFor="starter-kit" className="font-medium">
                     Starter kit
                   </Label>
-                  <Select defaultValue="empty-workspace">
+                  <Select defaultValue="empty-building">
                     <SelectTrigger
                       id="starter-kit"
                       name="starter-kit"
@@ -108,8 +108,8 @@ export function ModalAddWorkspace({
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="empty-workspace">
-                        None - Empty workspace
+                      <SelectItem value="empty-building">
+                        None - Empty building
                       </SelectItem>
                       <SelectItem value="commerce-analytics">
                         Commerce analytics
@@ -190,7 +190,7 @@ export function ModalAddWorkspace({
               </DialogClose>
               <DialogClose asChild>
                 <Button type="submit" className="w-full sm:w-fit">
-                  Add workspace
+                  Add building
                 </Button>
               </DialogClose>
             </DialogFooter>

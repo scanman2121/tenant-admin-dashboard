@@ -15,15 +15,15 @@ const switchVariants = tv({
       // ring color
       "ring-black/5 dark:ring-gray-800",
       // checked
-      "data-[state=checked]:bg-indigo-600 data-[state=checked]:dark:bg-indigo-600",
+      "data-[state=checked]:bg-primary data-[state=checked]:dark:bg-primary",
       // disabled
       "data-[disabled]:cursor-default",
       // disabled checked
-      "data-[disabled]:data-[state=checked]:bg-indigo-200",
+      "data-[disabled]:data-[state=checked]:bg-primary-200",
       "data-[disabled]:data-[state=checked]:ring-gray-300",
       // disabled checked dark
       "data-[disabled]:data-[state=checked]:dark:ring-gray-900",
-      "data-[disabled]:data-[state=checked]:dark:bg-indigo-900",
+      "data-[disabled]:data-[state=checked]:dark:bg-primary-900",
       // disabled unchecked
       "data-[disabled]:data-[state=unchecked]:ring-gray-300",
       "data-[disabled]:data-[state=unchecked]:bg-gray-100",
@@ -63,10 +63,10 @@ const switchVariants = tv({
 
 interface SwitchProps
   extends Omit<
-      React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>,
-      "asChild"
-    >,
-    VariantProps<typeof switchVariants> {}
+    React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>,
+    "asChild"
+  >,
+  VariantProps<typeof switchVariants> { }
 
 const Switch = React.forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,

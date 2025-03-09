@@ -2,8 +2,7 @@
 
 import { Button } from "@/components/Button"
 import { Searchbar } from "@/components/Searchbar"
-import { conditions, regions, statuses } from "@/data/data"
-import { formatters } from "@/lib/utils"
+import { statuses } from "@/data/data"
 import { RiDownloadLine } from "@remixicon/react"
 import { Table } from "@tanstack/react-table"
 import { useState } from "react"
@@ -16,11 +15,10 @@ interface DataTableToolbarProps<TData> {
 }
 
 export function Filterbar<TData>({ table }: DataTableToolbarProps<TData>) {
-  const isFiltered = table.getState().columnFilters.length > 0
   const [searchTerm, setSearchTerm] = useState<string>("")
 
   const debouncedSetFilterValue = useDebouncedCallback((value) => {
-    table.getColumn("owner")?.setFilterValue(value)
+    table.getColumn("requesterName")?.setFilterValue(value)
   }, 300)
 
   const handleSearchChange = (event: any) => {
@@ -40,51 +38,32 @@ export function Filterbar<TData>({ table }: DataTableToolbarProps<TData>) {
             type="select"
           />
         )}
-        {table.getColumn("region")?.getIsVisible() && (
+        {table.getColumn("requestedResource")?.getIsVisible() && (
           <DataTableFilter
-            column={table.getColumn("region")}
-            title="Region"
-            options={regions}
-            type="checkbox"
+            column={table.getColumn("requestedResource")}
+            title="Resource"
+            type="select"
           />
         )}
-        {table.getColumn("costs")?.getIsVisible() && (
-          <DataTableFilter
-            column={table.getColumn("costs")}
-            title="Costs"
-            type="number"
-            options={conditions}
-            formatter={formatters.currency}
-          />
-        )}
-        {table.getColumn("owner")?.getIsVisible() && (
+        {table.getColumn("requesterName")?.getIsVisible() && (
           <Searchbar
             type="search"
-            placeholder="Search by owner..."
+            placeholder="Search by requester..."
             value={searchTerm}
             onChange={handleSearchChange}
             className="w-full sm:max-w-[250px] sm:[&>input]:h-[30px]"
           />
         )}
-        {isFiltered && (
-          <Button
-            variant="ghost"
-            onClick={() => table.resetColumnFilters()}
-            className="border border-gray-200 px-2 font-semibold text-indigo-600 sm:border-none sm:py-1 dark:border-gray-800 dark:text-indigo-500"
-          >
-            Clear filters
-          </Button>
-        )}
       </div>
       <div className="flex items-center gap-2">
+        <ViewOptions table={table} />
         <Button
           variant="secondary"
           className="hidden gap-x-2 px-2 py-1.5 text-sm sm:text-xs lg:flex"
         >
-          <RiDownloadLine className="size-4 shrink-0" aria-hidden="true" />
-          Export
+          <RiDownloadLine className="size-4" aria-hidden="true" />
+          Download
         </Button>
-        <ViewOptions table={table} />
       </div>
     </div>
   )

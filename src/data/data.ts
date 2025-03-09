@@ -1,4 +1,4 @@
-import { Usage } from "./schema"
+import { Usage } from "./schema";
 
 export const roles: { value: string; label: string }[] = [
   {
@@ -21,19 +21,19 @@ export const roles: { value: string; label: string }[] = [
 
 export const statuses: { value: string; label: string; variant: string }[] = [
   {
-    value: "live",
-    label: "Live",
+    value: "Approved",
+    label: "Approved",
     variant: "success",
   },
   {
-    value: "inactive",
-    label: "Inactive",
-    variant: "neutral",
+    value: "Pending",
+    label: "Pending",
+    variant: "warning",
   },
   {
-    value: "archived",
-    label: "Archived",
-    variant: "warning",
+    value: "Rejected",
+    label: "Rejected",
+    variant: "error",
   },
 ]
 
@@ -93,49 +93,49 @@ export const users: {
   email: string
   role: string
 }[] = [
-  {
-    name: "Emma Stone",
-    initials: "ES",
-    email: "a.stone@gmail.com",
-    role: "viewer",
-  },
-  {
-    name: "Alissia McCalister",
-    initials: "AM",
-    email: "a.stone@gmail.com",
-    role: "viewer",
-  },
-  {
-    name: "Emily Luisa Bernacle",
-    initials: "EB",
-    email: "e.luis.bernacle@gmail.com",
-    role: "member",
-  },
-  {
-    name: "Aaron Wave",
-    initials: "AW",
-    email: "a.flow@acme.com",
-    role: "contributor",
-  },
-  {
-    name: "Thomas Palstein",
-    initials: "TP",
-    email: "t.palstein@acme.com",
-    role: "viewer",
-  },
-  {
-    name: "Sarah Johnson",
-    initials: "SJ",
-    email: "s.johnson@gmail.com",
-    role: "admin",
-  },
-  {
-    name: "Megan Katherina Brown",
-    initials: "MB",
-    email: "m.lovelybrown@gmail.com",
-    role: "contributor",
-  },
-]
+    {
+      name: "Emma Stone",
+      initials: "ES",
+      email: "a.stone@gmail.com",
+      role: "viewer",
+    },
+    {
+      name: "Alissia McCalister",
+      initials: "AM",
+      email: "a.stone@gmail.com",
+      role: "viewer",
+    },
+    {
+      name: "Emily Luisa Bernacle",
+      initials: "EB",
+      email: "e.luis.bernacle@gmail.com",
+      role: "member",
+    },
+    {
+      name: "Aaron Wave",
+      initials: "AW",
+      email: "a.flow@acme.com",
+      role: "contributor",
+    },
+    {
+      name: "Thomas Palstein",
+      initials: "TP",
+      email: "t.palstein@acme.com",
+      role: "viewer",
+    },
+    {
+      name: "Sarah Johnson",
+      initials: "SJ",
+      email: "s.johnson@gmail.com",
+      role: "admin",
+    },
+    {
+      name: "Megan Katherina Brown",
+      initials: "MB",
+      email: "m.lovelybrown@gmail.com",
+      role: "contributor",
+    },
+  ]
 
 export const invitedUsers: {
   initials: string
@@ -143,28 +143,53 @@ export const invitedUsers: {
   role: string
   expires: number
 }[] = [
-  {
-    initials: "LP",
-    email: "lydia.posh@gmail.com",
-    role: "viewer",
-    expires: 12,
-  },
-  {
-    initials: "AW",
-    email: "awidburg@bluewin.ch",
-    role: "viewer",
-    expires: 8,
-  },
-]
+    {
+      initials: "LP",
+      email: "lydia.posh@gmail.com",
+      role: "viewer",
+      expires: 12,
+    },
+    {
+      initials: "AW",
+      email: "awidburg@bluewin.ch",
+      role: "viewer",
+      expires: 8,
+    },
+  ]
 
 export const usage: Usage[] = [
   {
-    owner: "John Doe",
-    status: "live",
-    costs: 5422.35,
-    region: "US-West 1",
-    stability: 99,
-    lastEdited: "23/09/2023 13:00",
+    requestSubmitted: "03/06/2025",
+    requestedResource: "The Longboard Room",
+    requestedDate: "03/19/2025",
+    requestedTime: "10:45 AM - 12:30 PM",
+    requesterName: "Lucy Mitchell",
+    email: "lucy.mitchell@example.com",
+    bookingInfo: "-",
+    status: "Approved",
+    totalPrice: 0.00,
+  },
+  {
+    requestSubmitted: "03/05/2025",
+    requestedResource: "Conference Room A",
+    requestedDate: "03/20/2025",
+    requestedTime: "2:00 PM - 4:00 PM",
+    requesterName: "John Smith",
+    email: "john.smith@example.com",
+    bookingInfo: "Team meeting",
+    status: "Pending",
+    totalPrice: 150.00,
+  },
+  {
+    requestSubmitted: "03/04/2025",
+    requestedResource: "Training Room",
+    requestedDate: "03/18/2025",
+    requestedTime: "9:00 AM - 5:00 PM",
+    requesterName: "Sarah Johnson",
+    email: "sarah.j@example.com",
+    bookingInfo: "Annual training",
+    status: "Approved",
+    totalPrice: 500.00,
   },
   {
     owner: "Jane Smith",
@@ -573,5 +598,56 @@ export const usage: Usage[] = [
     region: "EU-North 1",
     stability: 21,
     lastEdited: "01/01/2022 16:18",
+  },
+]
+
+export const visitorStatuses: { value: string; label: string; variant: string }[] = [
+  {
+    value: "Checked In",
+    label: "Checked In",
+    variant: "success",
+  },
+  {
+    value: "Checked Out",
+    label: "Checked Out",
+    variant: "default",
+  },
+  {
+    value: "Expected",
+    label: "Expected",
+    variant: "warning",
+  },
+]
+
+export const visitors = [
+  {
+    checkInTime: "09:30 AM",
+    visitorName: "Sarah Johnson",
+    company: "Acme Corp",
+    hostName: "Michael Chen",
+    purpose: "Client Meeting",
+    status: "Checked In",
+    checkOutTime: null,
+    badgeNumber: "V1001",
+  },
+  {
+    checkInTime: "10:15 AM",
+    visitorName: "James Wilson",
+    company: "Tech Solutions",
+    hostName: "Emily Brown",
+    purpose: "Interview",
+    status: "Checked Out",
+    checkOutTime: "11:45 AM",
+    badgeNumber: "V1002",
+  },
+  {
+    checkInTime: "02:00 PM",
+    visitorName: "Maria Garcia",
+    company: "Global Services",
+    hostName: "David Kim",
+    purpose: "Vendor Meeting",
+    status: "Expected",
+    checkOutTime: null,
+    badgeNumber: "V1003",
   },
 ]

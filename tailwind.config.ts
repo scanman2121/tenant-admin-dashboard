@@ -5,6 +5,30 @@ const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Roboto', 'sans-serif'],
+      },
+      colors: {
+        primary: {
+          DEFAULT: '#044AEF',
+          light: '#2E69FF',
+          dark: '#0336B3',
+          50: '#E6EDFF',
+          100: '#CCE0FF',
+          200: '#99C2FF',
+          300: '#66A3FF',
+          400: '#3385FF',
+          500: '#044AEF',
+          600: '#0336B3',
+          700: '#022580',
+          800: '#01134D',
+          900: '#00051A'
+        },
+        text: {
+          primary: '#2D3338',
+          secondary: '#696E72',
+        }
+      },
       keyframes: {
         hide: {
           from: { opacity: "1" },

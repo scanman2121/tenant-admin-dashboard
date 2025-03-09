@@ -4,8 +4,10 @@ export const siteConfig = {
   description: "The only dashboard you will ever need.",
   baseLinks: {
     home: "/",
-    overview: "/overview",
-    details: "/details",
+    overview: "/my-hqo",
+    resources: "/resources",
+    transactions: "/transactions",
+    analytics: "/analytics",
     settings: {
       general: "/settings/general",
       billing: "/settings/billing",
