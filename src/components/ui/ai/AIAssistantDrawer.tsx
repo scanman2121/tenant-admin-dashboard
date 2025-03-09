@@ -2,7 +2,15 @@
 
 import { Button } from "@/components/Button"
 import { cx } from "@/lib/utils"
-import { RiCloseLine, RiSendPlaneFill, RiSparkling2Line } from "@remixicon/react"
+import {
+    RiCalendarEventLine,
+    RiCloseLine,
+    RiLineChartLine,
+    RiSendPlaneFill,
+    RiSparkling2Line,
+    RiUserAddLine,
+    RiVipCrownLine
+} from "@remixicon/react"
 import { useEffect, useRef, useState } from "react"
 
 interface AIAssistantDrawerProps {
@@ -10,12 +18,44 @@ interface AIAssistantDrawerProps {
     onClose: () => void
 }
 
+interface SuggestionCard {
+    id: string
+    title: string
+    description: string
+    icon: React.ReactNode
+}
+
 export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
-    const [messages, setMessages] = useState<{ role: 'user' | 'assistant', content: string }[]>([
-        { role: 'assistant', content: 'Hello! I\'m your AI assistant. How can I help you today?' }
-    ])
+    const [messages, setMessages] = useState<{ role: 'user' | 'assistant', content: string }[]>([])
     const [input, setInput] = useState('')
     const messagesEndRef = useRef<HTMLDivElement>(null)
+
+    const suggestionCards: SuggestionCard[] = [
+        {
+            id: 'add-user',
+            title: 'Add a user',
+            description: 'Create a new user account with proper permissions',
+            icon: <RiUserAddLine className="size-5" />
+        },
+        {
+            id: 'occupancy-trends',
+            title: 'Find occupancy trends',
+            description: 'Analyze building usage patterns over time',
+            icon: <RiLineChartLine className="size-5" />
+        },
+        {
+            id: 'schedule-event',
+            title: 'Schedule an event',
+            description: 'Create events that tenants will love',
+            icon: <RiCalendarEventLine className="size-5" />
+        },
+        {
+            id: 'view-vips',
+            title: 'View VIPs',
+            description: 'See important visitors expected today',
+            icon: <RiVipCrownLine className="size-5" />
+        }
+    ]
 
     // Scroll to bottom of messages when new messages are added
     useEffect(() => {
@@ -71,6 +111,24 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
         }, 1000)
     }
 
+    const handleSuggestionClick = (suggestion: SuggestionCard) => {
+        // Add user message based on suggestion
+        const userMessage = {
+            role: 'user' as const,
+            content: `Help me ${suggestion.title.toLowerCase()}`
+        }
+        setMessages(prev => [...prev, userMessage])
+
+        // Simulate AI response after a short delay
+        setTimeout(() => {
+            const aiResponse = {
+                role: 'assistant' as const,
+                content: `I'd be happy to help you ${suggestion.title.toLowerCase()}. Here's how we can get started...`
+            }
+            setMessages(prev => [...prev, aiResponse])
+        }, 1000)
+    }
+
     return (
         <>
             <div
@@ -84,7 +142,7 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
                 <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
                     <div className="flex items-center gap-2">
                         <RiSparkling2Line className="size-5 text-primary" />
-                        <h2 className="font-medium text-gray-900 dark:text-gray-50">AI Assistant</h2>
+                        <h2 className="font-medium text-gray-900 dark:text-gray-50">Assistant</h2>
                     </div>
                     <Button
                         variant="ghost"
@@ -96,21 +154,62 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
                     </Button>
                 </div>
 
-                {/* Messages */}
+                {/* Messages or Suggestions */}
                 <div className="flex flex-col h-[calc(100%-8rem)] overflow-y-auto p-4">
-                    {messages.map((message, index) => (
-                        <div
-                            key={index}
-                            className={cx(
-                                "mb-4 max-w-[85%] rounded-lg p-3",
-                                message.role === 'user'
-                                    ? "bg-primary text-white self-end rounded-br-none"
-                                    : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50 self-start rounded-bl-none"
-                            )}
-                        >
-                            {message.content}
+                    {messages.length > 0 ? (
+                        // Show message history if there are messages
+                        <>
+                            {messages.map((message, index) => (
+                                <div
+                                    key={index}
+                                    className={cx(
+                                        "mb-4 max-w-[85%] rounded-lg p-3",
+                                        message.role === 'user'
+                                            ? "bg-primary text-white self-end rounded-br-none"
+                                            : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50 self-start rounded-bl-none"
+                                    )}
+                                >
+                                    {message.content}
+                                </div>
+                            ))}
+                        </>
+                    ) : (
+                        // Show suggestion cards if no messages yet
+                        <div className="py-2">
+                            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                                I can help you with:
+                            </h3>
+                            <div className="grid grid-cols-1 gap-3">
+                                {suggestionCards.map((card) => (
+                                    <button
+                                        key={card.id}
+                                        onClick={() => handleSuggestionClick(card)}
+                                        className={cx(
+                                            "flex items-start gap-3 p-3 rounded-lg text-left transition-colors",
+                                            "bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800",
+                                            "border border-gray-200 dark:border-gray-800",
+                                            "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+                                        )}
+                                    >
+                                        <div className={cx(
+                                            "flex-shrink-0 flex items-center justify-center size-10 rounded-full",
+                                            "bg-primary/10 text-primary dark:bg-primary/20"
+                                        )}>
+                                            {card.icon}
+                                        </div>
+                                        <div>
+                                            <h4 className="font-medium text-gray-900 dark:text-gray-50 text-sm">
+                                                {card.title}
+                                            </h4>
+                                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                                {card.description}
+                                            </p>
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
                         </div>
-                    ))}
+                    )}
                     <div ref={messagesEndRef} />
                 </div>
 
