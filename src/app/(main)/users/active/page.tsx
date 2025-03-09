@@ -100,6 +100,28 @@ const usersColumns = [
         },
     },
     {
+        accessorKey: "email",
+        header: "Email",
+        cell: ({ row }: { row: any }) => {
+            const email = row.getValue("email") as string;
+            return <span className="text-gray-600 dark:text-gray-400">{email}</span>;
+        },
+        meta: {
+            displayName: "Email",
+        },
+    },
+    {
+        accessorKey: "company",
+        header: "Company",
+        cell: ({ row }: { row: any }) => {
+            const company = row.getValue("company") as string;
+            return <span className="text-gray-600 dark:text-gray-400">{company}</span>;
+        },
+        meta: {
+            displayName: "Company",
+        },
+    },
+    {
         accessorKey: "status",
         header: "Status",
         cell: () => {
