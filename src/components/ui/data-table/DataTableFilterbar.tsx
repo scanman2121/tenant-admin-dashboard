@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/Button"
 import { Searchbar } from "@/components/Searchbar"
-import { statuses } from "@/data/data"
+import { companies, roles, statuses } from "@/data/data"
 import { RiDownloadLine } from "@remixicon/react"
 import { Table } from "@tanstack/react-table"
 import { useState } from "react"
@@ -35,6 +35,22 @@ export function Filterbar<TData>({ table }: DataTableToolbarProps<TData>) {
             column={table.getColumn("status")}
             title="Status"
             options={statuses}
+            type="select"
+          />
+        )}
+        {table.getColumn("role")?.getIsVisible() && (
+          <DataTableFilter
+            column={table.getColumn("role")}
+            title="Role"
+            options={roles}
+            type="select"
+          />
+        )}
+        {table.getColumn("company")?.getIsVisible() && (
+          <DataTableFilter
+            column={table.getColumn("company")}
+            title="Company"
+            options={companies}
             type="select"
           />
         )}

@@ -87,12 +87,42 @@ export const conditions: { value: string; label: string }[] = [
   },
 ]
 
+export const companies: { value: string; label: string }[] = [
+  {
+    value: "Acme Inc",
+    label: "Acme Inc",
+  },
+  {
+    value: "Global Tech",
+    label: "Global Tech",
+  },
+  {
+    value: "Innovate Solutions",
+    label: "Innovate Solutions",
+  },
+  {
+    value: "Tech Innovators",
+    label: "Tech Innovators",
+  },
+]
+
+export const userStatuses: { value: string; label: string }[] = [
+  {
+    value: "Active",
+    label: "Active",
+  },
+  {
+    value: "Inactive",
+    label: "Inactive",
+  },
+]
+
 export const users: {
   name: string
   initials: string
   email: string
   role: string
-  company?: string
+  company: string
   avatarUrl?: string
 }[] = [
     {

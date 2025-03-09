@@ -98,6 +98,8 @@ const usersColumns = [
         meta: {
             displayName: "Role",
         },
+        filterFn: "equals" as const,
+        enableColumnFilter: true,
     },
     {
         accessorKey: "email",
@@ -120,6 +122,8 @@ const usersColumns = [
         meta: {
             displayName: "Company",
         },
+        filterFn: "equals" as const,
+        enableColumnFilter: true,
     },
     {
         accessorKey: "status",
@@ -134,6 +138,8 @@ const usersColumns = [
         meta: {
             displayName: "Status",
         },
+        filterFn: "equals" as const,
+        enableColumnFilter: true,
     },
 ]
 
