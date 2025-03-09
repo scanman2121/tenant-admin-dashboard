@@ -3,6 +3,7 @@
 import { Button } from "@/components/Button"
 import { cx } from "@/lib/utils"
 import {
+    RiAddLine,
     RiCalendarEventLine,
     RiCloseLine,
     RiLineChartLine,
@@ -129,6 +130,11 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
         }, 1000)
     }
 
+    const handleNewChat = () => {
+        setMessages([])
+        setInput('')
+    }
+
     return (
         <>
             <div
@@ -144,14 +150,26 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
                         <RiSparkling2Line className="size-5 text-primary" />
                         <h2 className="font-medium text-gray-900 dark:text-gray-50">Assistant</h2>
                     </div>
-                    <Button
-                        variant="ghost"
-                        className="p-1.5 h-7 w-7"
-                        onClick={onClose}
-                    >
-                        <RiCloseLine className="size-5" />
-                        <span className="sr-only">Close</span>
-                    </Button>
+                    <div className="flex items-center gap-1">
+                        {messages.length > 0 && (
+                            <Button
+                                variant="ghost"
+                                className="flex items-center gap-1 py-1 px-2 h-7 text-xs"
+                                onClick={handleNewChat}
+                            >
+                                <RiAddLine className="size-3.5" />
+                                New chat
+                            </Button>
+                        )}
+                        <Button
+                            variant="ghost"
+                            className="p-1.5 h-7 w-7"
+                            onClick={onClose}
+                        >
+                            <RiCloseLine className="size-5" />
+                            <span className="sr-only">Close</span>
+                        </Button>
+                    </div>
                 </div>
 
                 {/* Messages or Suggestions */}
