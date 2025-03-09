@@ -3,7 +3,7 @@
 import { Button } from "@/components/Button"
 import { cx } from "@/lib/utils"
 import {
-    RiAddLine,
+    RiArrowDownSLine,
     RiCalendarEventLine,
     RiCloseLine,
     RiLineChartLine,
@@ -26,10 +26,49 @@ interface SuggestionCard {
     icon: React.ReactNode
 }
 
+interface ChatSession {
+    id: string
+    title: string
+    date: string
+    messages: { role: 'user' | 'assistant', content: string }[]
+}
+
 export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
     const [messages, setMessages] = useState<{ role: 'user' | 'assistant', content: string }[]>([])
     const [input, setInput] = useState('')
+    const [showPreviousChats, setShowPreviousChats] = useState(false)
     const messagesEndRef = useRef<HTMLDivElement>(null)
+
+    // Sample previous chat sessions
+    const previousChats: ChatSession[] = [
+        {
+            id: '1',
+            title: 'Adding new tenant users',
+            date: 'Today',
+            messages: [
+                { role: 'user', content: 'Help me add a user' },
+                { role: 'assistant', content: 'I\'d be happy to help you add a user. Here\'s how we can get started...' }
+            ]
+        },
+        {
+            id: '2',
+            title: 'Building occupancy analysis',
+            date: 'Yesterday',
+            messages: [
+                { role: 'user', content: 'Help me find occupancy trends' },
+                { role: 'assistant', content: 'I\'d be happy to help you find occupancy trends. Here\'s how we can get started...' }
+            ]
+        },
+        {
+            id: '3',
+            title: 'Summer event planning',
+            date: 'Jun 10',
+            messages: [
+                { role: 'user', content: 'Help me schedule an event' },
+                { role: 'assistant', content: 'I\'d be happy to help you schedule an event. Here\'s how we can get started...' }
+            ]
+        }
+    ]
 
     const suggestionCards: SuggestionCard[] = [
         {
@@ -93,6 +132,20 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
         }
     }, [isOpen])
 
+    // Close previous chats dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (showPreviousChats) {
+                setShowPreviousChats(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [showPreviousChats])
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         if (!input.trim()) return
@@ -133,6 +186,17 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
     const handleNewChat = () => {
         setMessages([])
         setInput('')
+        setShowPreviousChats(false)
+    }
+
+    const handleLoadPreviousChat = (chat: ChatSession) => {
+        setMessages(chat.messages)
+        setShowPreviousChats(false)
+    }
+
+    const togglePreviousChats = (e: React.MouseEvent) => {
+        e.stopPropagation()
+        setShowPreviousChats(prev => !prev)
     }
 
     return (
@@ -152,14 +216,46 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
                     </div>
                     <div className="flex items-center gap-1">
                         {messages.length > 0 && (
-                            <Button
-                                variant="ghost"
-                                className="flex items-center gap-1 py-1 px-2 h-7 text-xs"
-                                onClick={handleNewChat}
-                            >
-                                <RiAddLine className="size-3.5" />
-                                New chat
-                            </Button>
+                            <div className="relative flex rounded-md overflow-hidden">
+                                <Button
+                                    variant="ghost"
+                                    className="py-1 px-2.5 h-7 text-xs rounded-r-none border-r border-gray-200 dark:border-gray-700"
+                                    onClick={handleNewChat}
+                                >
+                                    New chat
+                                </Button>
+                                <Button
+                                    variant="ghost"
+                                    className="p-0 w-6 h-7 flex items-center justify-center rounded-l-none"
+                                    onClick={togglePreviousChats}
+                                >
+                                    <RiArrowDownSLine className="size-3.5" />
+                                    <span className="sr-only">Show previous chats</span>
+                                </Button>
+
+                                {/* Previous chats dropdown */}
+                                {showPreviousChats && (
+                                    <div
+                                        className="absolute top-full right-0 mt-1 w-56 rounded-md shadow-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 overflow-hidden z-10"
+                                    >
+                                        <div className="py-1">
+                                            <div className="px-3 py-2 text-xs font-medium text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700">
+                                                Previous chats
+                                            </div>
+                                            {previousChats.map(chat => (
+                                                <button
+                                                    key={chat.id}
+                                                    className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                                                    onClick={() => handleLoadPreviousChat(chat)}
+                                                >
+                                                    <div className="font-medium truncate">{chat.title}</div>
+                                                    <div className="text-xs text-gray-500 dark:text-gray-400">{chat.date}</div>
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         )}
                         <Button
                             variant="ghost"
