@@ -21,7 +21,7 @@ const tenantsData = [
     {
         id: "1",
         name: "Acme Corporation",
-        logoUrl: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=2673&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        logoUrl: "https://cdn.worldvectorlogo.com/logos/acme-2.svg",
         building: "125 Highland Ave",
         industry: "Technology",
         employees: 120,
@@ -32,7 +32,7 @@ const tenantsData = [
     {
         id: "2",
         name: "Global Enterprises",
-        logoUrl: "https://images.unsplash.com/photo-1611095973763-414019e72400?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        logoUrl: "https://cdn.worldvectorlogo.com/logos/global-3.svg",
         building: "400 Market Street",
         industry: "Finance",
         employees: 85,
@@ -43,7 +43,7 @@ const tenantsData = [
     {
         id: "3",
         name: "Retail Solutions",
-        logoUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        logoUrl: "https://cdn.worldvectorlogo.com/logos/retail-1.svg",
         building: "75 State Street",
         industry: "Retail",
         employees: 45,
@@ -54,7 +54,7 @@ const tenantsData = [
     {
         id: "4",
         name: "Tech Innovators",
-        logoUrl: "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        logoUrl: "https://cdn.worldvectorlogo.com/logos/tech-innovators.svg",
         building: "200 Congress Ave",
         industry: "Technology",
         employees: 150,
@@ -65,7 +65,7 @@ const tenantsData = [
     {
         id: "5",
         name: "Financial Services Inc",
-        logoUrl: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        logoUrl: "https://cdn.worldvectorlogo.com/logos/financial-2.svg",
         building: "500 Boylston Street",
         industry: "Finance",
         employees: 95,
@@ -86,12 +86,12 @@ const tenantsColumns = [
 
             return (
                 <div className="flex items-center gap-3">
-                    <div className="relative size-8 overflow-hidden rounded-full">
+                    <div className="relative size-8 overflow-hidden rounded-full bg-gray-100 flex items-center justify-center p-1">
                         <Image
                             src={logoUrl}
                             alt={name}
                             fill
-                            className="object-cover"
+                            className="object-contain p-0.5"
                         />
                     </div>
                     <span>{name}</span>
