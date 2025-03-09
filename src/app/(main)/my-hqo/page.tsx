@@ -1,7 +1,15 @@
 "use client"
 
-import { RiAddLine, RiAlertLine, RiArrowDownLine, RiArrowUpLine, RiCheckLine, RiDownload2Line, RiInformationLine } from "@remixicon/react"
-import { AreaChart, Badge, Button, Callout, Card, DonutChart, Flex, Grid, Icon, Metric, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, Title } from "@tremor/react"
+import { RiAddLine, RiAlertLine, RiArrowDownLine, RiArrowUpLine, RiCheckLine, RiDownload2Line, RiInformationLine } from "@remixicon/react";
+import { AreaChart, Badge, Button, Callout, Card, DonutChart, Flex, Grid, Icon, Metric, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, Title } from "@tremor/react";
+
+// Type definition for KpiEntryExtended
+export type KpiEntryExtended = {
+  title: string;
+  color: string;
+  percentage: number;
+  value: number | string;
+};
 
 // Mock data for charts and metrics
 const performanceData = [
