@@ -3,7 +3,7 @@
 import { Button } from "@/components/Button"
 import { TabNavigation, TabNavigationLink } from "@/components/TabNavigation"
 import { DataTable } from "@/components/ui/data-table/DataTable"
-import { roles, users } from "@/data/data"
+import { roles } from "@/data/data"
 import { RiAddLine } from "@remixicon/react"
 import Image from "next/image"
 import Link from "next/link"
@@ -73,17 +73,20 @@ const usersColumns = [
         header: "Status",
         cell: () => {
             return (
-                <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
-                    Active
+                <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">
+                    Inactive
                 </span>
             );
         },
     },
 ]
 
-export default function Users() {
+// For this example, we'll show an empty table for inactive users
+const inactiveUsers: any[] = []
+
+export default function UsersInactive() {
     const pathname = usePathname()
-    const [data] = useState(users)
+    const [data] = useState(inactiveUsers)
 
     return (
         <div>

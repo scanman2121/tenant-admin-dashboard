@@ -81,8 +81,9 @@ const usersColumns = [
     },
 ]
 
-export default function Users() {
+export default function UsersActive() {
     const pathname = usePathname()
+    // For this example, we'll consider all users as active
     const [data] = useState(users)
 
     return (
