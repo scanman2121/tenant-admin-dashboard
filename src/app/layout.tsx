@@ -13,6 +13,7 @@ const inter = Inter({
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["300", "400", "500", "700"],
+  display: "swap",
   variable: "--font-roboto",
 })
 
@@ -49,14 +50,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${roboto.variable}`} suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body
-        className={`${inter.variable} ${roboto.variable} overflow-y-scroll scroll-auto antialiased selection:bg-indigo-100 selection:text-indigo-700 dark:bg-gray-950`}
-        suppressHydrationWarning
-      >
+      <body className="font-sans overflow-y-scroll scroll-auto antialiased selection:bg-indigo-100 selection:text-indigo-700 dark:bg-gray-950" suppressHydrationWarning>
         <ThemeProvider defaultTheme="system" attribute="class">
           {children}
         </ThemeProvider>
