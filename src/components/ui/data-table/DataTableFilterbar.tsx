@@ -17,19 +17,26 @@ interface DataTableToolbarProps<TData> {
 export function Filterbar<TData>({ table }: DataTableToolbarProps<TData>) {
   const [searchTerm, setSearchTerm] = useState<string>("")
 
-  const debouncedSetFilterValue = useDebouncedCallback((value) => {
-    table.getColumn("requesterName")?.setFilterValue(value)
+  const debouncedSetGlobalFilter = useDebouncedCallback((value) => {
+    table.setGlobalFilter(value)
   }, 300)
 
   const handleSearchChange = (event: any) => {
     const value = event.target.value
     setSearchTerm(value)
-    debouncedSetFilterValue(value)
+    debouncedSetGlobalFilter(value)
   }
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-x-6">
       <div className="flex w-full flex-col gap-2 sm:w-fit sm:flex-row sm:items-center">
+        <Searchbar
+          type="search"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="w-full sm:max-w-[250px] sm:[&>input]:h-[30px]"
+        />
         {table.getColumn("status")?.getIsVisible() && (
           <DataTableFilter
             column={table.getColumn("status")}
@@ -59,15 +66,6 @@ export function Filterbar<TData>({ table }: DataTableToolbarProps<TData>) {
             column={table.getColumn("requestedResource")}
             title="Resource"
             type="select"
-          />
-        )}
-        {table.getColumn("requesterName")?.getIsVisible() && (
-          <Searchbar
-            type="search"
-            placeholder="Search by requester..."
-            value={searchTerm}
-            onChange={handleSearchChange}
-            className="w-full sm:max-w-[250px] sm:[&>input]:h-[30px]"
           />
         )}
       </div>
