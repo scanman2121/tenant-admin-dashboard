@@ -69,7 +69,7 @@ export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
                     <TableHeaderCell
                       key={header.id}
                       className={cx(
-                        "whitespace-nowrap py-1 text-sm sm:text-xs",
+                        "whitespace-nowrap py-4 text-sm sm:text-xs",
                         header.column.columnDef.meta?.className,
                       )}
                     >
@@ -97,7 +97,7 @@ export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
                           row.getIsSelected()
                             ? "bg-gray-50 dark:bg-gray-900"
                             : "",
-                          "relative whitespace-nowrap py-1 text-gray-600 first:w-10 dark:text-gray-400",
+                          "relative whitespace-nowrap py-4 text-gray-600 first:w-10 dark:text-gray-400",
                           cell.column.columnDef.meta?.className,
                         )}
                       >
