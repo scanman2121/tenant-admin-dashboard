@@ -55,7 +55,13 @@ Make sure to set your Git user name and email for this repository:
 
 ```bash
 git config --local user.name "Your Name"
-git config --local user.email "your.email@example.com"
+git config --local user.email "your.github.email@example.com"
 ```
 
+**Important:** The email address must be associated with your GitHub account. If you're seeing the error "No GitHub account was found matching the commit author email address", make sure to use the email address that's registered with your GitHub account.
+
 This is required for deploying to Vercel.
+
+## Vercel Deployment
+
+This project is configured for deployment on Vercel. Make sure your Git configuration is properly set up before deploying to avoid authentication errors.
