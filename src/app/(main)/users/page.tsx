@@ -1,12 +1,46 @@
 "use client"
 
+import { Checkbox } from "@/components/Checkbox"
 import { DataTable } from "@/components/ui/data-table/DataTable"
 import { roles, users } from "@/data/data"
+import { Row, Table } from "@tanstack/react-table"
 import Image from "next/image"
 import { useState } from "react"
 
 // Define columns for the users table
 const usersColumns = [
+    {
+        id: "select",
+        header: ({ table }: { table: Table<any> }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected()
+                        ? true
+                        : table.getIsSomePageRowsSelected()
+                            ? "indeterminate"
+                            : false
+                }
+                onCheckedChange={(value) => {
+                    table.toggleAllPageRowsSelected(!!value)
+                }}
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }: { row: Row<any> }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={(value) => {
+                    row.toggleSelected(!!value)
+                }}
+                onClick={(e) => {
+                    e.stopPropagation()
+                }}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    },
     {
         accessorKey: "name",
         header: "User",
