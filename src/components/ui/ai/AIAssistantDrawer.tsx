@@ -176,9 +176,6 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
                     ) : (
                         // Show suggestion cards if no messages yet
                         <div className="py-2">
-                            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                                I can help you with:
-                            </h3>
                             <div className="grid grid-cols-1 gap-3">
                                 {suggestionCards.map((card) => (
                                     <button
@@ -220,7 +217,7 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
-                            placeholder="Type your message..."
+                            placeholder="Ask me anything"
                             className={cx(
                                 "flex-1 rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm",
                                 "bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-50",
