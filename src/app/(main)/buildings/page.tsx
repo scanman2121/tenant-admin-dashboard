@@ -4,6 +4,7 @@ import { Button } from "@/components/Button"
 import { TabNavigation, TabNavigationLink } from "@/components/TabNavigation"
 import { DataTable } from "@/components/ui/data-table/DataTable"
 import { RiAddLine } from "@remixicon/react"
+import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
@@ -20,6 +21,7 @@ const buildingsData = [
     {
         id: "1",
         name: "125 Highland Ave",
+        imageUrl: "https://images.unsplash.com/photo-1471039497385-b6d6ba609f9c?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         location: "Boston, MA",
         type: "Office",
         floors: 12,
@@ -30,6 +32,7 @@ const buildingsData = [
     {
         id: "2",
         name: "400 Market Street",
+        imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         location: "San Francisco, CA",
         type: "Mixed Use",
         floors: 24,
@@ -40,6 +43,7 @@ const buildingsData = [
     {
         id: "3",
         name: "75 State Street",
+        imageUrl: "https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?q=80&w=2674&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         location: "New York, NY",
         type: "Retail",
         floors: 3,
@@ -50,6 +54,7 @@ const buildingsData = [
     {
         id: "4",
         name: "200 Congress Ave",
+        imageUrl: "https://images.unsplash.com/photo-1554435493-93422e8d1c46?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         location: "Austin, TX",
         type: "Office",
         floors: 18,
@@ -60,6 +65,7 @@ const buildingsData = [
     {
         id: "5",
         name: "500 Boylston Street",
+        imageUrl: "https://images.unsplash.com/photo-1577985043696-8bd54d9f093f?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         location: "Boston, MA",
         type: "Office",
         floors: 15,
@@ -74,6 +80,24 @@ const buildingsColumns = [
     {
         accessorKey: "name",
         header: "Building Name",
+        cell: ({ row }: { row: any }) => {
+            const name = row.getValue("name") as string;
+            const imageUrl = row.original.imageUrl as string;
+
+            return (
+                <div className="flex items-center gap-3">
+                    <div className="relative size-8 overflow-hidden rounded-full">
+                        <Image
+                            src={imageUrl}
+                            alt={name}
+                            fill
+                            className="object-cover"
+                        />
+                    </div>
+                    <span>{name}</span>
+                </div>
+            );
+        },
     },
     {
         accessorKey: "location",
