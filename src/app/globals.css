@@ -17,3 +17,15 @@
         color: #2D3338;
     }
 }
+
+/* AI Drawer - Push Content */
+html.ai-drawer-open .main-content-wrapper {
+    transition: margin-right 0.3s ease-in-out;
+    margin-right: 20rem;
+    /* 320px (drawer width) */
+}
+
+.main-content-wrapper {
+    transition: margin-right 0.3s ease-in-out;
+    margin-right: 0;
+}

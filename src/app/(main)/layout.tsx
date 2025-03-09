@@ -11,7 +11,7 @@ export default function MainLayout({
   return (
     <>
       <Sidebar />
-      <main className="lg:pl-56">
+      <main className="lg:pl-56 main-content-wrapper">
         <div className="mx-auto max-w-screen-2xl">
           <Header />
           <div className="pt-6">

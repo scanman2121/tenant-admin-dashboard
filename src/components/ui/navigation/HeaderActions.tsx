@@ -4,11 +4,13 @@ import { Button } from "@/components/Button"
 import { cx, focusRing } from "@/lib/utils"
 import { RiSearchLine, RiSparkling2Line } from "@remixicon/react"
 import { useEffect, useState } from "react"
+import { AIAssistantDrawer } from "../ai/AIAssistantDrawer"
 import { CreatePopover } from "../create/CreatePopover"
 import { NotificationsPopover } from "../notifications/NotificationsPopover"
 
 export function HeaderActions() {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
+    const [isAIDrawerOpen, setIsAIDrawerOpen] = useState(false)
 
     // Set up global keyboard shortcuts
     useEffect(() => {
@@ -55,9 +57,11 @@ export function HeaderActions() {
 
                 <Button
                     variant="ghost"
+                    onClick={() => setIsAIDrawerOpen(true)}
                     className={cx(
                         "group flex items-center rounded-md p-2 text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
-                        focusRing
+                        focusRing,
+                        isAIDrawerOpen && "text-primary dark:text-primary-400"
                     )}
                 >
                     <RiSparkling2Line className="size-5" aria-hidden="true" />
@@ -73,6 +77,11 @@ export function HeaderActions() {
                     onClose={() => setIsSearchOpen(false)}
                 />
             )}
+
+            <AIAssistantDrawer
+                isOpen={isAIDrawerOpen}
+                onClose={() => setIsAIDrawerOpen(false)}
+            />
         </>
     )
 } 
