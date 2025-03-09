@@ -12,6 +12,7 @@ import {
 import { Switch } from "@/components/Switch"
 import { cx, focusInput } from "@/lib/utils"
 import { RiArrowRightSLine, RiBuildingLine, RiExpandUpDownLine } from "@remixicon/react"
+import Image from "next/image"
 import React from "react"
 import { ModalAddBuilding } from "./ModalAddBuilding"
 
@@ -21,6 +22,7 @@ const buildings = [
     name: "125 Highland Ave",
     initials: "HA",
     color: "bg-primary dark:bg-primary-400",
+    imageUrl: "https://images.unsplash.com/photo-1471039497385-b6d6ba609f9c?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   // Add more buildings...
 ]
@@ -66,16 +68,23 @@ export const BuildingsDropdownDesktop = () => {
               )}
             >
               <div className="flex shrink-0 items-center gap-x-2.5">
-                <span
-                  className="flex aspect-square size-6 items-center justify-center rounded bg-primary p-1 text-xs font-medium text-white dark:bg-primary-400"
-                  aria-hidden="true"
-                >
-                  {isPortfolioView ? (
+                {isPortfolioView ? (
+                  <span
+                    className="flex aspect-square size-6 items-center justify-center rounded bg-primary p-1 text-xs font-medium text-white dark:bg-primary-400"
+                    aria-hidden="true"
+                  >
                     <RiBuildingLine className="size-4" />
-                  ) : (
-                    selectedBuilding.initials
-                  )}
-                </span>
+                  </span>
+                ) : (
+                  <div className="relative size-6 overflow-hidden rounded">
+                    <Image
+                      src={selectedBuilding.imageUrl}
+                      alt={selectedBuilding.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
               </div>
               <div className="flex min-w-0 flex-1 items-center justify-between gap-x-2">
                 <p className="truncate text-sm font-medium text-gray-900 dark:text-gray-50">
@@ -109,15 +118,14 @@ export const BuildingsDropdownDesktop = () => {
                   onSelect={() => handleBuildingSelect(building)}
                 >
                   <div className="flex w-full items-center gap-x-2.5">
-                    <span
-                      className={cx(
-                        building.color,
-                        "flex aspect-square size-6 items-center justify-center rounded p-1 text-xs font-medium text-white",
-                      )}
-                      aria-hidden="true"
-                    >
-                      {building.initials}
-                    </span>
+                    <div className="relative size-6 overflow-hidden rounded">
+                      <Image
+                        src={building.imageUrl}
+                        alt={building.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
                     <p className="text-sm font-medium text-gray-900 dark:text-gray-50">
                       {building.name}
                     </p>
@@ -184,16 +192,23 @@ export const BuildingsDropdownMobile = () => {
         <DropdownMenuTrigger asChild>
           <button className="flex w-[280px] items-center gap-x-1.5 rounded-md p-1.5 hover:bg-gray-100 focus:outline-none hover:dark:bg-gray-900">
             <div className="flex shrink-0 items-center gap-x-1.5">
-              <span
-                className="flex aspect-square size-6 items-center justify-center rounded bg-primary p-1 text-xs font-medium text-white dark:bg-primary-400"
-                aria-hidden="true"
-              >
-                {isPortfolioView ? (
+              {isPortfolioView ? (
+                <span
+                  className="flex aspect-square size-6 items-center justify-center rounded bg-primary p-1 text-xs font-medium text-white dark:bg-primary-400"
+                  aria-hidden="true"
+                >
                   <RiBuildingLine className="size-4" />
-                ) : (
-                  selectedBuilding.initials
-                )}
-              </span>
+                </span>
+              ) : (
+                <div className="relative size-6 overflow-hidden rounded">
+                  <Image
+                    src={selectedBuilding.imageUrl}
+                    alt={selectedBuilding.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              )}
               <RiArrowRightSLine
                 className="size-4 shrink-0 text-gray-500"
                 aria-hidden="true"
@@ -231,15 +246,14 @@ export const BuildingsDropdownMobile = () => {
                 onSelect={() => handleBuildingSelect(building)}
               >
                 <div className="flex w-full items-center gap-x-2.5">
-                  <span
-                    className={cx(
-                      building.color,
-                      "flex size-6 items-center justify-center rounded p-1 text-xs font-medium text-white",
-                    )}
-                    aria-hidden="true"
-                  >
-                    {building.initials}
-                  </span>
+                  <div className="relative size-6 overflow-hidden rounded">
+                    <Image
+                      src={building.imageUrl}
+                      alt={building.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                   <p className="text-sm font-medium text-gray-900 dark:text-gray-50">
                     {building.name}
                   </p>

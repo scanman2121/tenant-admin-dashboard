@@ -15,7 +15,7 @@ export default function MainLayout({
         <div className="mx-auto max-w-screen-2xl">
           <Header />
           <div className="pt-6">
-            <div className="p-4 sm:px-6 sm:pb-10 lg:px-10">
+            <div className="px-4 sm:px-6 md:px-6 lg:px-10">
               {children}
             </div>
           </div>

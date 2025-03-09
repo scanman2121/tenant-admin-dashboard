@@ -7,11 +7,17 @@ export const siteConfig = {
     overview: "/my-hqo",
     resources: "/resources",
     transactions: "/transactions",
+    credits: "/credits",
+    discounts: "/discounts",
     analytics: "/analytics",
+    users: "/users",
+    buildings: "/buildings",
+    tenants: "/tenants",
+    vendors: "/vendors",
+    audiences: "/audiences",
     settings: {
       general: "/settings/general",
       billing: "/settings/billing",
-      users: "/settings/users",
     },
   },
 }

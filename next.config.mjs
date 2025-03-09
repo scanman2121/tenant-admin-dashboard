@@ -13,7 +13,24 @@ const nextConfig = {
         destination: "/my-hqo",
         permanent: true,
       },
+      // Add redirect from old users page to new one
+      {
+        source: "/settings/users",
+        destination: "/users",
+        permanent: true,
+      },
+      // Remove the problematic redirects that are causing infinite loops
     ];
+  },
+  // Add output configuration to ensure static files are generated properly
+  output: 'standalone',
+  // Ensure proper asset handling
+  poweredByHeader: false,
+  reactStrictMode: true,
+  swcMinify: true,
+  // Configure allowed image domains
+  images: {
+    domains: ['images.unsplash.com'],
   },
 };
 

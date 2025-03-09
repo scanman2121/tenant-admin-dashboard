@@ -1,243 +1,431 @@
 "use client"
-import { CategoryBarCard } from "@/components/ui/overview/DashboardCategoryBarCard"
-import { ChartCard } from "@/components/ui/overview/DashboardChartCard"
-import { Filterbar } from "@/components/ui/overview/DashboardFilterbar"
-import { ProgressBarCard } from "@/components/ui/overview/DashboardProgressBarCard"
-import { overviews } from "@/data/overview-data"
-import { OverviewData } from "@/data/schema"
-import { cx } from "@/lib/utils"
-import { subDays, toDate } from "date-fns"
-import React from "react"
-import { DateRange } from "react-day-picker"
 
-export type PeriodValue = "previous-period" | "last-year" | "no-comparison"
+import { RiAddLine, RiAlertLine, RiArrowDownLine, RiArrowUpLine, RiCheckLine, RiDownload2Line, RiInformationLine } from "@remixicon/react"
+import { AreaChart, Badge, Button, Callout, Card, DonutChart, Flex, Grid, Icon, Metric, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, Title } from "@tremor/react"
+import { useState } from "react"
 
-const categories: {
-  title: keyof OverviewData
-  type: "currency" | "unit"
-}[] = [
-    {
-      title: "Rows read",
-      type: "unit",
-    },
-    {
-      title: "Rows written",
-      type: "unit",
-    },
-    {
-      title: "Queries",
-      type: "unit",
-    },
-    {
-      title: "Payments completed",
-      type: "currency",
-    },
-    {
-      title: "Sign ups",
-      type: "unit",
-    },
-    {
-      title: "Logins",
-      type: "unit",
-    },
-    {
-      title: "Sign outs",
-      type: "unit",
-    },
-    {
-      title: "Support calls",
-      type: "unit",
-    },
-  ]
-
-export type KpiEntry = {
-  title: string
-  percentage: number
-  current: number
-  allowed: number
-  unit?: string
-}
-
-const data: KpiEntry[] = [
+// Mock data for charts and metrics
+const performanceData = [
   {
-    title: "Rows read",
-    percentage: 48.1,
-    current: 48.1,
-    allowed: 100,
-    unit: "M",
+    date: "Jan 2023",
+    "Tenant Satisfaction": 85,
+    "Tenant Engagement": 75,
   },
   {
-    title: "Rows written",
-    percentage: 78.3,
-    current: 78.3,
-    allowed: 100,
-    unit: "M",
+    date: "Feb 2023",
+    "Tenant Satisfaction": 83,
+    "Tenant Engagement": 76,
   },
   {
-    title: "Storage",
-    percentage: 26,
-    current: 5.2,
-    allowed: 20,
-    unit: "GB",
+    date: "Mar 2023",
+    "Tenant Satisfaction": 86,
+    "Tenant Engagement": 78,
+  },
+  {
+    date: "Apr 2023",
+    "Tenant Satisfaction": 87,
+    "Tenant Engagement": 80,
+  },
+  {
+    date: "May 2023",
+    "Tenant Satisfaction": 89,
+    "Tenant Engagement": 82,
+  },
+  {
+    date: "Jun 2023",
+    "Tenant Satisfaction": 90,
+    "Tenant Engagement": 85,
+  },
+  {
+    date: "Jul 2023",
+    "Tenant Satisfaction": 91,
+    "Tenant Engagement": 87,
+  },
+  {
+    date: "Aug 2023",
+    "Tenant Satisfaction": 92,
+    "Tenant Engagement": 88,
+  },
+  {
+    date: "Sep 2023",
+    "Tenant Satisfaction": 93,
+    "Tenant Engagement": 89,
+  },
+  {
+    date: "Oct 2023",
+    "Tenant Satisfaction": 94,
+    "Tenant Engagement": 90,
+  },
+  {
+    date: "Nov 2023",
+    "Tenant Satisfaction": 95,
+    "Tenant Engagement": 91,
+  },
+  {
+    date: "Dec 2023",
+    "Tenant Satisfaction": 96,
+    "Tenant Engagement": 92,
   },
 ]
 
-const data2: KpiEntry[] = [
+const usageData = [
   {
-    title: "Weekly active users",
-    percentage: 21.7,
-    current: 21.7,
-    allowed: 100,
-    unit: "%",
+    date: "Jan 2023",
+    "Mobile App": 65,
+    "Web Portal": 40,
+    "Kiosk": 20,
   },
   {
-    title: "Total users",
-    percentage: 70,
-    current: 28,
-    allowed: 40,
+    date: "Feb 2023",
+    "Mobile App": 68,
+    "Web Portal": 42,
+    "Kiosk": 22,
   },
   {
-    title: "Uptime",
-    percentage: 98.3,
-    current: 98.3,
-    allowed: 100,
-    unit: "%",
+    date: "Mar 2023",
+    "Mobile App": 70,
+    "Web Portal": 45,
+    "Kiosk": 25,
+  },
+  {
+    date: "Apr 2023",
+    "Mobile App": 72,
+    "Web Portal": 48,
+    "Kiosk": 28,
+  },
+  {
+    date: "May 2023",
+    "Mobile App": 75,
+    "Web Portal": 50,
+    "Kiosk": 30,
+  },
+  {
+    date: "Jun 2023",
+    "Mobile App": 78,
+    "Web Portal": 52,
+    "Kiosk": 32,
+  },
+  {
+    date: "Jul 2023",
+    "Mobile App": 80,
+    "Web Portal": 55,
+    "Kiosk": 35,
+  },
+  {
+    date: "Aug 2023",
+    "Mobile App": 82,
+    "Web Portal": 58,
+    "Kiosk": 38,
+  },
+  {
+    date: "Sep 2023",
+    "Mobile App": 85,
+    "Web Portal": 60,
+    "Kiosk": 40,
+  },
+  {
+    date: "Oct 2023",
+    "Mobile App": 88,
+    "Web Portal": 62,
+    "Kiosk": 42,
+  },
+  {
+    date: "Nov 2023",
+    "Mobile App": 90,
+    "Web Portal": 65,
+    "Kiosk": 45,
+  },
+  {
+    date: "Dec 2023",
+    "Mobile App": 92,
+    "Web Portal": 68,
+    "Kiosk": 48,
   },
 ]
 
-export type KpiEntryExtended = Omit<
-  KpiEntry,
-  "current" | "allowed" | "unit"
-> & {
-  value: string
-  color: string
-}
-
-const data3: KpiEntryExtended[] = [
-  {
-    title: "Base tier",
-    percentage: 68.1,
-    value: "$200",
-    color: "bg-indigo-600 dark:bg-indigo-500",
-  },
-  {
-    title: "On-demand charges",
-    percentage: 20.8,
-    value: "$61.1",
-    color: "bg-purple-600 dark:bg-purple-500",
-  },
-  {
-    title: "Caching",
-    percentage: 11.1,
-    value: "$31.9",
-    color: "bg-gray-400 dark:bg-gray-600",
-  },
+const featureUsageData = [
+  { name: "Events", value: 35 },
+  { name: "Marketplace", value: 25 },
+  { name: "Bookings", value: 20 },
+  { name: "Access", value: 15 },
+  { name: "Other", value: 5 },
 ]
 
-const overviewsDates = overviews.map((item) => toDate(item.date).getTime())
-const maxDate = toDate(Math.max(...overviewsDates))
+const tenantBreakdownData = [
+  { name: "Active", value: 85 },
+  { name: "Inactive", value: 10 },
+  { name: "Pending", value: 5 },
+]
+
+const recentActivityData = [
+  {
+    id: 1,
+    type: "Event",
+    title: "Wellness Wednesday",
+    date: "Today, 2:30 PM",
+    status: "Active",
+    registrations: 45,
+    capacity: 50
+  },
+  {
+    id: 2,
+    type: "Booking",
+    title: "Conference Room A",
+    date: "Today, 10:00 AM",
+    status: "Completed",
+    bookedBy: "John Smith"
+  },
+  {
+    id: 3,
+    type: "Marketplace",
+    title: "Lunch Special Order",
+    date: "Yesterday",
+    status: "Delivered",
+    orders: 12
+  },
+  {
+    id: 4,
+    type: "Access",
+    title: "After-hours Access",
+    date: "Yesterday",
+    status: "Approved",
+    requestedBy: "Sarah Johnson"
+  },
+  {
+    id: 5,
+    type: "Event",
+    title: "Building Maintenance",
+    date: "Jun 15, 2023",
+    status: "Scheduled",
+    notification: "Sent to all tenants"
+  },
+]
 
 export default function MyHqO() {
-  const [selectedDates, setSelectedDates] = React.useState<
-    DateRange | undefined
-  >({
-    from: subDays(maxDate, 30),
-    to: maxDate,
-  })
-  const [selectedPeriod, setSelectedPeriod] =
-    React.useState<PeriodValue>("last-year")
-
-  const [selectedCategories, setSelectedCategories] = React.useState<string[]>(
-    categories.map((category) => category.title),
-  )
+  const [activeTab, setActiveTab] = useState(0)
 
   return (
-    <div>
-      <h1 className="text-lg font-semibold text-gray-900 sm:text-xl dark:text-gray-50">
+    <div className="space-y-6">
+      <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
         My HqO
       </h1>
 
-      <section aria-labelledby="current-billing-cycle" className="mt-4">
-        <h2
-          id="current-billing-cycle"
-          className="scroll-mt-10 text-base font-medium text-gray-900 dark:text-gray-50"
-        >
-          Current billing cycle
-        </h2>
-        <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
-          <ProgressBarCard
-            title="Usage"
-            change="+0.2%"
-            value="68.1%"
-            valueDescription="of allowed capacity"
-            ctaDescription="Monthly usage resets in 12 days."
-            ctaText="Manage plan."
-            ctaLink="#"
-            data={data}
-          />
-          <ProgressBarCard
-            title="Workspace"
-            change="+2.9%"
-            value="21.7%"
-            valueDescription="weekly active users"
-            ctaDescription="Add up to 20 members in free plan."
-            ctaText="Invite users."
-            ctaLink="#"
-            data={data2}
-          />
-          <CategoryBarCard
-            title="Costs"
-            change="-1.4%"
-            value="$293.5"
-            valueDescription="current billing cycle"
-            subtitle="Current costs"
-            ctaDescription="Set hard caps in"
-            ctaText="cost spend management."
-            ctaLink="#"
-            data={data3}
-          />
-        </div>
+      {/* Key Metrics Section */}
+      <section>
+        <Grid numItemsMd={2} numItemsLg={4} className="gap-6">
+          <Card decoration="top" decorationColor="primary">
+            <Flex justifyContent="between" alignItems="center">
+              <Title className="text-text-primary">Tenant Satisfaction</Title>
+              <Badge color="green" size="sm">
+                <Flex justifyContent="start" alignItems="center" className="gap-1">
+                  <Icon icon={RiArrowUpLine} size="sm" />
+                  <span>4.2%</span>
+                </Flex>
+              </Badge>
+            </Flex>
+            <Metric className="mt-2 text-text-primary">92%</Metric>
+            <Text className="text-text-secondary">Based on 1,245 responses</Text>
+          </Card>
+
+          <Card decoration="top" decorationColor="primary">
+            <Flex justifyContent="between" alignItems="center">
+              <Title className="text-text-primary">Tenant Engagement</Title>
+              <Badge color="green" size="sm">
+                <Flex justifyContent="start" alignItems="center" className="gap-1">
+                  <Icon icon={RiArrowUpLine} size="sm" />
+                  <span>2.8%</span>
+                </Flex>
+              </Badge>
+            </Flex>
+            <Metric className="mt-2 text-text-primary">78%</Metric>
+            <Text className="text-text-secondary">Across all platforms</Text>
+          </Card>
+
+          <Card decoration="top" decorationColor="primary">
+            <Flex justifyContent="between" alignItems="center">
+              <Title className="text-text-primary">Active Users</Title>
+              <Badge color="red" size="sm">
+                <Flex justifyContent="start" alignItems="center" className="gap-1">
+                  <Icon icon={RiArrowDownLine} size="sm" />
+                  <span>1.5%</span>
+                </Flex>
+              </Badge>
+            </Flex>
+            <Metric className="mt-2 text-text-primary">3,842</Metric>
+            <Text className="text-text-secondary">Out of 4,500 total users</Text>
+          </Card>
+
+          <Card decoration="top" decorationColor="primary">
+            <Flex justifyContent="between" alignItems="center">
+              <Title className="text-text-primary">Events This Month</Title>
+              <Badge color="green" size="sm">
+                <Flex justifyContent="start" alignItems="center" className="gap-1">
+                  <Icon icon={RiArrowUpLine} size="sm" />
+                  <span>12.3%</span>
+                </Flex>
+              </Badge>
+            </Flex>
+            <Metric className="mt-2 text-text-primary">28</Metric>
+            <Text className="text-text-secondary">With 1,245 registrations</Text>
+          </Card>
+        </Grid>
       </section>
 
-      <section aria-labelledby="usage-overview" className="mt-8">
-        <h2
-          id="usage-overview"
-          className="scroll-mt-8 text-base font-medium text-gray-900 dark:text-gray-50"
-        >
-          Overview
-        </h2>
-        <div className="sticky top-6 z-20 flex items-center justify-between border-b border-gray-200 bg-white pb-4 pt-4 dark:border-gray-800 dark:bg-gray-950">
-          <Filterbar
-            maxDate={maxDate}
-            minDate={new Date(2024, 0, 1)}
-            selectedDates={selectedDates}
-            onDatesChange={(dates) => setSelectedDates(dates)}
-            selectedPeriod={selectedPeriod}
-            onPeriodChange={(period) => setSelectedPeriod(period)}
-            categories={categories}
-            setSelectedCategories={setSelectedCategories}
-            selectedCategories={selectedCategories}
-          />
-        </div>
-        <dl
-          className={cx(
-            "mt-6 grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3",
-          )}
-        >
-          {categories
-            .filter((category) => selectedCategories.includes(category.title))
-            .map((category) => {
-              return (
-                <ChartCard
-                  key={category.title}
-                  title={category.title}
-                  type={category.type}
-                  selectedDates={selectedDates}
-                  selectedPeriod={selectedPeriod}
+      {/* Performance Insights Section */}
+      <section>
+        <Card>
+          <Title className="text-text-primary mb-4">Performance Insights</Title>
+          <TabGroup>
+            <TabList>
+              <Tab>Tenant Satisfaction</Tab>
+              <Tab>Platform Usage</Tab>
+              <Tab>Feature Breakdown</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <AreaChart
+                  className="mt-4 h-72"
+                  data={performanceData}
+                  index="date"
+                  categories={["Tenant Satisfaction", "Tenant Engagement"]}
+                  colors={["primary", "indigo"]}
+                  valueFormatter={(value) => `${value}%`}
+                  showLegend={true}
+                  showGridLines={false}
+                  showAnimation={true}
                 />
-              )
-            })}
-        </dl>
+              </TabPanel>
+              <TabPanel>
+                <AreaChart
+                  className="mt-4 h-72"
+                  data={usageData}
+                  index="date"
+                  categories={["Mobile App", "Web Portal", "Kiosk"]}
+                  colors={["primary", "indigo", "cyan"]}
+                  valueFormatter={(value) => `${value}%`}
+                  showLegend={true}
+                  showGridLines={false}
+                  showAnimation={true}
+                />
+              </TabPanel>
+              <TabPanel>
+                <Grid numItemsMd={2} className="gap-6 mt-4">
+                  <Card>
+                    <Title className="text-text-primary">Feature Usage</Title>
+                    <DonutChart
+                      className="mt-4 h-60"
+                      data={featureUsageData}
+                      category="value"
+                      index="name"
+                      colors={["primary", "indigo", "cyan", "violet", "slate"]}
+                      valueFormatter={(value) => `${value}%`}
+                      showLabel={true}
+                      showAnimation={true}
+                    />
+                  </Card>
+                  <Card>
+                    <Title className="text-text-primary">Tenant Breakdown</Title>
+                    <DonutChart
+                      className="mt-4 h-60"
+                      data={tenantBreakdownData}
+                      category="value"
+                      index="name"
+                      colors={["primary", "amber", "slate"]}
+                      valueFormatter={(value) => `${value}%`}
+                      showLabel={true}
+                      showAnimation={true}
+                    />
+                  </Card>
+                </Grid>
+              </TabPanel>
+            </TabPanels>
+          </TabGroup>
+        </Card>
+      </section>
+
+      {/* Recent Activity Section */}
+      <section>
+        <Card>
+          <Flex justifyContent="between" alignItems="center" className="mb-4">
+            <Title className="text-text-primary">Recent Activity</Title>
+            <Flex className="gap-2">
+              <Button size="sm" variant="secondary" icon={RiDownload2Line}>Export</Button>
+              <Button size="sm" variant="primary" icon={RiAddLine}>Add Event</Button>
+            </Flex>
+          </Flex>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead className="text-xs text-text-secondary uppercase bg-gray-50 dark:bg-gray-800">
+                <tr>
+                  <th className="px-4 py-3">Type</th>
+                  <th className="px-4 py-3">Title</th>
+                  <th className="px-4 py-3">Date</th>
+                  <th className="px-4 py-3">Status</th>
+                  <th className="px-4 py-3">Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentActivityData.map((item) => (
+                  <tr key={item.id} className="border-b dark:border-gray-700">
+                    <td className="px-4 py-3 font-medium text-text-primary">{item.type}</td>
+                    <td className="px-4 py-3 text-text-primary">{item.title}</td>
+                    <td className="px-4 py-3 text-text-secondary">{item.date}</td>
+                    <td className="px-4 py-3">
+                      <Badge color={
+                        item.status === "Active" || item.status === "Approved" ? "green" :
+                          item.status === "Completed" || item.status === "Delivered" ? "blue" :
+                            item.status === "Scheduled" ? "amber" : "gray"
+                      }>
+                        {item.status}
+                      </Badge>
+                    </td>
+                    <td className="px-4 py-3 text-text-secondary">
+                      {item.registrations && `${item.registrations}/${item.capacity} registered`}
+                      {item.bookedBy && `Booked by ${item.bookedBy}`}
+                      {item.orders && `${item.orders} orders`}
+                      {item.requestedBy && `Requested by ${item.requestedBy}`}
+                      {item.notification && item.notification}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card>
+      </section>
+
+      {/* Announcements Section */}
+      <section>
+        <Card>
+          <Title className="text-text-primary mb-4">Announcements & Alerts</Title>
+          <div className="space-y-4">
+            <Callout
+              title="Building Maintenance Scheduled"
+              icon={RiInformationLine}
+              color="blue"
+              className="mt-2"
+            >
+              The lobby will be undergoing maintenance on Saturday, June 24th from 8:00 AM to 12:00 PM.
+            </Callout>
+            <Callout
+              title="Fire Alarm Testing"
+              icon={RiAlertLine}
+              color="amber"
+              className="mt-2"
+            >
+              Fire alarm testing will be conducted on Friday, June 23rd from 2:00 PM to 3:00 PM.
+            </Callout>
+            <Callout
+              title="New Marketplace Vendor"
+              icon={RiCheckLine}
+              color="green"
+              className="mt-2"
+            >
+              We're excited to welcome "Fresh Eats Catering" to our marketplace starting next week.
+            </Callout>
+          </div>
+        </Card>
       </section>
     </div>
   )

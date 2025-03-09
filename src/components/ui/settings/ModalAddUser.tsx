@@ -19,17 +19,65 @@ import {
   SelectValue,
 } from "@/components/Select"
 import { roles } from "@/data/data"
+import { showError, showSuccess } from "@/lib/toast"
+import { useState } from "react"
 
 export type ModalAddUserProps = {
   children: React.ReactNode
 }
 
 export function ModalAddUser({ children }: ModalAddUserProps) {
+  const [email, setEmail] = useState("")
+  const [role, setRole] = useState("")
+  const [open, setOpen] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+
+    // Validate form
+    if (!email) {
+      showError("Please enter an email address")
+      return
+    }
+
+    if (!role) {
+      showError("Please select a role")
+      return
+    }
+
+    // Show loading state
+    setIsSubmitting(true)
+
+    // Simulate API call
+    setTimeout(() => {
+      try {
+        // In a real application, you would send this data to your backend
+        console.log("Inviting user:", { email, role })
+
+        // Show success message
+        showSuccess(`Invitation sent to ${email}`)
+
+        // Close the dialog after submission
+        setOpen(false)
+
+        // Reset form
+        setEmail("")
+        setRole("")
+      } catch (error) {
+        // Show error message
+        showError("Failed to send invitation. Please try again.")
+      } finally {
+        setIsSubmitting(false)
+      }
+    }, 1000)
+  }
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-lg">
-        <form>
+        <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>Invite people to your workspace</DialogTitle>
             <DialogDescription className="mt-1 text-sm leading-6">
@@ -42,15 +90,19 @@ export function ModalAddUser({ children }: ModalAddUserProps) {
               <Input
                 id="email-new-user"
                 name="email-new-user"
+                type="email"
                 placeholder="Insert email..."
                 className="mt-2"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
             <div className="mt-4">
               <Label htmlFor="role-new-user" className="font-medium">
                 Select role
               </Label>
-              <Select>
+              <Select value={role} onValueChange={setRole}>
                 <SelectTrigger
                   id="role-new-user"
                   name="role-new-user"
@@ -75,17 +127,25 @@ export function ModalAddUser({ children }: ModalAddUserProps) {
           <DialogFooter className="mt-6">
             <DialogClose asChild>
               <Button
+                type="button"
                 className="mt-2 w-full sm:mt-0 sm:w-fit"
                 variant="secondary"
+                onClick={() => {
+                  setEmail("")
+                  setRole("")
+                }}
+                disabled={isSubmitting}
               >
                 Go back
               </Button>
             </DialogClose>
-            <DialogClose asChild>
-              <Button type="submit" className="w-full sm:w-fit">
-                Add user
-              </Button>
-            </DialogClose>
+            <Button
+              type="submit"
+              className="w-full sm:w-fit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Sending..." : "Add user"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

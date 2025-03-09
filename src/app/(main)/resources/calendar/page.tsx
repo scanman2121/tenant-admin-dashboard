@@ -1,5 +1,6 @@
 "use client"
 
+import { PageHeader } from "@/components/PageHeader"
 import { TabNavigation, TabNavigationLink } from "@/components/TabNavigation"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -14,9 +15,11 @@ export default function Calendar() {
     const pathname = usePathname()
     return (
         <div>
-            <h1 className="text-lg font-semibold text-gray-900 sm:text-xl dark:text-gray-50">
-                Resources
-            </h1>
+            <PageHeader
+                title="Resources"
+                secondaryCta="Add Resource"
+                primaryCta="Book Resource"
+            />
             <TabNavigation className="mt-4">
                 {tabs.map((tab) => (
                     <TabNavigationLink

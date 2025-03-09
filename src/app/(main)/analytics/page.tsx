@@ -1,5 +1,6 @@
 "use client"
 
+import { PageHeader } from "@/components/PageHeader"
 import { ChartCard } from "@/components/ui/overview/DashboardChartCard"
 import { Filterbar } from "@/components/ui/overview/DashboardFilterbar"
 import { OverviewData } from "@/data/schema"
@@ -60,9 +61,7 @@ export default function Analytics() {
 
     return (
         <div>
-            <h1 className="text-lg font-semibold text-gray-900 sm:text-xl dark:text-gray-50">
-                Analytics
-            </h1>
+            <PageHeader title="Analytics" />
 
             <section aria-labelledby="usage-overview" className="mt-4">
                 <h2

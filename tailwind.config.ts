@@ -2,7 +2,10 @@ import type { Config } from "tailwindcss"
 
 const config: Config = {
   darkMode: "selector",
-  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -27,7 +30,36 @@ const config: Config = {
         text: {
           primary: '#2D3338',
           secondary: '#696E72',
-        }
+        },
+        tremor: {
+          brand: {
+            faint: "#eff6ff",
+            muted: "#bfdbfe",
+            subtle: "#60a5fa",
+            DEFAULT: "#044AEF",
+            emphasis: "#0336B3",
+            inverted: "#ffffff",
+          },
+          background: {
+            muted: "#f9fafb",
+            subtle: "#f3f4f6",
+            DEFAULT: "#ffffff",
+            emphasis: "#374151",
+          },
+          border: {
+            DEFAULT: "#e5e7eb",
+          },
+          ring: {
+            DEFAULT: "#e5e7eb",
+          },
+          content: {
+            subtle: "#9ca3af",
+            DEFAULT: "#6b7280",
+            emphasis: "#374151",
+            strong: "#111827",
+            inverted: "#ffffff",
+          },
+        },
       },
       keyframes: {
         hide: {
@@ -82,8 +114,26 @@ const config: Config = {
         dialogContentShow:
           "dialogContentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
       },
+      boxShadow: {
+        "tremor-input": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        "tremor-card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "tremor-dropdown": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+      },
+      borderRadius: {
+        "tremor-small": "0.375rem",
+        "tremor-default": "0.5rem",
+        "tremor-full": "9999px",
+      },
     },
   },
+  safelist: [
+    {
+      pattern: /^(bg|text|border|ring)-tremor-/,
+    },
+    {
+      pattern: /^tremor-/,
+    },
+  ],
   plugins: [require("@tailwindcss/forms")],
 }
 export default config

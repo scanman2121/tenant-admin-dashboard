@@ -8,6 +8,7 @@ import { Label } from "@/components/Label"
 import { ProgressBar } from "@/components/ProgressBar"
 import { ProgressCircle } from "@/components/ProgressCircle"
 import { Switch } from "@/components/Switch"
+import TremorPricingSection from "@/components/TremorPricingSection"
 import { cx } from "@/lib/utils"
 import { RiArrowRightUpLine } from "@remixicon/react"
 import React from "react"
@@ -19,38 +20,38 @@ const data: {
   capacity?: string
   percentageValue?: number
 }[] = [
-  {
-    name: "Starter plan",
-    description: "Discounted plan for start-ups and growing companies",
-    value: "$90",
-  },
-  {
-    name: "Storage",
-    description: "Used 10.1 GB",
-    value: "$40",
-    capacity: "100 GB included",
-    percentageValue: 10.1,
-  },
-  {
-    name: "Bandwith",
-    description: "Used 2.9 GB",
-    value: "$10",
-    capacity: "5 GB included",
-    percentageValue: 58,
-  },
-  {
-    name: "Users",
-    description: "Used 9",
-    value: "$20",
-    capacity: "50 users included",
-    percentageValue: 18,
-  },
-  {
-    name: "Query super caching (EU-Central 1)",
-    description: "4 GB query cache, $120/mo",
-    value: "$120.00",
-  },
-]
+    {
+      name: "Starter plan",
+      description: "Discounted plan for start-ups and growing companies",
+      value: "$90",
+    },
+    {
+      name: "Storage",
+      description: "Used 10.1 GB",
+      value: "$40",
+      capacity: "100 GB included",
+      percentageValue: 10.1,
+    },
+    {
+      name: "Bandwith",
+      description: "Used 2.9 GB",
+      value: "$10",
+      capacity: "5 GB included",
+      percentageValue: 58,
+    },
+    {
+      name: "Users",
+      description: "Used 9",
+      value: "$20",
+      capacity: "50 users included",
+      percentageValue: 18,
+    },
+    {
+      name: "Query super caching (EU-Central 1)",
+      description: "4 GB query cache, $120/mo",
+      value: "$120.00",
+    },
+  ]
 
 export default function Billing() {
   const [isSpendMgmtEnabled, setIsSpendMgmtEnabled] = React.useState(true)
@@ -75,6 +76,10 @@ export default function Billing() {
           </a>
         </p>
       </div>
+
+      {/* Tremor Pricing Section */}
+      <TremorPricingSection />
+
       <div className="mt-6 space-y-10">
         <section aria-labelledby="billing-overview">
           <div className="grid grid-cols-1 gap-x-14 gap-y-8 md:grid-cols-3">
