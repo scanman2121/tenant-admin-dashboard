@@ -40,6 +40,9 @@ const usersColumns = [
         ),
         enableSorting: false,
         enableHiding: false,
+        meta: {
+            displayName: "Select",
+        },
     },
     {
         accessorKey: "name",
@@ -77,6 +80,9 @@ const usersColumns = [
                 </div>
             );
         },
+        meta: {
+            displayName: "User",
+        },
     },
     {
         accessorKey: "role",
@@ -89,6 +95,9 @@ const usersColumns = [
                 <span className="capitalize">{roleLabel}</span>
             );
         },
+        meta: {
+            displayName: "Role",
+        },
     },
     {
         accessorKey: "status",
@@ -99,6 +108,9 @@ const usersColumns = [
                     Active
                 </span>
             );
+        },
+        meta: {
+            displayName: "Status",
         },
     },
 ]
