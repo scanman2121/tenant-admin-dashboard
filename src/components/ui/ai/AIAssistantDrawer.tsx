@@ -218,10 +218,10 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
                 )}
             >
                 {/* Header */}
-                <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
+                <div className="flex items-center justify-between p-4">
                     <div className="flex items-center gap-2">
                         <RiSparkling2Line className="size-5 text-primary" />
-                        <h2 className="font-medium text-gray-900 dark:text-gray-50">Assistant</h2>
+                        <h2 className="font-medium text-sm text-gray-900 dark:text-gray-50">Assistant</h2>
                     </div>
                     <div className="flex items-center gap-2">
                         {/* Always show the button group for testing */}
