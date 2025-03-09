@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/Button"
 import { cx, focusRing } from "@/lib/utils"
-import { RiRobot2Line, RiSearchLine } from "@remixicon/react"
+import { RiSearchLine, RiStarSLine } from "@remixicon/react"
 import { useEffect, useState } from "react"
 import { CreatePopover } from "../create/CreatePopover"
 import { NotificationsPopover } from "../notifications/NotificationsPopover"
@@ -60,8 +60,8 @@ export function HeaderActions() {
                         focusRing
                     )}
                 >
-                    <RiRobot2Line className="size-5" aria-hidden="true" />
-                    <span className="sr-only">AI Assistant</span>
+                    <RiStarSLine className="size-5" aria-hidden="true" />
+                    <span className="sr-only">Favorites</span>
                 </Button>
 
                 <CreatePopover />
