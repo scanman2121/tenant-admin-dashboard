@@ -2,7 +2,6 @@
 
 import { RiAddLine, RiAlertLine, RiArrowDownLine, RiArrowUpLine, RiCheckLine, RiDownload2Line, RiInformationLine } from "@remixicon/react"
 import { AreaChart, Badge, Button, Callout, Card, DonutChart, Flex, Grid, Icon, Metric, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, Title } from "@tremor/react"
-import { useState } from "react"
 
 // Mock data for charts and metrics
 const performanceData = [
@@ -202,8 +201,6 @@ const recentActivityData = [
 ]
 
 export default function MyHqO() {
-  const [activeTab, setActiveTab] = useState(0)
-
   return (
     <div className="space-y-6">
       <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
