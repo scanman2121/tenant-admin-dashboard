@@ -86,7 +86,7 @@ const buildingsColumns = [
 
             return (
                 <div className="flex items-center gap-3">
-                    <div className="relative size-8 overflow-hidden rounded-full">
+                    <div className="relative size-8 overflow-hidden rounded-md">
                         <Image
                             src={imageUrl}
                             alt={name}
