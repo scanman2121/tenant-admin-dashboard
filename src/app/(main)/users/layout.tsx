@@ -8,7 +8,9 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 const tabs = [
-    { name: "Existing users", href: "/users" },
+    { name: "All Users", href: "/users" },
+    { name: "Active", href: "/users/active" },
+    { name: "Inactive", href: "/users/inactive" },
     { name: "Invited users", href: "/users/invited" },
 ] as const
 

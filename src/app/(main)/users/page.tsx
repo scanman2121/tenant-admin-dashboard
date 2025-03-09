@@ -1,21 +1,9 @@
 "use client"
 
-import { Button } from "@/components/Button"
-import { TabNavigation, TabNavigationLink } from "@/components/TabNavigation"
 import { DataTable } from "@/components/ui/data-table/DataTable"
 import { roles, users } from "@/data/data"
-import { RiAddLine } from "@remixicon/react"
 import Image from "next/image"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { useState } from "react"
-
-// Define tabs for the Users page
-const tabs = [
-    { name: "All Users", href: "/users" },
-    { name: "Active", href: "/users/active" },
-    { name: "Inactive", href: "/users/inactive" },
-] as const
 
 // Define columns for the users table
 const usersColumns = [
@@ -82,36 +70,6 @@ const usersColumns = [
 ]
 
 export default function Users() {
-    const pathname = usePathname()
     const [data] = useState(users)
-
-    return (
-        <div>
-            <div className="flex items-center justify-between">
-                <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
-                    Users
-                </h1>
-                <Button>
-                    <RiAddLine className="size-4 shrink-0 mr-1.5" aria-hidden="true" />
-                    Add User
-                </Button>
-            </div>
-
-            <TabNavigation className="mt-4">
-                {tabs.map((tab) => (
-                    <TabNavigationLink
-                        key={tab.name}
-                        asChild
-                        active={pathname === tab.href}
-                    >
-                        <Link href={tab.href}>{tab.name}</Link>
-                    </TabNavigationLink>
-                ))}
-            </TabNavigation>
-
-            <div className="pt-6">
-                <DataTable columns={usersColumns} data={data} />
-            </div>
-        </div>
-    )
+    return <DataTable columns={usersColumns} data={data} />
 } 
