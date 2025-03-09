@@ -129,10 +129,7 @@ const config: Config = {
   safelist: [
     {
       pattern: /^(bg|text|border|ring)-tremor-/,
-    },
-    {
-      pattern: /^tremor-/,
-    },
+    }
   ],
   plugins: [require("@tailwindcss/forms")],
 }

@@ -422,7 +422,7 @@ export default function MyHqO() {
               color="green"
               className="mt-2"
             >
-              We're excited to welcome "Fresh Eats Catering" to our marketplace starting next week.
+              We&apos;re excited to welcome &quot;Fresh Eats Catering&quot; to our marketplace starting next week.
             </Callout>
           </div>
         </Card>
