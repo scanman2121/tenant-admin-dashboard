@@ -21,7 +21,7 @@ const tenantsData = [
     {
         id: "1",
         name: "Acme Corporation",
-        logoUrl: "https://cdn.worldvectorlogo.com/logos/acme-2.svg",
+        logoUrl: "https://cdn-icons-png.flaticon.com/512/5969/5969043.png",
         building: "125 Highland Ave",
         industry: "Technology",
         employees: 120,
@@ -32,7 +32,7 @@ const tenantsData = [
     {
         id: "2",
         name: "Global Enterprises",
-        logoUrl: "https://cdn.worldvectorlogo.com/logos/global-3.svg",
+        logoUrl: "https://cdn-icons-png.flaticon.com/512/5969/5969184.png",
         building: "400 Market Street",
         industry: "Finance",
         employees: 85,
@@ -43,7 +43,7 @@ const tenantsData = [
     {
         id: "3",
         name: "Retail Solutions",
-        logoUrl: "https://cdn.worldvectorlogo.com/logos/retail-1.svg",
+        logoUrl: "https://cdn-icons-png.flaticon.com/512/5969/5969007.png",
         building: "75 State Street",
         industry: "Retail",
         employees: 45,
@@ -54,7 +54,7 @@ const tenantsData = [
     {
         id: "4",
         name: "Tech Innovators",
-        logoUrl: "https://cdn.worldvectorlogo.com/logos/tech-innovators.svg",
+        logoUrl: "https://cdn-icons-png.flaticon.com/512/5969/5969085.png",
         building: "200 Congress Ave",
         industry: "Technology",
         employees: 150,
@@ -65,7 +65,7 @@ const tenantsData = [
     {
         id: "5",
         name: "Financial Services Inc",
-        logoUrl: "https://cdn.worldvectorlogo.com/logos/financial-2.svg",
+        logoUrl: "https://cdn-icons-png.flaticon.com/512/5969/5969113.png",
         building: "500 Boylston Street",
         industry: "Finance",
         employees: 95,
@@ -86,12 +86,13 @@ const tenantsColumns = [
 
             return (
                 <div className="flex items-center gap-3">
-                    <div className="relative size-8 overflow-hidden rounded-full bg-gray-100 flex items-center justify-center p-1">
+                    <div className="relative size-8 overflow-hidden rounded-full bg-gray-100 flex items-center justify-center">
                         <Image
                             src={logoUrl}
                             alt={name}
-                            fill
-                            className="object-contain p-0.5"
+                            width={24}
+                            height={24}
+                            className="object-contain"
                         />
                     </div>
                     <span>{name}</span>
