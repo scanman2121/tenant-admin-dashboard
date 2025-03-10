@@ -1,7 +1,8 @@
 "use client"
 
-import { RiAddLine, RiDownload2Line } from "@remixicon/react";
-import { AreaChart, Badge, Button, Card, DonutChart, Flex, Grid, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, Title } from "@tremor/react";
+import { RiCalendarEventLine, RiDoorOpenLine, RiFilterLine, RiInformationLine, RiMapPinLine, RiSearchLine, RiShoppingBag3Line, RiUserAddLine } from "@remixicon/react";
+import { AreaChart, Badge, Button, Card, DonutChart, Grid, Icon, Select, SelectItem, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, TextInput, Title } from "@tremor/react";
+import { useState } from "react";
 
 // Type definitions
 export type PeriodValue = "previous-period" | "last-year" | "no-comparison";
@@ -178,6 +179,7 @@ const tenantBreakdownData = [
   { name: "Pending", value: 5 },
 ]
 
+// Enhanced recentActivityData with tenant information and avatars
 const recentActivityData = [
   {
     id: 1,
@@ -186,7 +188,13 @@ const recentActivityData = [
     date: "Today, 2:30 PM",
     status: "Active",
     registrations: 45,
-    capacity: 50
+    capacity: 50,
+    tenant: "Acme Inc",
+    user: {
+      name: "Lucy Mitchell",
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    description: "Registered for the weekly wellness session"
   },
   {
     id: 2,
@@ -194,7 +202,13 @@ const recentActivityData = [
     title: "Conference Room A",
     date: "Today, 10:00 AM",
     status: "Completed",
-    bookedBy: "John Smith"
+    bookedBy: "John Smith",
+    tenant: "Global Tech",
+    user: {
+      name: "John Smith",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    description: "Booked a meeting room for team standup"
   },
   {
     id: 3,
@@ -202,7 +216,13 @@ const recentActivityData = [
     title: "Lunch Special Order",
     date: "Yesterday",
     status: "Delivered",
-    orders: 12
+    orders: 12,
+    tenant: "Innovate Solutions",
+    user: {
+      name: "Emily Bernacle",
+      avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=2961&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    description: "Placed a group order for the design team lunch"
   },
   {
     id: 4,
@@ -210,19 +230,71 @@ const recentActivityData = [
     title: "After-hours Access",
     date: "Yesterday",
     status: "Approved",
-    requestedBy: "Sarah Johnson"
+    requestedBy: "Sarah Johnson",
+    tenant: "Tech Innovators",
+    user: {
+      name: "Sarah Johnson",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2864&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    description: "Requested weekend access to the office"
   },
   {
     id: 5,
-    type: "Event",
-    title: "Building Maintenance",
+    type: "Visitor",
+    title: "Client Meeting",
     date: "Jun 15, 2023",
     status: "Scheduled",
-    notification: "Sent to all tenants"
+    tenant: "Acme Inc",
+    user: {
+      name: "Thomas Palstein",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    description: "Invited 3 external visitors for a product demo"
   },
-]
+];
+
+// List of tenants for the filter
+const tenants = [
+  { value: "all", label: "All Tenants" },
+  { value: "Acme Inc", label: "Acme Inc" },
+  { value: "Global Tech", label: "Global Tech" },
+  { value: "Innovate Solutions", label: "Innovate Solutions" },
+  { value: "Tech Innovators", label: "Tech Innovators" },
+];
 
 export default function MyHqO() {
+  const [selectedTenant, setSelectedTenant] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Filter activities based on tenant selection and search query
+  const filteredActivities = recentActivityData.filter(activity => {
+    const matchesTenant = selectedTenant === "all" || activity.tenant === selectedTenant;
+    const matchesSearch = searchQuery === "" ||
+      activity.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      activity.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      activity.user.name.toLowerCase().includes(searchQuery.toLowerCase());
+
+    return matchesTenant && matchesSearch;
+  });
+
+  // Function to get the appropriate icon for each activity type
+  const getActivityIcon = (type: string) => {
+    switch (type) {
+      case "Event":
+        return RiCalendarEventLine;
+      case "Booking":
+        return RiMapPinLine;
+      case "Marketplace":
+        return RiShoppingBag3Line;
+      case "Access":
+        return RiDoorOpenLine;
+      case "Visitor":
+        return RiUserAddLine;
+      default:
+        return RiInformationLine;
+    }
+  };
+
   return (
     <div className="space-y-6">
       <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
@@ -343,52 +415,122 @@ export default function MyHqO() {
       {/* Recent Activity Section */}
       <section>
         <Card>
-          <Flex justifyContent="between" alignItems="center" className="mb-4">
-            <Title className="text-text-primary">Recent Activity</Title>
-            <Flex className="gap-2">
-              <Button size="sm" variant="secondary" icon={RiDownload2Line}>Export</Button>
-              <Button size="sm" variant="primary" icon={RiAddLine}>Add Event</Button>
-            </Flex>
-          </Flex>
+          <Title className="text-text-primary mb-4">Tenant Activity Stream</Title>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
-              <thead className="text-xs text-text-secondary uppercase bg-gray-50 dark:bg-gray-800">
-                <tr>
-                  <th className="px-4 py-3">Type</th>
-                  <th className="px-4 py-3">Title</th>
-                  <th className="px-4 py-3">Date</th>
-                  <th className="px-4 py-3">Status</th>
-                  <th className="px-4 py-3">Details</th>
-                </tr>
-              </thead>
-              <tbody>
-                {recentActivityData.map((item) => (
-                  <tr key={item.id} className="border-b dark:border-gray-700">
-                    <td className="px-4 py-3 font-medium text-text-primary">{item.type}</td>
-                    <td className="px-4 py-3 text-text-primary">{item.title}</td>
-                    <td className="px-4 py-3 text-text-secondary">{item.date}</td>
-                    <td className="px-4 py-3">
-                      <Badge color={
-                        item.status === "Active" || item.status === "Approved" ? "green" :
-                          item.status === "Completed" || item.status === "Delivered" ? "blue" :
-                            item.status === "Scheduled" ? "amber" : "gray"
-                      }>
-                        {item.status}
-                      </Badge>
-                    </td>
-                    <td className="px-4 py-3 text-text-secondary">
-                      {item.registrations && `${item.registrations}/${item.capacity} registered`}
-                      {item.bookedBy && `Booked by ${item.bookedBy}`}
-                      {item.orders && `${item.orders} orders`}
-                      {item.requestedBy && `Requested by ${item.requestedBy}`}
-                      {item.notification && item.notification}
-                    </td>
-                  </tr>
+          {/* Filters and Search */}
+          <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="w-full sm:w-64">
+              <Select
+                value={selectedTenant}
+                onValueChange={setSelectedTenant}
+                icon={RiFilterLine}
+                placeholder="Filter by tenant"
+              >
+                {tenants.map((tenant) => (
+                  <SelectItem key={tenant.value} value={tenant.value}>
+                    {tenant.label}
+                  </SelectItem>
                 ))}
-              </tbody>
-            </table>
+              </Select>
+            </div>
+            <div className="w-full sm:w-72">
+              <TextInput
+                icon={RiSearchLine}
+                placeholder="Search activities..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
           </div>
+
+          {/* Activity Stream */}
+          <div className="space-y-4">
+            {filteredActivities.length === 0 ? (
+              <div className="py-12 text-center">
+                <Text className="text-text-secondary">No activities found matching your criteria.</Text>
+              </div>
+            ) : (
+              filteredActivities.map((activity) => {
+                const ActivityIcon = getActivityIcon(activity.type);
+                return (
+                  <div key={activity.id} className="flex gap-4 p-4 rounded-lg border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
+                    {/* User Avatar */}
+                    <div className="flex-shrink-0">
+                      <div className="relative">
+                        <img
+                          src={activity.user.avatar}
+                          alt={activity.user.name}
+                          className="w-10 h-10 rounded-full object-cover"
+                        />
+                        <div className="absolute -bottom-1 -right-1 rounded-full p-1 bg-white dark:bg-gray-900">
+                          <Icon
+                            icon={ActivityIcon}
+                            size="sm"
+                            className={`
+                              ${activity.type === "Event" ? "text-blue-500" : ""}
+                              ${activity.type === "Booking" ? "text-green-500" : ""}
+                              ${activity.type === "Marketplace" ? "text-amber-500" : ""}
+                              ${activity.type === "Access" ? "text-violet-500" : ""}
+                              ${activity.type === "Visitor" ? "text-rose-500" : ""}
+                            `}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Activity Content */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                        <div>
+                          <p className="font-medium text-text-primary truncate">
+                            {activity.user.name}
+                            <span className="font-normal text-text-secondary"> · {activity.tenant}</span>
+                          </p>
+                          <p className="text-sm text-text-secondary">{activity.description}</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Badge color={
+                            activity.status === "Active" || activity.status === "Approved" ? "green" :
+                              activity.status === "Completed" || activity.status === "Delivered" ? "blue" :
+                                activity.status === "Scheduled" ? "amber" : "gray"
+                          }>
+                            {activity.status}
+                          </Badge>
+                          <Text className="text-xs text-text-secondary whitespace-nowrap">{activity.date}</Text>
+                        </div>
+                      </div>
+
+                      {/* Activity Details */}
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        <Badge size="sm" color="gray" className="font-normal">
+                          {activity.title}
+                        </Badge>
+                        {activity.registrations && (
+                          <Badge size="sm" color="blue" className="font-normal">
+                            {activity.registrations}/{activity.capacity} registered
+                          </Badge>
+                        )}
+                        {activity.orders && (
+                          <Badge size="sm" color="amber" className="font-normal">
+                            {activity.orders} orders
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+
+          {/* Load More Button */}
+          {filteredActivities.length > 0 && (
+            <div className="mt-6 text-center">
+              <Button variant="light" className="text-text-primary">
+                Load more activities
+              </Button>
+            </div>
+          )}
         </Card>
       </section>
     </div>
