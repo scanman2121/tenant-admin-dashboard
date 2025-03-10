@@ -183,7 +183,7 @@ export function Sidebar() {
 
   return (
     <nav className="hidden lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:flex-col">
-      <aside className="flex h-full flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 dark:border-gray-800 dark:bg-gray-950">
+      <div className="flex h-full flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-2 dark:border-gray-800 dark:bg-gray-950">
         <div className="flex h-16 shrink-0 items-center">
           <Link href="/" className="pl-1.5">
             <HqOLogo className="h-8 w-auto" />
@@ -193,42 +193,32 @@ export function Sidebar() {
         <nav className="flex flex-1 flex-col">
           <ul role="list" className="flex flex-1 flex-col gap-y-7">
             <li>
-              <div className="text-xs font-semibold uppercase tracking-wider text-gray-400">
-                My HqO
-              </div>
-              <ul role="list" className="mt-2 space-y-1">
-                {navigation.map((item) => (
-                  <li key={item.name}>
-                    <Link
-                      href={item.href}
+              <ul role="list" className="space-y-1">
+                {/* My HqO */}
+                <li>
+                  <Link
+                    href={siteConfig.baseLinks.overview}
+                    className={cx(
+                      "group flex items-center gap-x-3 rounded-md px-3 py-2 text-sm transition",
+                      isActive(siteConfig.baseLinks.overview)
+                        ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                        : "text-[#696E72] hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-50",
+                      focusRing,
+                    )}
+                  >
+                    <RiHome2Line
                       className={cx(
-                        "group flex items-center gap-x-3 rounded-md px-3 py-2 text-sm transition",
-                        isActive(item.href)
-                          ? "bg-gray-50 text-primary dark:bg-gray-900 dark:text-primary-400"
-                          : "text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-50",
-                        focusRing,
+                        "size-4 shrink-0",
+                        isActive(siteConfig.baseLinks.overview)
+                          ? "text-primary dark:text-primary-400"
+                          : "text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-400",
                       )}
-                    >
-                      <item.icon
-                        className={cx(
-                          "size-5 shrink-0",
-                          isActive(item.href)
-                            ? "text-primary dark:text-primary-400"
-                            : "text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-400",
-                        )}
-                        aria-hidden="true"
-                      />
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
-            <li>
-              <div className="text-xs font-semibold uppercase tracking-wider text-gray-400">
-                Navigation
-              </div>
-              <ul role="list" className="mt-2 space-y-1">
+                      aria-hidden="true"
+                    />
+                    My HqO
+                  </Link>
+                </li>
+
                 {/* Asset Manager accordion */}
                 <li className={cx(
                   openSection === 'assetManager' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
@@ -326,7 +316,7 @@ export function Sidebar() {
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -382,7 +372,7 @@ export function Sidebar() {
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -438,7 +428,7 @@ export function Sidebar() {
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -494,7 +484,7 @@ export function Sidebar() {
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -550,7 +540,7 @@ export function Sidebar() {
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -569,7 +559,7 @@ export function Sidebar() {
           </ul>
         </nav>
         <UserProfileDesktop />
-      </aside>
+      </div>
     </nav>
   )
 }

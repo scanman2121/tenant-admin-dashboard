@@ -57,29 +57,6 @@ const paymentsItems = [
   { name: "Discounts", href: siteConfig.baseLinks.discounts },
 ] as const
 
-const shortcuts = [
-  {
-    name: "Add new user",
-    href: "/settings/users",
-    icon: RiLinkM,
-  },
-  {
-    name: "Workspace usage",
-    href: "/settings/billing#billing-overview",
-    icon: RiLinkM,
-  },
-  {
-    name: "Cost spend control",
-    href: "/settings/billing#cost-spend-control",
-    icon: RiLinkM,
-  },
-  {
-    name: "My HqO – Rows written",
-    href: "/my-hqo#usage-overview",
-    icon: RiLinkM,
-  },
-] as const
-
 // Experience Manager sub-navigation items
 const experienceManagerItems = [
   { name: "Content", href: siteConfig.baseLinks.experienceManager.content },
@@ -120,6 +97,29 @@ const intelligenceItems = [
 
 // Type for section IDs to ensure type safety
 type SectionId = 'assetManager' | 'payments' | 'experienceManager' | 'operations' | 'settingsAndSetup' | 'intelligence';
+
+const shortcuts = [
+  {
+    name: "Add new user",
+    href: "/settings/users",
+    icon: RiLinkM,
+  },
+  {
+    name: "Workspace usage",
+    href: "/settings/billing#billing-overview",
+    icon: RiLinkM,
+  },
+  {
+    name: "Cost spend control",
+    href: "/settings/billing#cost-spend-control",
+    icon: RiLinkM,
+  },
+  {
+    name: "My HqO – Rows written",
+    href: "/my-hqo#usage-overview",
+    icon: RiLinkM,
+  },
+] as const
 
 export default function MobileSidebar() {
   const pathname = usePathname()
@@ -269,7 +269,7 @@ export default function MobileSidebar() {
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -327,7 +327,7 @@ export default function MobileSidebar() {
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -385,7 +385,7 @@ export default function MobileSidebar() {
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -443,7 +443,7 @@ export default function MobileSidebar() {
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -501,7 +501,7 @@ export default function MobileSidebar() {
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -559,7 +559,7 @@ export default function MobileSidebar() {
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
