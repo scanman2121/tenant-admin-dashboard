@@ -32,6 +32,13 @@ import { UserProfileMobile } from "./UserProfile"
 // Main navigation items excluding the ones that will go into the Asset Manager section
 const navigation = [
   { name: "My HqO", href: siteConfig.baseLinks.overview, icon: RiHome2Line },
+  { name: "Resources", href: siteConfig.baseLinks.resources, icon: RiLinkM },
+  { name: "Analytics", href: siteConfig.baseLinks.analytics, icon: RiLinkM },
+  {
+    name: "Settings & setup",
+    href: siteConfig.baseLinks.settings.general,
+    icon: RiSettings5Line,
+  },
 ] as const
 
 // Asset Manager sub-navigation items
@@ -48,6 +55,29 @@ const paymentsItems = [
   { name: "Transactions", href: siteConfig.baseLinks.transactions },
   { name: "Credits", href: siteConfig.baseLinks.credits },
   { name: "Discounts", href: siteConfig.baseLinks.discounts },
+] as const
+
+const shortcuts = [
+  {
+    name: "Add new user",
+    href: "/settings/users",
+    icon: RiLinkM,
+  },
+  {
+    name: "Workspace usage",
+    href: "/settings/billing#billing-overview",
+    icon: RiLinkM,
+  },
+  {
+    name: "Cost spend control",
+    href: "/settings/billing#cost-spend-control",
+    icon: RiLinkM,
+  },
+  {
+    name: "My HqO – Rows written",
+    href: "/my-hqo#usage-overview",
+    icon: RiLinkM,
+  },
 ] as const
 
 // Experience Manager sub-navigation items
@@ -86,29 +116,6 @@ const intelligenceItems = [
   { name: "Dashboard", href: siteConfig.baseLinks.intelligence.dashboard },
   { name: "Assessments", href: siteConfig.baseLinks.intelligence.assessments },
   { name: "About Intelligence", href: siteConfig.baseLinks.intelligence.aboutIntelligence },
-] as const
-
-const shortcuts = [
-  {
-    name: "Add new user",
-    href: "/settings/users",
-    icon: RiLinkM,
-  },
-  {
-    name: "Workspace usage",
-    href: "/settings/billing#billing-overview",
-    icon: RiLinkM,
-  },
-  {
-    name: "Cost spend control",
-    href: "/settings/billing#cost-spend-control",
-    icon: RiLinkM,
-  },
-  {
-    name: "My HqO – Rows written",
-    href: "/my-hqo#usage-overview",
-    icon: RiLinkM,
-  },
 ] as const
 
 // Type for section IDs to ensure type safety
@@ -162,10 +169,7 @@ export default function MobileSidebar() {
   }, [isInAssetManager, isInPayments, isInExperienceManager, isInOperations, isInSettingsAndSetup, isInIntelligence])
 
   const isActive = (itemHref: string) => {
-    if (itemHref === siteConfig.baseLinks.settings.general) {
-      return pathname.startsWith("/settings")
-    }
-    return pathname === itemHref || pathname.startsWith(itemHref)
+    return pathname === itemHref || pathname.startsWith(itemHref + "/")
   }
 
   // Toggle section open/closed
@@ -198,7 +202,7 @@ export default function MobileSidebar() {
             aria-label="core mobile navigation links"
             className="flex flex-1 flex-col space-y-10"
           >
-            <ul role="list" className="space-y-1">
+            <ul role="list" className="space-y-1.5">
               {/* Regular navigation items */}
               {navigation.map((item) => (
                 <li key={item.name}>
@@ -207,9 +211,9 @@ export default function MobileSidebar() {
                       href={item.href}
                       className={cx(
                         isActive(item.href)
-                          ? "text-primary dark:text-primary-400 bg-white dark:bg-gray-900"
+                          ? "text-primary dark:text-primary-400"
                           : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-                        "flex items-center gap-x-2.5 rounded-md px-3 py-2 text-sm transition hover:bg-gray-100 hover:dark:bg-gray-900",
+                        "flex items-center gap-x-2.5 rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
                         focusRing,
                       )}
                     >
@@ -225,7 +229,7 @@ export default function MobileSidebar() {
 
               {/* Experience Manager accordion */}
               <li className={cx(
-                openSection === 'experienceManager' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden" : ""
+                openSection === 'experienceManager' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
               )}>
                 <button
                   onClick={() => toggleSection('experienceManager')}
@@ -233,7 +237,7 @@ export default function MobileSidebar() {
                     "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
                     openSection === 'experienceManager'
                       ? "text-gray-900 dark:text-gray-50"
-                      : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
+                      : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                     focusRing,
                   )}
                   aria-expanded={openSection === 'experienceManager'}
@@ -244,7 +248,7 @@ export default function MobileSidebar() {
                   </span>
                   <RiArrowDownSLine
                     className={cx(
-                      "size-4 shrink-0 transition-transform duration-200",
+                      "size-4 shrink-0 transition-transform duration-300 ease-in-out",
                       openSection === 'experienceManager' ? "rotate-0" : "-rotate-90"
                     )}
                     aria-hidden="true"
@@ -258,17 +262,17 @@ export default function MobileSidebar() {
                     openSection === 'experienceManager' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                   )}
                 >
-                  <ul className="space-y-1 pl-6">
+                  <ul className="space-y-1 px-2">
                     {experienceManagerItems.map((item) => (
                       <li key={item.name}>
                         <DrawerClose asChild>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full",
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                                : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                                : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
                           >
@@ -283,7 +287,7 @@ export default function MobileSidebar() {
 
               {/* Operations accordion */}
               <li className={cx(
-                openSection === 'operations' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden" : ""
+                openSection === 'operations' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
               )}>
                 <button
                   onClick={() => toggleSection('operations')}
@@ -291,7 +295,7 @@ export default function MobileSidebar() {
                     "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
                     openSection === 'operations'
                       ? "text-gray-900 dark:text-gray-50"
-                      : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
+                      : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                     focusRing,
                   )}
                   aria-expanded={openSection === 'operations'}
@@ -302,7 +306,7 @@ export default function MobileSidebar() {
                   </span>
                   <RiArrowDownSLine
                     className={cx(
-                      "size-4 shrink-0 transition-transform duration-200",
+                      "size-4 shrink-0 transition-transform duration-300 ease-in-out",
                       openSection === 'operations' ? "rotate-0" : "-rotate-90"
                     )}
                     aria-hidden="true"
@@ -316,17 +320,17 @@ export default function MobileSidebar() {
                     openSection === 'operations' ? "max-h-96 opacity-100 mt-1" : "max-h-0 opacity-0"
                   )}
                 >
-                  <ul className="space-y-1 pl-6">
+                  <ul className="space-y-1 px-2">
                     {operationsItems.map((item) => (
                       <li key={item.name}>
                         <DrawerClose asChild>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full",
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                                : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                                : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
                           >
@@ -341,7 +345,7 @@ export default function MobileSidebar() {
 
               {/* Payments accordion */}
               <li className={cx(
-                openSection === 'payments' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden" : ""
+                openSection === 'payments' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
               )}>
                 <button
                   onClick={() => toggleSection('payments')}
@@ -349,7 +353,7 @@ export default function MobileSidebar() {
                     "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
                     openSection === 'payments'
                       ? "text-gray-900 dark:text-gray-50"
-                      : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
+                      : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                     focusRing,
                   )}
                   aria-expanded={openSection === 'payments'}
@@ -360,7 +364,7 @@ export default function MobileSidebar() {
                   </span>
                   <RiArrowDownSLine
                     className={cx(
-                      "size-4 shrink-0 transition-transform duration-200",
+                      "size-4 shrink-0 transition-transform duration-300 ease-in-out",
                       openSection === 'payments' ? "rotate-0" : "-rotate-90"
                     )}
                     aria-hidden="true"
@@ -374,17 +378,17 @@ export default function MobileSidebar() {
                     openSection === 'payments' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                   )}
                 >
-                  <ul className="space-y-1 pl-6">
+                  <ul className="space-y-1 px-2">
                     {paymentsItems.map((item) => (
                       <li key={item.name}>
                         <DrawerClose asChild>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full",
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                                : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                                : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
                           >
@@ -399,7 +403,7 @@ export default function MobileSidebar() {
 
               {/* Asset Manager accordion */}
               <li className={cx(
-                openSection === 'assetManager' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden" : ""
+                openSection === 'assetManager' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
               )}>
                 <button
                   onClick={() => toggleSection('assetManager')}
@@ -407,7 +411,7 @@ export default function MobileSidebar() {
                     "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
                     openSection === 'assetManager'
                       ? "text-gray-900 dark:text-gray-50"
-                      : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
+                      : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                     focusRing,
                   )}
                   aria-expanded={openSection === 'assetManager'}
@@ -418,7 +422,7 @@ export default function MobileSidebar() {
                   </span>
                   <RiArrowDownSLine
                     className={cx(
-                      "size-4 shrink-0 transition-transform duration-200",
+                      "size-4 shrink-0 transition-transform duration-300 ease-in-out",
                       openSection === 'assetManager' ? "rotate-0" : "-rotate-90"
                     )}
                     aria-hidden="true"
@@ -432,17 +436,17 @@ export default function MobileSidebar() {
                     openSection === 'assetManager' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                   )}
                 >
-                  <ul className="space-y-1 pl-6">
+                  <ul className="space-y-1 px-2">
                     {assetManagerItems.map((item) => (
                       <li key={item.name}>
                         <DrawerClose asChild>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full",
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                                : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                                : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
                           >
@@ -457,7 +461,7 @@ export default function MobileSidebar() {
 
               {/* Intelligence accordion */}
               <li className={cx(
-                openSection === 'intelligence' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden" : ""
+                openSection === 'intelligence' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
               )}>
                 <button
                   onClick={() => toggleSection('intelligence')}
@@ -465,7 +469,7 @@ export default function MobileSidebar() {
                     "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
                     openSection === 'intelligence'
                       ? "text-gray-900 dark:text-gray-50"
-                      : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
+                      : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                     focusRing,
                   )}
                   aria-expanded={openSection === 'intelligence'}
@@ -476,7 +480,7 @@ export default function MobileSidebar() {
                   </span>
                   <RiArrowDownSLine
                     className={cx(
-                      "size-4 shrink-0 transition-transform duration-200",
+                      "size-4 shrink-0 transition-transform duration-300 ease-in-out",
                       openSection === 'intelligence' ? "rotate-0" : "-rotate-90"
                     )}
                     aria-hidden="true"
@@ -490,17 +494,17 @@ export default function MobileSidebar() {
                     openSection === 'intelligence' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                   )}
                 >
-                  <ul className="space-y-1 pl-6">
+                  <ul className="space-y-1 px-2">
                     {intelligenceItems.map((item) => (
                       <li key={item.name}>
                         <DrawerClose asChild>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full",
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                                : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                                : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
                           >
@@ -515,7 +519,7 @@ export default function MobileSidebar() {
 
               {/* Settings and setup accordion */}
               <li className={cx(
-                openSection === 'settingsAndSetup' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden" : ""
+                openSection === 'settingsAndSetup' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
               )}>
                 <button
                   onClick={() => toggleSection('settingsAndSetup')}
@@ -523,7 +527,7 @@ export default function MobileSidebar() {
                     "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
                     openSection === 'settingsAndSetup'
                       ? "text-gray-900 dark:text-gray-50"
-                      : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
+                      : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                     focusRing,
                   )}
                   aria-expanded={openSection === 'settingsAndSetup'}
@@ -534,7 +538,7 @@ export default function MobileSidebar() {
                   </span>
                   <RiArrowDownSLine
                     className={cx(
-                      "size-4 shrink-0 transition-transform duration-200",
+                      "size-4 shrink-0 transition-transform duration-300 ease-in-out",
                       openSection === 'settingsAndSetup' ? "rotate-0" : "-rotate-90"
                     )}
                     aria-hidden="true"
@@ -548,17 +552,17 @@ export default function MobileSidebar() {
                     openSection === 'settingsAndSetup' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                   )}
                 >
-                  <ul className="space-y-1 pl-6">
+                  <ul className="space-y-1 px-2">
                     {settingsAndSetupItems.map((item) => (
                       <li key={item.name}>
                         <DrawerClose asChild>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full",
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                                : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                                : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
                           >
@@ -571,24 +575,26 @@ export default function MobileSidebar() {
                 </div>
               </li>
             </ul>
-
             <div>
-              <div className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+              <span className="text-xs font-medium leading-6 text-gray-500">
                 Shortcuts
-              </div>
-              <ul role="list" className="mt-3 space-y-1">
+              </span>
+              <ul aria-label="shortcuts" role="list" className="space-y-0.5">
                 {shortcuts.map((item) => (
                   <li key={item.name}>
                     <DrawerClose asChild>
                       <Link
                         href={item.href}
                         className={cx(
-                          "flex items-center gap-x-2.5 rounded-md px-3 py-2 text-sm text-gray-700 transition hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 hover:dark:bg-gray-800 hover:dark:text-gray-50",
+                          pathname === item.href || pathname.startsWith(item.href)
+                            ? "text-primary dark:text-primary-400"
+                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
+                          "flex items-center gap-x-2.5 rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
                           focusRing,
                         )}
                       >
                         <item.icon
-                          className="size-4 shrink-0 text-gray-400 dark:text-gray-500"
+                          className="size-4 shrink-0"
                           aria-hidden="true"
                         />
                         {item.name}

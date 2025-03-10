@@ -183,378 +183,390 @@ export function Sidebar() {
 
   return (
     <nav className="hidden lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:flex-col">
-      <aside className="flex w-[226px] max-w-[226px] grow flex-col gap-y-6 overflow-y-auto border-r border-gray-200 bg-white px-2 py-4 dark:border-gray-800 dark:bg-gray-950">
-        <div className="flex items-center px-1 pt-1.5">
-          <HqOLogo className="h-6 w-auto" />
+      <aside className="flex h-full flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 dark:border-gray-800 dark:bg-gray-950">
+        <div className="flex h-16 shrink-0 items-center">
+          <Link href="/" className="pl-1.5">
+            <HqOLogo className="h-8 w-auto" />
+            <span className="sr-only">HqO</span>
+          </Link>
         </div>
-        <nav
-          aria-label="core navigation links"
-          className="flex flex-1 flex-col space-y-10"
-        >
-          <ul role="list" className="space-y-1">
-            {/* My HqO */}
-            {renderNavItem(navigation[0])}
-
-            {/* Asset Manager accordion */}
-            <li className={cx(
-              openSection === 'assetManager' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden" : ""
-            )}>
-              <button
-                onClick={() => toggleSection('assetManager')}
-                className={cx(
-                  "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
-                  openSection === 'assetManager'
-                    ? "text-gray-900 dark:text-gray-50"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
-                  focusRing,
-                )}
-                aria-expanded={openSection === 'assetManager'}
-              >
-                <span className="flex items-center gap-x-2.5">
-                  <RiBuildingLine className="size-4 shrink-0" aria-hidden="true" />
-                  Asset Manager
-                </span>
-                <RiArrowDownSLine
-                  className={cx(
-                    "size-4 shrink-0 transition-transform duration-200",
-                    openSection === 'assetManager' ? "rotate-0" : "-rotate-90"
-                  )}
-                  aria-hidden="true"
-                />
-              </button>
-
-              {/* Sub-navigation items with animation */}
-              <div
-                className={cx(
-                  "overflow-hidden transition-all duration-300 ease-in-out",
-                  openSection === 'assetManager' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
-                )}
-              >
-                <ul className="space-y-1 pl-6">
-                  {assetManagerItems.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
-                        className={cx(
-                          "flex items-center rounded-md px-3 py-2 text-sm transition w-full",
-                          isActive(item.href)
-                            ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
-                          focusRing,
-                        )}
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+        <nav className="flex flex-1 flex-col">
+          <ul role="list" className="flex flex-1 flex-col gap-y-7">
+            <li>
+              <div className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                My HqO
               </div>
-            </li>
-
-            {/* Experience Manager accordion */}
-            <li className={cx(
-              openSection === 'experienceManager' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden" : ""
-            )}>
-              <button
-                onClick={() => toggleSection('experienceManager')}
-                className={cx(
-                  "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
-                  openSection === 'experienceManager'
-                    ? "text-gray-900 dark:text-gray-50"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
-                  focusRing,
-                )}
-                aria-expanded={openSection === 'experienceManager'}
-              >
-                <span className="flex items-center gap-x-2.5">
-                  <RiMegaphoneLine className="size-4 shrink-0" aria-hidden="true" />
-                  Experience Manager
-                </span>
-                <RiArrowDownSLine
-                  className={cx(
-                    "size-4 shrink-0 transition-transform duration-200",
-                    openSection === 'experienceManager' ? "rotate-0" : "-rotate-90"
-                  )}
-                  aria-hidden="true"
-                />
-              </button>
-
-              {/* Sub-navigation items with animation */}
-              <div
-                className={cx(
-                  "overflow-hidden transition-all duration-300 ease-in-out",
-                  openSection === 'experienceManager' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
-                )}
-              >
-                <ul className="space-y-1 pl-6">
-                  {experienceManagerItems.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
+              <ul role="list" className="mt-2 space-y-1">
+                {navigation.map((item) => (
+                  <li key={item.name}>
+                    <Link
+                      href={item.href}
+                      className={cx(
+                        "group flex items-center gap-x-3 rounded-md px-3 py-2 text-sm transition",
+                        isActive(item.href)
+                          ? "bg-gray-50 text-primary dark:bg-gray-900 dark:text-primary-400"
+                          : "text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-50",
+                        focusRing,
+                      )}
+                    >
+                      <item.icon
                         className={cx(
-                          "flex items-center rounded-md px-3 py-2 text-sm transition w-full",
+                          "size-5 shrink-0",
                           isActive(item.href)
-                            ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
-                          focusRing,
+                            ? "text-primary dark:text-primary-400"
+                            : "text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-400",
                         )}
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                        aria-hidden="true"
+                      />
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </li>
-
-            {/* Operations accordion */}
-            <li className={cx(
-              openSection === 'operations' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden" : ""
-            )}>
-              <button
-                onClick={() => toggleSection('operations')}
-                className={cx(
-                  "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
-                  openSection === 'operations'
-                    ? "text-gray-900 dark:text-gray-50"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
-                  focusRing,
-                )}
-                aria-expanded={openSection === 'operations'}
-              >
-                <span className="flex items-center gap-x-2.5">
-                  <RiDashboardLine className="size-4 shrink-0" aria-hidden="true" />
-                  Operations
-                </span>
-                <RiArrowDownSLine
-                  className={cx(
-                    "size-4 shrink-0 transition-transform duration-200",
-                    openSection === 'operations' ? "rotate-0" : "-rotate-90"
-                  )}
-                  aria-hidden="true"
-                />
-              </button>
-
-              {/* Sub-navigation items with animation */}
-              <div
-                className={cx(
-                  "overflow-hidden transition-all duration-300 ease-in-out",
-                  openSection === 'operations' ? "max-h-96 opacity-100 mt-1" : "max-h-0 opacity-0"
-                )}
-              >
-                <ul className="space-y-1 pl-6">
-                  {operationsItems.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
-                        className={cx(
-                          "flex items-center rounded-md px-3 py-2 text-sm transition w-full",
-                          isActive(item.href)
-                            ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
-                          focusRing,
-                        )}
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+            <li>
+              <div className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                Navigation
               </div>
-            </li>
-
-            {/* Payments accordion */}
-            <li className={cx(
-              openSection === 'payments' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden" : ""
-            )}>
-              <button
-                onClick={() => toggleSection('payments')}
-                className={cx(
-                  "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
-                  openSection === 'payments'
-                    ? "text-gray-900 dark:text-gray-50"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
-                  focusRing,
-                )}
-                aria-expanded={openSection === 'payments'}
-              >
-                <span className="flex items-center gap-x-2.5">
-                  <RiReceiptLine className="size-4 shrink-0" aria-hidden="true" />
-                  Payments
-                </span>
-                <RiArrowDownSLine
-                  className={cx(
-                    "size-4 shrink-0 transition-transform duration-200",
-                    openSection === 'payments' ? "rotate-0" : "-rotate-90"
-                  )}
-                  aria-hidden="true"
-                />
-              </button>
-
-              {/* Sub-navigation items with animation */}
-              <div
-                className={cx(
-                  "overflow-hidden transition-all duration-300 ease-in-out",
-                  openSection === 'payments' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
-                )}
-              >
-                <ul className="space-y-1 pl-6">
-                  {paymentsItems.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
-                        className={cx(
-                          "flex items-center rounded-md px-3 py-2 text-sm transition w-full",
-                          isActive(item.href)
-                            ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
-                          focusRing,
-                        )}
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </li>
-
-            {/* Intelligence accordion */}
-            <li className={cx(
-              openSection === 'intelligence' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden" : ""
-            )}>
-              <button
-                onClick={() => toggleSection('intelligence')}
-                className={cx(
-                  "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
-                  openSection === 'intelligence'
-                    ? "text-gray-900 dark:text-gray-50"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
-                  focusRing,
-                )}
-                aria-expanded={openSection === 'intelligence'}
-              >
-                <span className="flex items-center gap-x-2.5">
-                  <RiLineChartLine className="size-4 shrink-0" aria-hidden="true" />
-                  Intelligence
-                </span>
-                <RiArrowDownSLine
-                  className={cx(
-                    "size-4 shrink-0 transition-transform duration-200",
-                    openSection === 'intelligence' ? "rotate-0" : "-rotate-90"
-                  )}
-                  aria-hidden="true"
-                />
-              </button>
-
-              {/* Sub-navigation items with animation */}
-              <div
-                className={cx(
-                  "overflow-hidden transition-all duration-300 ease-in-out",
-                  openSection === 'intelligence' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
-                )}
-              >
-                <ul className="space-y-1 pl-6">
-                  {intelligenceItems.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
-                        className={cx(
-                          "flex items-center rounded-md px-3 py-2 text-sm transition w-full",
-                          isActive(item.href)
-                            ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
-                          focusRing,
-                        )}
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </li>
-
-            {/* Settings and setup accordion */}
-            <li className={cx(
-              openSection === 'settingsAndSetup' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden" : ""
-            )}>
-              <button
-                onClick={() => toggleSection('settingsAndSetup')}
-                className={cx(
-                  "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
-                  openSection === 'settingsAndSetup'
-                    ? "text-gray-900 dark:text-gray-50"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
-                  focusRing,
-                )}
-                aria-expanded={openSection === 'settingsAndSetup'}
-              >
-                <span className="flex items-center gap-x-2.5">
-                  <RiSettings5Line className="size-4 shrink-0" aria-hidden="true" />
-                  Settings and setup
-                </span>
-                <RiArrowDownSLine
-                  className={cx(
-                    "size-4 shrink-0 transition-transform duration-200",
-                    openSection === 'settingsAndSetup' ? "rotate-0" : "-rotate-90"
-                  )}
-                  aria-hidden="true"
-                />
-              </button>
-
-              {/* Sub-navigation items with animation */}
-              <div
-                className={cx(
-                  "overflow-hidden transition-all duration-300 ease-in-out",
-                  openSection === 'settingsAndSetup' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
-                )}
-              >
-                <ul className="space-y-1 pl-6">
-                  {settingsAndSetupItems.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
-                        className={cx(
-                          "flex items-center rounded-md px-3 py-2 text-sm transition w-full",
-                          isActive(item.href)
-                            ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
-                          focusRing,
-                        )}
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </li>
-          </ul>
-          <div>
-            <div className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
-              Shortcuts
-            </div>
-            <ul role="list" className="mt-3 space-y-1">
-              {shortcuts.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
+              <ul role="list" className="mt-2 space-y-1">
+                {/* Asset Manager accordion */}
+                <li className={cx(
+                  openSection === 'assetManager' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
+                )}>
+                  <button
+                    onClick={() => toggleSection('assetManager')}
                     className={cx(
-                      "flex items-center gap-x-2.5 rounded-md px-3 py-2 text-sm text-gray-700 transition hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 hover:dark:bg-gray-800 hover:dark:text-gray-50",
+                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
+                      openSection === 'assetManager'
+                        ? "text-gray-900 dark:text-gray-50"
+                        : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                       focusRing,
                     )}
+                    aria-expanded={openSection === 'assetManager'}
                   >
-                    <item.icon
-                      className="size-4 shrink-0 text-gray-400 dark:text-gray-500"
+                    <span className="flex items-center gap-x-2.5">
+                      <RiBuildingLine className="size-4 shrink-0" aria-hidden="true" />
+                      Asset Manager
+                    </span>
+                    <RiArrowDownSLine
+                      className={cx(
+                        "size-4 shrink-0 transition-transform duration-300 ease-in-out",
+                        openSection === 'assetManager' ? "rotate-0" : "-rotate-90"
+                      )}
                       aria-hidden="true"
                     />
-                    {item.name}
-                  </Link>
+                  </button>
+
+                  {/* Sub-navigation items with animation */}
+                  <div
+                    className={cx(
+                      "overflow-hidden transition-all duration-300 ease-in-out",
+                      openSection === 'assetManager' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
+                    )}
+                  >
+                    <ul className="space-y-1 px-2">
+                      {assetManagerItems.map((item) => (
+                        <li key={item.name}>
+                          <Link
+                            href={item.href}
+                            className={cx(
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
+                              isActive(item.href)
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                                : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                              focusRing,
+                            )}
+                          >
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </li>
-              ))}
-            </ul>
-          </div>
+
+                {/* Experience Manager accordion */}
+                <li className={cx(
+                  openSection === 'experienceManager' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
+                )}>
+                  <button
+                    onClick={() => toggleSection('experienceManager')}
+                    className={cx(
+                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
+                      openSection === 'experienceManager'
+                        ? "text-gray-900 dark:text-gray-50"
+                        : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
+                      focusRing,
+                    )}
+                    aria-expanded={openSection === 'experienceManager'}
+                  >
+                    <span className="flex items-center gap-x-2.5">
+                      <RiMegaphoneLine className="size-4 shrink-0" aria-hidden="true" />
+                      Experience Manager
+                    </span>
+                    <RiArrowDownSLine
+                      className={cx(
+                        "size-4 shrink-0 transition-transform duration-300 ease-in-out",
+                        openSection === 'experienceManager' ? "rotate-0" : "-rotate-90"
+                      )}
+                      aria-hidden="true"
+                    />
+                  </button>
+
+                  {/* Sub-navigation items with animation */}
+                  <div
+                    className={cx(
+                      "overflow-hidden transition-all duration-300 ease-in-out",
+                      openSection === 'experienceManager' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
+                    )}
+                  >
+                    <ul className="space-y-1 px-2">
+                      {experienceManagerItems.map((item) => (
+                        <li key={item.name}>
+                          <Link
+                            href={item.href}
+                            className={cx(
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
+                              isActive(item.href)
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                                : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                              focusRing,
+                            )}
+                          >
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+
+                {/* Operations accordion */}
+                <li className={cx(
+                  openSection === 'operations' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
+                )}>
+                  <button
+                    onClick={() => toggleSection('operations')}
+                    className={cx(
+                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
+                      openSection === 'operations'
+                        ? "text-gray-900 dark:text-gray-50"
+                        : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
+                      focusRing,
+                    )}
+                    aria-expanded={openSection === 'operations'}
+                  >
+                    <span className="flex items-center gap-x-2.5">
+                      <RiDashboardLine className="size-4 shrink-0" aria-hidden="true" />
+                      Operations
+                    </span>
+                    <RiArrowDownSLine
+                      className={cx(
+                        "size-4 shrink-0 transition-transform duration-300 ease-in-out",
+                        openSection === 'operations' ? "rotate-0" : "-rotate-90"
+                      )}
+                      aria-hidden="true"
+                    />
+                  </button>
+
+                  {/* Sub-navigation items with animation */}
+                  <div
+                    className={cx(
+                      "overflow-hidden transition-all duration-300 ease-in-out",
+                      openSection === 'operations' ? "max-h-96 opacity-100 mt-1" : "max-h-0 opacity-0"
+                    )}
+                  >
+                    <ul className="space-y-1 px-2">
+                      {operationsItems.map((item) => (
+                        <li key={item.name}>
+                          <Link
+                            href={item.href}
+                            className={cx(
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
+                              isActive(item.href)
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                                : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                              focusRing,
+                            )}
+                          >
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+
+                {/* Payments accordion */}
+                <li className={cx(
+                  openSection === 'payments' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
+                )}>
+                  <button
+                    onClick={() => toggleSection('payments')}
+                    className={cx(
+                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
+                      openSection === 'payments'
+                        ? "text-gray-900 dark:text-gray-50"
+                        : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
+                      focusRing,
+                    )}
+                    aria-expanded={openSection === 'payments'}
+                  >
+                    <span className="flex items-center gap-x-2.5">
+                      <RiReceiptLine className="size-4 shrink-0" aria-hidden="true" />
+                      Payments
+                    </span>
+                    <RiArrowDownSLine
+                      className={cx(
+                        "size-4 shrink-0 transition-transform duration-300 ease-in-out",
+                        openSection === 'payments' ? "rotate-0" : "-rotate-90"
+                      )}
+                      aria-hidden="true"
+                    />
+                  </button>
+
+                  {/* Sub-navigation items with animation */}
+                  <div
+                    className={cx(
+                      "overflow-hidden transition-all duration-300 ease-in-out",
+                      openSection === 'payments' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
+                    )}
+                  >
+                    <ul className="space-y-1 px-2">
+                      {paymentsItems.map((item) => (
+                        <li key={item.name}>
+                          <Link
+                            href={item.href}
+                            className={cx(
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
+                              isActive(item.href)
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                                : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                              focusRing,
+                            )}
+                          >
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+
+                {/* Intelligence accordion */}
+                <li className={cx(
+                  openSection === 'intelligence' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
+                )}>
+                  <button
+                    onClick={() => toggleSection('intelligence')}
+                    className={cx(
+                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
+                      openSection === 'intelligence'
+                        ? "text-gray-900 dark:text-gray-50"
+                        : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
+                      focusRing,
+                    )}
+                    aria-expanded={openSection === 'intelligence'}
+                  >
+                    <span className="flex items-center gap-x-2.5">
+                      <RiLineChartLine className="size-4 shrink-0" aria-hidden="true" />
+                      Intelligence
+                    </span>
+                    <RiArrowDownSLine
+                      className={cx(
+                        "size-4 shrink-0 transition-transform duration-300 ease-in-out",
+                        openSection === 'intelligence' ? "rotate-0" : "-rotate-90"
+                      )}
+                      aria-hidden="true"
+                    />
+                  </button>
+
+                  {/* Sub-navigation items with animation */}
+                  <div
+                    className={cx(
+                      "overflow-hidden transition-all duration-300 ease-in-out",
+                      openSection === 'intelligence' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
+                    )}
+                  >
+                    <ul className="space-y-1 px-2">
+                      {intelligenceItems.map((item) => (
+                        <li key={item.name}>
+                          <Link
+                            href={item.href}
+                            className={cx(
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
+                              isActive(item.href)
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                                : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                              focusRing,
+                            )}
+                          >
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+
+                {/* Settings and setup accordion */}
+                <li className={cx(
+                  openSection === 'settingsAndSetup' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
+                )}>
+                  <button
+                    onClick={() => toggleSection('settingsAndSetup')}
+                    className={cx(
+                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
+                      openSection === 'settingsAndSetup'
+                        ? "text-gray-900 dark:text-gray-50"
+                        : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
+                      focusRing,
+                    )}
+                    aria-expanded={openSection === 'settingsAndSetup'}
+                  >
+                    <span className="flex items-center gap-x-2.5">
+                      <RiSettings5Line className="size-4 shrink-0" aria-hidden="true" />
+                      Settings and setup
+                    </span>
+                    <RiArrowDownSLine
+                      className={cx(
+                        "size-4 shrink-0 transition-transform duration-300 ease-in-out",
+                        openSection === 'settingsAndSetup' ? "rotate-0" : "-rotate-90"
+                      )}
+                      aria-hidden="true"
+                    />
+                  </button>
+
+                  {/* Sub-navigation items with animation */}
+                  <div
+                    className={cx(
+                      "overflow-hidden transition-all duration-300 ease-in-out",
+                      openSection === 'settingsAndSetup' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
+                    )}
+                  >
+                    <ul className="space-y-1 px-2">
+                      {settingsAndSetupItems.map((item) => (
+                        <li key={item.name}>
+                          <Link
+                            href={item.href}
+                            className={cx(
+                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
+                              isActive(item.href)
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                                : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                              focusRing,
+                            )}
+                          >
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </nav>
         <UserProfileDesktop />
       </aside>
