@@ -133,9 +133,15 @@ export function Sidebar() {
     pathname === item.href || pathname.startsWith(item.href + "/")
   )
 
+  // Check if we're on the My HqO page
+  const isInMyHqO = pathname === siteConfig.baseLinks.overview || pathname.startsWith(siteConfig.baseLinks.overview + "/")
+
   // Auto-expand the section that contains the current path
   useEffect(() => {
-    if (isInAssetManager) {
+    if (isInMyHqO) {
+      // Collapse all sections when My HqO is active
+      setOpenSection(null)
+    } else if (isInAssetManager) {
       setOpenSection('assetManager')
     } else if (isInPayments) {
       setOpenSection('payments')
@@ -148,7 +154,7 @@ export function Sidebar() {
     } else if (isInIntelligence) {
       setOpenSection('intelligence')
     }
-  }, [isInAssetManager, isInPayments, isInExperienceManager, isInOperations, isInSettingsAndSetup, isInIntelligence])
+  }, [isInMyHqO, isInAssetManager, isInPayments, isInExperienceManager, isInOperations, isInSettingsAndSetup, isInIntelligence])
 
   const isActive = (itemHref: string) => {
     if (itemHref === siteConfig.baseLinks.settings.general) {
@@ -202,7 +208,7 @@ export function Sidebar() {
                       "group flex items-center gap-x-3 rounded-md px-3 py-2 text-[13px] transition",
                       isActive(siteConfig.baseLinks.overview)
                         ? "bg-gray-100 dark:bg-gray-800 text-primary dark:text-primary-400"
-                        : "text-[#696E72] hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-50",
+                        : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                       focusRing,
                     )}
                   >
@@ -264,7 +270,7 @@ export function Sidebar() {
                             className={cx(
                               "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
@@ -322,7 +328,7 @@ export function Sidebar() {
                             className={cx(
                               "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
@@ -380,7 +386,7 @@ export function Sidebar() {
                             className={cx(
                               "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
@@ -438,7 +444,7 @@ export function Sidebar() {
                             className={cx(
                               "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
@@ -496,7 +502,7 @@ export function Sidebar() {
                             className={cx(
                               "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
@@ -554,7 +560,7 @@ export function Sidebar() {
                             className={cx(
                               "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}

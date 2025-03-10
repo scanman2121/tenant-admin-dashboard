@@ -93,15 +93,24 @@ export default function MobileSidebar() {
     pathname === item.href || pathname.startsWith(item.href + "/")
   )
 
+  // Check if we're on the My HqO page
+  const isInMyHqO = pathname === siteConfig.baseLinks.overview || pathname.startsWith(siteConfig.baseLinks.overview + "/")
+
   // Auto-expand Asset Manager if current path is in that section
   useEffect(() => {
-    if (isInAssetManager) {
-      setIsAssetManagerOpen(true)
+    if (isInMyHqO) {
+      // Collapse all sections when My HqO is active
+      setIsAssetManagerOpen(false)
+      setIsPaymentsOpen(false)
+    } else {
+      if (isInAssetManager) {
+        setIsAssetManagerOpen(true)
+      }
+      if (isInPayments) {
+        setIsPaymentsOpen(true)
+      }
     }
-    if (isInPayments) {
-      setIsPaymentsOpen(true)
-    }
-  }, [isInAssetManager, isInPayments])
+  }, [isInMyHqO, isInAssetManager, isInPayments])
 
   const isActive = (itemHref: string) => {
     if (itemHref === siteConfig.baseLinks.settings.general) {
@@ -145,8 +154,8 @@ export default function MobileSidebar() {
                       className={cx(
                         isActive(item.href)
                           ? "bg-gray-100 dark:bg-gray-800 text-primary dark:text-primary-400"
-                          : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-                        "flex items-center gap-x-2.5 rounded-md px-3 py-2 text-[13px] transition hover:bg-gray-50 hover:dark:bg-gray-900",
+                          : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
+                        "flex items-center gap-x-2.5 rounded-md px-3 py-2 text-[13px] transition",
                         focusRing,
                       )}
                     >
@@ -202,7 +211,7 @@ export default function MobileSidebar() {
                             className={cx(
                               "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
@@ -258,7 +267,7 @@ export default function MobileSidebar() {
                             className={cx(
                               "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
