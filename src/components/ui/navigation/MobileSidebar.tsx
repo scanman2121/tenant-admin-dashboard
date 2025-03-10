@@ -18,7 +18,6 @@ import {
   RiDashboardLine,
   RiHome2Line,
   RiLineChartLine,
-  RiLinkM,
   RiMegaphoneLine,
   RiMenuLine,
   RiReceiptLine,
@@ -33,8 +32,6 @@ import { UserProfileMobile } from "./UserProfile"
 // Main navigation items excluding the ones that will go into the Asset Manager section
 const navigation = [
   { name: "My HqO", href: siteConfig.baseLinks.overview, icon: RiHome2Line },
-  { name: "Resources", href: siteConfig.baseLinks.resources, icon: RiLinkM },
-  { name: "Analytics", href: siteConfig.baseLinks.analytics, icon: RiLinkM },
   {
     name: "Settings & setup",
     href: siteConfig.baseLinks.settings.general,
@@ -58,28 +55,6 @@ const paymentsItems = [
   { name: "Discounts", href: siteConfig.baseLinks.discounts },
 ] as const
 
-const shortcuts = [
-  {
-    name: "Add new user",
-    href: "/settings/users",
-    icon: RiLinkM,
-  },
-  {
-    name: "Workspace usage",
-    href: "/settings/billing#billing-overview",
-    icon: RiLinkM,
-  },
-  {
-    name: "Cost spend control",
-    href: "/settings/billing#cost-spend-control",
-    icon: RiLinkM,
-  },
-  {
-    name: "My HqO – Rows written",
-    href: "/my-hqo#usage-overview",
-    icon: RiLinkM,
-  },
-] as const
 
 // Experience Manager sub-navigation items
 const experienceManagerItems = [
@@ -605,35 +580,6 @@ export default function MobileSidebar() {
                 </div>
               </li>
             </ul>
-            <div>
-              <span className="text-xs font-medium leading-6 text-gray-500">
-                Shortcuts
-              </span>
-              <ul aria-label="shortcuts" role="list" className="space-y-0.5">
-                {shortcuts.map((item) => (
-                  <li key={item.name}>
-                    <DrawerClose asChild>
-                      <Link
-                        href={item.href}
-                        className={cx(
-                          pathname === item.href || pathname.startsWith(item.href)
-                            ? "text-primary dark:text-primary-400"
-                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-                          "flex items-center gap-x-2.5 rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
-                          focusRing,
-                        )}
-                      >
-                        <item.icon
-                          className="size-4 shrink-0"
-                          aria-hidden="true"
-                        />
-                        {item.name}
-                      </Link>
-                    </DrawerClose>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </nav>
           <UserProfileMobile />
         </DrawerBody>
