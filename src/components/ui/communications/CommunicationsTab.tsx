@@ -90,7 +90,7 @@ export function CommunicationsTab() {
                         >
                             <div className="flex items-center gap-2">
                                 <RiMessage2Line className="size-4 text-primary" />
-                                <span className="font-medium text-sm text-gray-900 dark:text-gray-50">Communications</span>
+                                <span className="font-medium text-sm text-gray-900 dark:text-gray-50">Tenant contacts</span>
                             </div>
                             <div className="flex items-center gap-1">
                                 <button
@@ -111,7 +111,7 @@ export function CommunicationsTab() {
                 <button
                     onClick={toggleOpen}
                     className={cx(
-                        "flex items-center gap-2 px-4 py-2 rounded-t-lg shadow-lg transition-colors",
+                        "flex items-center gap-2 px-5 py-3 rounded-t-lg shadow-lg transition-colors",
                         "bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 border-b-0",
                         "hover:bg-gray-50 dark:hover:bg-gray-800",
                         "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-gray-950",
@@ -119,7 +119,7 @@ export function CommunicationsTab() {
                     )}
                 >
                     <RiMessage2Line className="size-5" />
-                    <span className="font-medium text-sm">Communications</span>
+                    <span className="font-medium">Tenant contacts</span>
                     {isOpen && isMinimized && (
                         <span className="ml-1 px-1.5 py-0.5 text-xs bg-red-500 text-white rounded-full">3</span>
                     )}

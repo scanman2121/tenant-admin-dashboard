@@ -383,7 +383,7 @@ export function CommunicationsPanel({
             <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                 <div className="flex items-center gap-2">
                     <RiMessage2Line className="size-4 text-primary" />
-                    <span className="font-medium text-sm text-gray-900 dark:text-gray-50">Communications</span>
+                    <span className="font-medium text-sm text-gray-900 dark:text-gray-50">Tenant contacts</span>
                 </div>
                 <div className="flex items-center gap-1">
                     {!isExpanded && onExpand && (
