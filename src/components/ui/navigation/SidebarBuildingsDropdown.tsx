@@ -10,10 +10,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/Dropdown"
 import { Switch } from "@/components/Switch"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { cx, focusInput } from "@/lib/utils"
-import { RiArrowRightSLine, RiBuildingLine, RiExpandUpDownLine } from "@remixicon/react"
+import { RiArrowRightSLine, RiBuildingLine, RiExpandUpDownLine, RiInformationLine } from "@remixicon/react"
 import Image from "next/image"
-import React from "react"
+import { usePathname } from "next/navigation"
+import React, { useEffect } from "react"
 import { ModalAddBuilding } from "./ModalAddBuilding"
 
 const buildings = [
@@ -54,13 +61,74 @@ const buildings = [
   },
 ]
 
+// Function to check if portfolio view is allowed for the current page
+const isPortfolioViewAllowed = (pathname: string): boolean => {
+  // Portfolio view is allowed for My HqO
+  if (pathname === '/my-hqo') return true;
+
+  // Portfolio view is allowed for all pages under Asset Manager
+  if (
+    pathname === '/buildings' ||
+    pathname === '/buildings/active' ||
+    pathname === '/buildings/inactive' ||
+    pathname === '/tenants' ||
+    pathname === '/users' ||
+    pathname === '/users/active' ||
+    pathname === '/users/inactive' ||
+    pathname === '/users/invited' ||
+    pathname === '/vendors' ||
+    pathname === '/audiences'
+  ) return true;
+
+  // Portfolio view is allowed for Surveys
+  if (pathname === '/experience-manager/surveys') return true;
+
+  // Portfolio view is not allowed for other pages
+  return false;
+}
+
+// Function to get the current page name for the tooltip
+const getPageName = (pathname: string): string => {
+  const parts = pathname.split('/').filter(Boolean);
+  if (parts.length === 0) return 'this page';
+
+  // Handle special cases
+  if (parts[0] === 'my-hqo') return 'My HqO';
+
+  // For paths with subpaths, use the last part
+  const lastPart = parts[parts.length - 1];
+
+  // Convert kebab-case to Title Case and handle special cases
+  return lastPart
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
 export const BuildingsDropdownDesktop = () => {
   const [dropdownOpen, setDropdownOpen] = React.useState(false)
   const [hasOpenDialog, setHasOpenDialog] = React.useState(false)
   const [isPortfolioView, setIsPortfolioView] = React.useState(false)
   const [selectedBuilding, setSelectedBuilding] = React.useState(buildings[0])
+  const [isAnimating, setIsAnimating] = React.useState(false)
   const dropdownTriggerRef = React.useRef<null | HTMLButtonElement>(null)
   const focusRef = React.useRef<null | HTMLButtonElement>(null)
+  const pathname = usePathname()
+
+  const portfolioAllowed = isPortfolioViewAllowed(pathname)
+  const pageName = getPageName(pathname)
+
+  // Effect to handle portfolio view toggle when navigating between pages
+  useEffect(() => {
+    if (isPortfolioView && !portfolioAllowed) {
+      setIsAnimating(true);
+      // Animate the toggle off
+      setTimeout(() => {
+        setIsPortfolioView(false);
+        setIsAnimating(false);
+      }, 300);
+    }
+  }, [pathname, isPortfolioView, portfolioAllowed]);
 
   const handleDialogItemSelect = () => {
     focusRef.current = dropdownTriggerRef.current
@@ -78,6 +146,12 @@ export const BuildingsDropdownDesktop = () => {
     setIsPortfolioView(false)
     setDropdownOpen(false)
   }
+
+  const handlePortfolioToggle = (checked: boolean) => {
+    if (portfolioAllowed) {
+      setIsPortfolioView(checked);
+    }
+  };
 
   return (
     <div className="flex items-center gap-x-4">
@@ -171,14 +245,38 @@ export const BuildingsDropdownDesktop = () => {
       </div>
 
       <div className="hidden items-center whitespace-nowrap lg:flex">
-        <Switch
-          checked={isPortfolioView}
-          onCheckedChange={setIsPortfolioView}
-          size="small"
-        />
-        <span className="ml-2 text-sm font-medium text-text-primary dark:text-gray-50">
-          Portfolio view
-        </span>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className={cx(
+                "flex items-center transition-opacity duration-300",
+                !portfolioAllowed && !isAnimating ? "opacity-50 cursor-not-allowed" : "opacity-100"
+              )}>
+                <Switch
+                  checked={isPortfolioView}
+                  onCheckedChange={handlePortfolioToggle}
+                  size="small"
+                  disabled={!portfolioAllowed || isAnimating}
+                  className={cx(
+                    "transition-transform duration-300",
+                    isAnimating ? "scale-90" : "scale-100"
+                  )}
+                />
+                <span className="ml-2 text-sm font-medium text-text-primary dark:text-gray-50">
+                  Portfolio view
+                </span>
+                {!portfolioAllowed && (
+                  <RiInformationLine className="ml-1 size-4 text-gray-400" />
+                )}
+              </div>
+            </TooltipTrigger>
+            {!portfolioAllowed && (
+              <TooltipContent side="bottom" className="max-w-xs">
+                <p>Portfolio view is not available for {pageName}</p>
+              </TooltipContent>
+            )}
+          </Tooltip>
+        </TooltipProvider>
       </div>
     </div>
   )
@@ -189,8 +287,25 @@ export const BuildingsDropdownMobile = () => {
   const [hasOpenDialog, setHasOpenDialog] = React.useState(false)
   const [isPortfolioView, setIsPortfolioView] = React.useState(false)
   const [selectedBuilding, setSelectedBuilding] = React.useState(buildings[0])
+  const [isAnimating, setIsAnimating] = React.useState(false)
   const dropdownTriggerRef = React.useRef<null | HTMLButtonElement>(null)
   const focusRef = React.useRef<null | HTMLButtonElement>(null)
+  const pathname = usePathname()
+
+  const portfolioAllowed = isPortfolioViewAllowed(pathname)
+  const pageName = getPageName(pathname)
+
+  // Effect to handle portfolio view toggle when navigating between pages
+  useEffect(() => {
+    if (isPortfolioView && !portfolioAllowed) {
+      setIsAnimating(true);
+      // Animate the toggle off
+      setTimeout(() => {
+        setIsPortfolioView(false);
+        setIsAnimating(false);
+      }, 300);
+    }
+  }, [pathname, isPortfolioView, portfolioAllowed]);
 
   const handleDialogItemSelect = () => {
     focusRef.current = dropdownTriggerRef.current
@@ -208,6 +323,12 @@ export const BuildingsDropdownMobile = () => {
     setIsPortfolioView(false)
     setDropdownOpen(false)
   }
+
+  const handlePortfolioToggle = (checked: boolean) => {
+    if (portfolioAllowed) {
+      setIsPortfolioView(checked);
+    }
+  };
 
   return (
     <>
@@ -295,16 +416,38 @@ export const BuildingsDropdownMobile = () => {
             itemName="Add building"
           />
           <DropdownMenuSeparator />
-          <div className="flex items-center whitespace-nowrap px-2 py-1.5">
-            <Switch
-              checked={isPortfolioView}
-              onCheckedChange={setIsPortfolioView}
-              size="small"
-            />
-            <span className="ml-2 text-sm font-medium text-text-primary dark:text-gray-50">
-              Portfolio view
-            </span>
-          </div>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className={cx(
+                  "flex items-center whitespace-nowrap px-2 py-1.5 transition-opacity duration-300",
+                  !portfolioAllowed && !isAnimating ? "opacity-50 cursor-not-allowed" : "opacity-100"
+                )}>
+                  <Switch
+                    checked={isPortfolioView}
+                    onCheckedChange={handlePortfolioToggle}
+                    size="small"
+                    disabled={!portfolioAllowed || isAnimating}
+                    className={cx(
+                      "transition-transform duration-300",
+                      isAnimating ? "scale-90" : "scale-100"
+                    )}
+                  />
+                  <span className="ml-2 text-sm font-medium text-text-primary dark:text-gray-50">
+                    Portfolio view
+                  </span>
+                  {!portfolioAllowed && (
+                    <RiInformationLine className="ml-1 size-4 text-gray-400" />
+                  )}
+                </div>
+              </TooltipTrigger>
+              {!portfolioAllowed && (
+                <TooltipContent side="bottom" className="max-w-xs">
+                  <p>Portfolio view is not available for {pageName}</p>
+                </TooltipContent>
+              )}
+            </Tooltip>
+          </TooltipProvider>
         </DropdownMenuContent>
       </DropdownMenu>
     </>
