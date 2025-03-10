@@ -5,7 +5,7 @@ import {
   RiArrowDownSLine,
   RiBuildingLine,
   RiDashboardLine,
-  RiHome2Line,
+  RiHomeSmileFill,
   RiLineChartLine,
   RiLinkM,
   RiMegaphoneLine,
@@ -20,7 +20,7 @@ import { UserProfileDesktop } from "./UserProfile"
 
 // Main navigation items excluding the ones that will go into the Asset Manager section
 const navigation = [
-  { name: "My HqO", href: siteConfig.baseLinks.overview, icon: RiHome2Line },
+  { name: "My HqO", href: siteConfig.baseLinks.overview, icon: RiHomeSmileFill },
 ] as const
 
 // Asset Manager sub-navigation items
@@ -212,7 +212,7 @@ export function Sidebar() {
                       focusRing,
                     )}
                   >
-                    <RiHome2Line
+                    <RiHomeSmileFill
                       className={cx(
                         "size-4 shrink-0",
                         isActive(siteConfig.baseLinks.overview)

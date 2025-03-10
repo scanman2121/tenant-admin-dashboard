@@ -16,7 +16,7 @@ import {
   RiArrowRightSLine,
   RiBuildingLine,
   RiDashboardLine,
-  RiHome2Line,
+  RiHomeSmileFill,
   RiLineChartLine,
   RiMegaphoneLine,
   RiMenuLine,
@@ -31,7 +31,7 @@ import { UserProfileMobile } from "./UserProfile"
 
 // Main navigation items excluding the ones that will go into the Asset Manager section
 const navigation = [
-  { name: "My HqO", href: siteConfig.baseLinks.overview, icon: RiHome2Line },
+  { name: "My HqO", href: siteConfig.baseLinks.overview, icon: RiHomeSmileFill },
   {
     name: "Settings & setup",
     href: siteConfig.baseLinks.settings.general,
@@ -238,7 +238,7 @@ export default function MobileSidebar() {
                       focusRing,
                     )}
                   >
-                    <RiHome2Line className="size-4 shrink-0" aria-hidden="true" />
+                    <RiHomeSmileFill className="size-4 shrink-0" aria-hidden="true" />
                     My HqO
                   </Link>
                 </DrawerClose>
