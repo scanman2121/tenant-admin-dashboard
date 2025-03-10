@@ -14,9 +14,9 @@ import { cx, focusRing } from "@/lib/utils"
 import {
   RiArrowDownSLine,
   RiArrowRightSLine,
+  RiBuilding2Line,
   RiBuildingLine,
   RiDashboardLine,
-  RiHomeSmileFill,
   RiLineChartLine,
   RiMegaphoneLine,
   RiMenuLine,
@@ -31,7 +31,7 @@ import { UserProfileMobile } from "./UserProfile"
 
 // Main navigation items excluding the ones that will go into the Asset Manager section
 const navigation = [
-  { name: "My HqO", href: siteConfig.baseLinks.overview, icon: RiHomeSmileFill },
+  { name: "My HqO", href: siteConfig.baseLinks.overview, icon: RiBuilding2Line },
   {
     name: "Settings & setup",
     href: siteConfig.baseLinks.settings.general,
@@ -238,7 +238,7 @@ export default function MobileSidebar() {
                       focusRing,
                     )}
                   >
-                    <RiHomeSmileFill className="size-4 shrink-0" aria-hidden="true" />
+                    <RiBuilding2Line className="size-4 shrink-0 text-[#696E72]" aria-hidden="true" />
                     My HqO
                   </Link>
                 </DrawerClose>

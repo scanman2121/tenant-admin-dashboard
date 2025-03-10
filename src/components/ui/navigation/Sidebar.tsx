@@ -3,9 +3,9 @@ import { siteConfig } from "@/app/siteConfig"
 import { cx, focusRing } from "@/lib/utils"
 import {
   RiArrowDownSLine,
+  RiBuilding2Line,
   RiBuildingLine,
   RiDashboardLine,
-  RiHomeSmileFill,
   RiLineChartLine,
   RiLinkM,
   RiMegaphoneLine,
@@ -20,7 +20,7 @@ import { UserProfileDesktop } from "./UserProfile"
 
 // Main navigation items excluding the ones that will go into the Asset Manager section
 const navigation = [
-  { name: "My HqO", href: siteConfig.baseLinks.overview, icon: RiHomeSmileFill },
+  { name: "My HqO", href: siteConfig.baseLinks.overview, icon: RiBuilding2Line },
 ] as const
 
 // Asset Manager sub-navigation items
@@ -212,12 +212,12 @@ export function Sidebar() {
                       focusRing,
                     )}
                   >
-                    <RiHomeSmileFill
+                    <RiBuilding2Line
                       className={cx(
                         "size-4 shrink-0",
                         isActive(siteConfig.baseLinks.overview)
                           ? "text-primary dark:text-primary-400"
-                          : "text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-400",
+                          : "text-[#696E72] group-hover:text-gray-500 dark:group-hover:text-gray-400",
                       )}
                       aria-hidden="true"
                     />
