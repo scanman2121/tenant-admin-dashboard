@@ -76,7 +76,7 @@ export function FullScreenSearch({ isOpen, onClose }: FullScreenSearchProps) {
 
         // Mock search results
         const mockResults = [
-            { id: 1, type: "user", title: "Emma Stone", description: "Tenant admin" },
+            { id: 1, type: "user", title: "Ellie Edwards", description: "Tenant admin" },
             { id: 2, type: "building", title: "125 Highland Ave", description: "Boston, MA" },
             { id: 3, type: "tenant", title: "Acme Corporation", description: "Technology" },
             { id: 4, type: "vendor", title: "Maintenance Pro", description: "Maintenance" },

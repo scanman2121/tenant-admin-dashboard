@@ -126,9 +126,9 @@ export const users: {
   avatarUrl?: string
 }[] = [
     {
-      name: "Emma Stone",
-      initials: "ES",
-      email: "a.stone@gmail.com",
+      name: "Ellie Edwards",
+      initials: "EE",
+      email: "ellie.edwards@acme.com",
       role: "viewer",
       company: "Acme Inc",
       avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -138,16 +138,14 @@ export const users: {
       initials: "AM",
       email: "a.stone@gmail.com",
       role: "viewer",
-      company: "Global Tech",
-      avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2576&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      company: "Acme Inc",
     },
     {
       name: "Emily Luisa Bernacle",
       initials: "EB",
       email: "e.luis.bernacle@gmail.com",
       role: "member",
-      company: "Innovate Solutions",
-      avatarUrl: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=2961&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      company: "Acme Inc",
     },
     {
       name: "Aaron Wave",
@@ -155,7 +153,6 @@ export const users: {
       email: "a.flow@acme.com",
       role: "contributor",
       company: "Acme Inc",
-      avatarUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       name: "Thomas Palstein",
@@ -163,23 +160,20 @@ export const users: {
       email: "t.palstein@acme.com",
       role: "viewer",
       company: "Acme Inc",
-      avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       name: "Sarah Johnson",
       initials: "SJ",
       email: "s.johnson@gmail.com",
       role: "admin",
-      company: "Tech Innovators",
-      avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2864&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      company: "Acme Inc",
     },
     {
       name: "Megan Katherina Brown",
       initials: "MB",
       email: "m.lovelybrown@gmail.com",
       role: "contributor",
-      company: "Global Tech",
-      avatarUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      company: "Acme Inc",
     },
   ]
 
