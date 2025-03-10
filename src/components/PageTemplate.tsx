@@ -26,7 +26,7 @@ export function PageTemplate({
     const pathname = usePathname()
 
     return (
-        <div className="flex flex-col gap-5 w-full">
+        <div className="flex flex-col gap-4 w-full">
             <PageHeader
                 title={title}
                 primaryCta={primaryCta}
@@ -35,7 +35,7 @@ export function PageTemplate({
 
             {tabs && tabs.length > 0 ? (
                 <>
-                    <TabNavigation className="mt-4">
+                    <TabNavigation>
                         {tabs.map((tab) => (
                             <TabNavigationLink
                                 key={tab.name}
@@ -47,7 +47,7 @@ export function PageTemplate({
                         ))}
                     </TabNavigation>
 
-                    <div className="pt-6">
+                    <div className="pt-4">
                         <DataTable data={usage} columns={columns} />
                     </div>
                 </>

@@ -147,7 +147,7 @@ export default function BuildingsInactive() {
     }, [])
 
     return (
-        <div>
+        <div className="flex flex-col gap-4 w-full">
             <div className="flex items-center justify-between">
                 <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
                     Buildings
@@ -158,7 +158,7 @@ export default function BuildingsInactive() {
                 </Button>
             </div>
 
-            <TabNavigation className="mt-4">
+            <TabNavigation>
                 {tabs.map((tab) => (
                     <TabNavigationLink
                         key={tab.name}
@@ -170,7 +170,7 @@ export default function BuildingsInactive() {
                 ))}
             </TabNavigation>
 
-            <div className="pt-6">
+            <div className="pt-4">
                 <DataTable columns={buildingsColumns} data={data} />
             </div>
         </div>

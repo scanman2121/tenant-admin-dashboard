@@ -57,7 +57,7 @@ export function PageHeader({
     customButtons,
 }: PageHeaderProps) {
     return (
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-4">
             <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
                 {title}
             </h1>
