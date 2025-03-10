@@ -1,7 +1,7 @@
 "use client"
 
-import { RiAddLine, RiAlertLine, RiArrowDownLine, RiArrowUpLine, RiCheckLine, RiDownload2Line, RiInformationLine } from "@remixicon/react";
-import { AreaChart, Badge, Button, Callout, Card, DonutChart, Flex, Grid, Icon, Metric, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, Title } from "@tremor/react";
+import { RiAddLine, RiDownload2Line } from "@remixicon/react";
+import { AreaChart, Badge, Button, Card, DonutChart, Flex, Grid, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, Title } from "@tremor/react";
 
 // Type definitions
 export type PeriodValue = "previous-period" | "last-year" | "no-comparison";
@@ -226,66 +226,44 @@ export default function MyHqO() {
   return (
     <div className="space-y-6">
       <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
-        My HqO
+        Welcome back, Ellie
       </h1>
 
-      {/* Key Metrics Section */}
+      {/* Area Charts Section */}
       <section>
-        <Grid numItemsMd={2} numItemsLg={4} className="gap-6">
-          <Card decoration="top" decorationColor="primary">
-            <Flex justifyContent="between" alignItems="center">
-              <Title className="text-text-primary">Tenant Satisfaction</Title>
-              <Badge color="green" size="sm">
-                <Flex justifyContent="start" alignItems="center" className="gap-1">
-                  <Icon icon={RiArrowUpLine} size="sm" />
-                  <span>4.2%</span>
-                </Flex>
-              </Badge>
-            </Flex>
-            <Metric className="mt-2 text-text-primary">92%</Metric>
-            <Text className="text-text-secondary">Based on 1,245 responses</Text>
+        <Grid numItemsMd={1} numItemsLg={2} className="gap-6">
+          {/* Area Chart 1 */}
+          <Card>
+            <Title className="text-text-primary mb-2">Tenant Engagement</Title>
+            <Text className="text-text-secondary mb-4">Monthly trends over time</Text>
+            <AreaChart
+              className="h-72"
+              data={performanceData}
+              index="date"
+              categories={["Tenant Satisfaction", "Tenant Engagement"]}
+              colors={["primary", "indigo"]}
+              valueFormatter={(value) => `${value}%`}
+              showLegend={true}
+              showGridLines={false}
+              showAnimation={true}
+            />
           </Card>
 
-          <Card decoration="top" decorationColor="primary">
-            <Flex justifyContent="between" alignItems="center">
-              <Title className="text-text-primary">Tenant Engagement</Title>
-              <Badge color="green" size="sm">
-                <Flex justifyContent="start" alignItems="center" className="gap-1">
-                  <Icon icon={RiArrowUpLine} size="sm" />
-                  <span>2.8%</span>
-                </Flex>
-              </Badge>
-            </Flex>
-            <Metric className="mt-2 text-text-primary">78%</Metric>
-            <Text className="text-text-secondary">Across all platforms</Text>
-          </Card>
-
-          <Card decoration="top" decorationColor="primary">
-            <Flex justifyContent="between" alignItems="center">
-              <Title className="text-text-primary">Active Users</Title>
-              <Badge color="red" size="sm">
-                <Flex justifyContent="start" alignItems="center" className="gap-1">
-                  <Icon icon={RiArrowDownLine} size="sm" />
-                  <span>1.5%</span>
-                </Flex>
-              </Badge>
-            </Flex>
-            <Metric className="mt-2 text-text-primary">3,842</Metric>
-            <Text className="text-text-secondary">Out of 4,500 total users</Text>
-          </Card>
-
-          <Card decoration="top" decorationColor="primary">
-            <Flex justifyContent="between" alignItems="center">
-              <Title className="text-text-primary">Events This Month</Title>
-              <Badge color="green" size="sm">
-                <Flex justifyContent="start" alignItems="center" className="gap-1">
-                  <Icon icon={RiArrowUpLine} size="sm" />
-                  <span>12.3%</span>
-                </Flex>
-              </Badge>
-            </Flex>
-            <Metric className="mt-2 text-text-primary">28</Metric>
-            <Text className="text-text-secondary">With 1,245 registrations</Text>
+          {/* Area Chart 2 */}
+          <Card>
+            <Title className="text-text-primary mb-2">Platform Usage</Title>
+            <Text className="text-text-secondary mb-4">Distribution by channel</Text>
+            <AreaChart
+              className="h-72"
+              data={usageData}
+              index="date"
+              categories={["Mobile App", "Web Portal", "Kiosk"]}
+              colors={["primary", "indigo", "cyan"]}
+              valueFormatter={(value) => `${value}%`}
+              showLegend={true}
+              showGridLines={false}
+              showAnimation={true}
+            />
           </Card>
         </Grid>
       </section>
@@ -410,39 +388,6 @@ export default function MyHqO() {
                 ))}
               </tbody>
             </table>
-          </div>
-        </Card>
-      </section>
-
-      {/* Announcements Section */}
-      <section>
-        <Card>
-          <Title className="text-text-primary mb-4">Announcements & Alerts</Title>
-          <div className="space-y-4">
-            <Callout
-              title="Building Maintenance Scheduled"
-              icon={RiInformationLine}
-              color="blue"
-              className="mt-2"
-            >
-              The lobby will be undergoing maintenance on Saturday, June 24th from 8:00 AM to 12:00 PM.
-            </Callout>
-            <Callout
-              title="Fire Alarm Testing"
-              icon={RiAlertLine}
-              color="amber"
-              className="mt-2"
-            >
-              Fire alarm testing will be conducted on Friday, June 23rd from 2:00 PM to 3:00 PM.
-            </Callout>
-            <Callout
-              title="New Marketplace Vendor"
-              icon={RiCheckLine}
-              color="green"
-              className="mt-2"
-            >
-              We&apos;re excited to welcome &quot;Fresh Eats Catering&quot; to our marketplace starting next week.
-            </Callout>
           </div>
         </Card>
       </section>
