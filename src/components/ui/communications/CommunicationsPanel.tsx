@@ -517,40 +517,42 @@ export function CommunicationsPanel({
 
                                     {/* Tenant Contacts Avatars */}
                                     {currentTenant && (
-                                        <div className="flex -space-x-2">
-                                            {currentTenant.contacts.map(contact => (
-                                                <button
-                                                    key={contact.id}
-                                                    onClick={() => setSelectedContact(selectedContact === contact.id ? null : contact.id)}
-                                                    className={cx(
-                                                        "relative rounded-full border-2",
-                                                        selectedContact === contact.id
-                                                            ? "border-primary"
-                                                            : "border-white dark:border-gray-900 hover:border-gray-200 dark:hover:border-gray-700",
-                                                        "transition-all"
-                                                    )}
-                                                    title={`${contact.name} - ${contact.role}`}
-                                                >
-                                                    {contact.avatar ? (
-                                                        <div className="relative size-8 overflow-hidden rounded-full">
-                                                            <Image
-                                                                src={contact.avatar}
-                                                                alt={contact.name}
-                                                                fill
-                                                                className="object-cover"
-                                                            />
-                                                        </div>
-                                                    ) : (
-                                                        <div className="flex size-8 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
-                                                            <span className="text-xs font-medium">{contact.initials}</span>
-                                                        </div>
-                                                    )}
-                                                </button>
-                                            ))}
+                                        <div className="flex items-center">
+                                            <div className="flex -space-x-2 mr-2">
+                                                {currentTenant.contacts.map(contact => (
+                                                    <button
+                                                        key={contact.id}
+                                                        onClick={() => setSelectedContact(selectedContact === contact.id ? null : contact.id)}
+                                                        className={cx(
+                                                            "relative rounded-full border-2",
+                                                            selectedContact === contact.id
+                                                                ? "border-primary"
+                                                                : "border-white dark:border-gray-900 hover:border-gray-200 dark:hover:border-gray-700",
+                                                            "transition-all"
+                                                        )}
+                                                        title={`${contact.name} - ${contact.role}`}
+                                                    >
+                                                        {contact.avatar ? (
+                                                            <div className="relative size-8 overflow-hidden rounded-full">
+                                                                <Image
+                                                                    src={contact.avatar}
+                                                                    alt={contact.name}
+                                                                    fill
+                                                                    className="object-cover"
+                                                                />
+                                                            </div>
+                                                        ) : (
+                                                            <div className="flex size-8 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+                                                                <span className="text-xs font-medium">{contact.initials}</span>
+                                                            </div>
+                                                        )}
+                                                    </button>
+                                                ))}
+                                            </div>
                                             {selectedContact && (
                                                 <button
                                                     onClick={() => setSelectedContact(null)}
-                                                    className="ml-2 text-xs text-primary hover:text-primary-dark"
+                                                    className="text-xs text-primary hover:text-primary-dark whitespace-nowrap"
                                                     title="Show all contacts"
                                                 >
                                                     Show all
