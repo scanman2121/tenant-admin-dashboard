@@ -20,6 +20,15 @@ interface CommunicationsPanelProps {
     isExpanded?: boolean
 }
 
+interface TenantContact {
+    id: string
+    name: string
+    role: string
+    avatar?: string
+    initials: string
+    email: string
+}
+
 interface Tenant {
     id: string
     name: string
@@ -27,6 +36,7 @@ interface Tenant {
     avatar?: string
     initials: string
     unread: number
+    contacts: TenantContact[]
     lastMessage?: {
         text: string
         time: string
@@ -40,6 +50,7 @@ interface Message {
     time: string
     isFromTenant: boolean
     sender: string
+    senderId: string
     read: boolean
 }
 
@@ -50,10 +61,11 @@ export function CommunicationsPanel({
     isExpanded = false
 }: CommunicationsPanelProps) {
     const [selectedTenant, setSelectedTenant] = useState<string | null>(null)
+    const [selectedContact, setSelectedContact] = useState<string | null>(null)
     const [searchQuery, setSearchQuery] = useState("")
     const [messageInput, setMessageInput] = useState("")
 
-    // Sample tenant data
+    // Sample tenant data with contacts
     const tenants: Tenant[] = [
         {
             id: "1",
@@ -61,6 +73,30 @@ export function CommunicationsPanel({
             building: "Empire State Building",
             initials: "AI",
             unread: 3,
+            contacts: [
+                {
+                    id: "1-1",
+                    name: "John Smith",
+                    role: "Office Manager",
+                    initials: "JS",
+                    email: "john.smith@acme.com"
+                },
+                {
+                    id: "1-2",
+                    name: "Sarah Johnson",
+                    role: "Facilities Director",
+                    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    initials: "SJ",
+                    email: "sarah.johnson@acme.com"
+                },
+                {
+                    id: "1-3",
+                    name: "Robert Chen",
+                    role: "CEO",
+                    initials: "RC",
+                    email: "robert.chen@acme.com"
+                }
+            ],
             lastMessage: {
                 text: "When will the elevator maintenance be completed?",
                 time: "10:30 AM",
@@ -74,6 +110,23 @@ export function CommunicationsPanel({
             avatar: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             initials: "GT",
             unread: 0,
+            contacts: [
+                {
+                    id: "2-1",
+                    name: "Emily Davis",
+                    role: "Office Administrator",
+                    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2576&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    initials: "ED",
+                    email: "emily.davis@globaltech.com"
+                },
+                {
+                    id: "2-2",
+                    name: "Michael Wong",
+                    role: "IT Director",
+                    initials: "MW",
+                    email: "michael.wong@globaltech.com"
+                }
+            ],
             lastMessage: {
                 text: "Thanks for addressing our concerns about the HVAC system.",
                 time: "Yesterday",
@@ -86,6 +139,23 @@ export function CommunicationsPanel({
             building: "One World Trade Center",
             initials: "IS",
             unread: 1,
+            contacts: [
+                {
+                    id: "3-1",
+                    name: "Jessica Martinez",
+                    role: "Office Manager",
+                    avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=2522&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    initials: "JM",
+                    email: "jessica.martinez@innovate.com"
+                },
+                {
+                    id: "3-2",
+                    name: "David Wilson",
+                    role: "Facilities Coordinator",
+                    initials: "DW",
+                    email: "david.wilson@innovate.com"
+                }
+            ],
             lastMessage: {
                 text: "We've scheduled the tenant event for next Friday at 3 PM.",
                 time: "Yesterday",
@@ -98,6 +168,15 @@ export function CommunicationsPanel({
             building: "Chrysler Building",
             initials: "CS",
             unread: 0,
+            contacts: [
+                {
+                    id: "4-1",
+                    name: "Alex Thompson",
+                    role: "Studio Manager",
+                    initials: "AT",
+                    email: "alex.thompson@creative.com"
+                }
+            ],
             lastMessage: {
                 text: "Our team would like to discuss the upcoming renovations.",
                 time: "Jun 10",
@@ -114,7 +193,8 @@ export function CommunicationsPanel({
                 text: "Hello, we've noticed that the elevator in the north wing has been out of service for two days now.",
                 time: "Yesterday, 4:30 PM",
                 isFromTenant: true,
-                sender: "John from Acme Inc",
+                sender: "John Smith",
+                senderId: "1-1",
                 read: true
             },
             {
@@ -123,6 +203,7 @@ export function CommunicationsPanel({
                 time: "Yesterday, 5:15 PM",
                 isFromTenant: false,
                 sender: "You",
+                senderId: "you",
                 read: true
             },
             {
@@ -130,7 +211,8 @@ export function CommunicationsPanel({
                 text: "Do you have an estimated time for when it will be fixed? It's causing significant inconvenience for our staff.",
                 time: "Today, 9:45 AM",
                 isFromTenant: true,
-                sender: "John from Acme Inc",
+                sender: "John Smith",
+                senderId: "1-1",
                 read: true
             },
             {
@@ -138,7 +220,8 @@ export function CommunicationsPanel({
                 text: "When will the elevator maintenance be completed?",
                 time: "Today, 10:30 AM",
                 isFromTenant: true,
-                sender: "John from Acme Inc",
+                sender: "John Smith",
+                senderId: "1-1",
                 read: false
             }
         ],
@@ -148,7 +231,8 @@ export function CommunicationsPanel({
                 text: "We've been experiencing temperature fluctuations in our office space on the 15th floor.",
                 time: "Monday, 11:20 AM",
                 isFromTenant: true,
-                sender: "Sarah from Global Tech",
+                sender: "Emily Davis",
+                senderId: "2-1",
                 read: true
             },
             {
@@ -157,6 +241,7 @@ export function CommunicationsPanel({
                 time: "Monday, 1:05 PM",
                 isFromTenant: false,
                 sender: "You",
+                senderId: "you",
                 read: true
             },
             {
@@ -164,7 +249,8 @@ export function CommunicationsPanel({
                 text: "It seems to happen mostly in the afternoon, between 2-4 PM. The temperature rises significantly making it uncomfortable to work.",
                 time: "Monday, 2:30 PM",
                 isFromTenant: true,
-                sender: "Sarah from Global Tech",
+                sender: "Emily Davis",
+                senderId: "2-1",
                 read: true
             },
             {
@@ -173,6 +259,7 @@ export function CommunicationsPanel({
                 time: "Tuesday, 9:15 AM",
                 isFromTenant: false,
                 sender: "You",
+                senderId: "you",
                 read: true
             },
             {
@@ -180,7 +267,8 @@ export function CommunicationsPanel({
                 text: "Thanks for addressing our concerns about the HVAC system.",
                 time: "Yesterday, 3:45 PM",
                 isFromTenant: true,
-                sender: "Sarah from Global Tech",
+                sender: "Emily Davis",
+                senderId: "2-1",
                 read: true
             }
         ],
@@ -190,7 +278,8 @@ export function CommunicationsPanel({
                 text: "We're interested in hosting a company event in the building's common area next week. Is that possible?",
                 time: "Tuesday, 10:00 AM",
                 isFromTenant: true,
-                sender: "Michael from Innovate Solutions",
+                sender: "Jessica Martinez",
+                senderId: "3-1",
                 read: true
             },
             {
@@ -199,6 +288,7 @@ export function CommunicationsPanel({
                 time: "Tuesday, 11:30 AM",
                 isFromTenant: false,
                 sender: "You",
+                senderId: "you",
                 read: true
             },
             {
@@ -206,7 +296,8 @@ export function CommunicationsPanel({
                 text: "We're looking at next Friday, around 3-5 PM. We'll have approximately 50 attendees.",
                 time: "Tuesday, 2:15 PM",
                 isFromTenant: true,
-                sender: "Michael from Innovate Solutions",
+                sender: "Jessica Martinez",
+                senderId: "3-1",
                 read: true
             },
             {
@@ -215,6 +306,7 @@ export function CommunicationsPanel({
                 time: "Yesterday, 4:00 PM",
                 isFromTenant: false,
                 sender: "You",
+                senderId: "you",
                 read: false
             }
         ]
@@ -233,6 +325,16 @@ export function CommunicationsPanel({
         console.log(`Sending message to tenant ${selectedTenant}: ${messageInput}`)
         setMessageInput("")
     }
+
+    // Get the current tenant
+    const currentTenant = tenants.find(t => t.id === selectedTenant)
+
+    // Filter messages by selected contact if one is selected
+    const filteredMessages = selectedTenant && messages[selectedTenant]
+        ? (selectedContact
+            ? messages[selectedTenant].filter(m => m.isFromTenant ? m.senderId === selectedContact : true)
+            : messages[selectedTenant])
+        : []
 
     return (
         <div className={cx(
@@ -308,7 +410,10 @@ export function CommunicationsPanel({
                                         "hover:bg-gray-50 dark:hover:bg-gray-900",
                                         selectedTenant === tenant.id && "bg-gray-100 dark:bg-gray-800"
                                     )}
-                                    onClick={() => setSelectedTenant(tenant.id)}
+                                    onClick={() => {
+                                        setSelectedTenant(tenant.id)
+                                        setSelectedContact(null) // Reset selected contact when changing tenant
+                                    }}
                                 >
                                     <div className="flex items-center gap-3">
                                         <div className="relative flex-shrink-0">
@@ -373,71 +478,143 @@ export function CommunicationsPanel({
                 <div className="w-2/3 flex flex-col">
                     {selectedTenant ? (
                         <>
-                            {/* Conversation Header */}
-                            <div className="p-3 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
-                                <div className="flex items-center gap-3">
-                                    {(() => {
-                                        const tenant = tenants.find(t => t.id === selectedTenant)
-                                        if (!tenant) return null
+                            {/* Conversation Header with Tenant Contacts */}
+                            <div className="p-3 border-b border-gray-200 dark:border-gray-800">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        {(() => {
+                                            const tenant = tenants.find(t => t.id === selectedTenant)
+                                            if (!tenant) return null
 
-                                        return (
-                                            <>
-                                                {tenant.avatar ? (
-                                                    <div className="relative size-8 overflow-hidden rounded-full">
-                                                        <Image
-                                                            src={tenant.avatar}
-                                                            alt={tenant.name}
-                                                            fill
-                                                            className="object-cover"
-                                                        />
+                                            return (
+                                                <>
+                                                    {tenant.avatar ? (
+                                                        <div className="relative size-8 overflow-hidden rounded-full">
+                                                            <Image
+                                                                src={tenant.avatar}
+                                                                alt={tenant.name}
+                                                                fill
+                                                                className="object-cover"
+                                                            />
+                                                        </div>
+                                                    ) : (
+                                                        <div className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary dark:bg-primary/20">
+                                                            <span className="text-xs font-medium">{tenant.initials}</span>
+                                                        </div>
+                                                    )}
+                                                    <div>
+                                                        <h3 className="font-medium text-sm text-gray-900 dark:text-gray-50">
+                                                            {tenant.name}
+                                                        </h3>
+                                                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                            {tenant.building}
+                                                        </p>
                                                     </div>
-                                                ) : (
-                                                    <div className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-primary dark:bg-primary/20">
-                                                        <span className="text-xs font-medium">{tenant.initials}</span>
-                                                    </div>
-                                                )}
-                                                <div>
-                                                    <h3 className="font-medium text-sm text-gray-900 dark:text-gray-50">
-                                                        {tenant.name}
-                                                    </h3>
-                                                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                                                        {tenant.building}
-                                                    </p>
-                                                </div>
-                                            </>
-                                        )
-                                    })()}
+                                                </>
+                                            )
+                                        })()}
+                                    </div>
+
+                                    {/* Tenant Contacts Avatars */}
+                                    {currentTenant && (
+                                        <div className="flex -space-x-2">
+                                            {currentTenant.contacts.map(contact => (
+                                                <button
+                                                    key={contact.id}
+                                                    onClick={() => setSelectedContact(selectedContact === contact.id ? null : contact.id)}
+                                                    className={cx(
+                                                        "relative rounded-full border-2",
+                                                        selectedContact === contact.id
+                                                            ? "border-primary"
+                                                            : "border-white dark:border-gray-900 hover:border-gray-200 dark:hover:border-gray-700",
+                                                        "transition-all"
+                                                    )}
+                                                    title={`${contact.name} - ${contact.role}`}
+                                                >
+                                                    {contact.avatar ? (
+                                                        <div className="relative size-8 overflow-hidden rounded-full">
+                                                            <Image
+                                                                src={contact.avatar}
+                                                                alt={contact.name}
+                                                                fill
+                                                                className="object-cover"
+                                                            />
+                                                        </div>
+                                                    ) : (
+                                                        <div className="flex size-8 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+                                                            <span className="text-xs font-medium">{contact.initials}</span>
+                                                        </div>
+                                                    )}
+                                                </button>
+                                            ))}
+                                            {selectedContact && (
+                                                <button
+                                                    onClick={() => setSelectedContact(null)}
+                                                    className="ml-2 text-xs text-primary hover:text-primary-dark"
+                                                    title="Show all contacts"
+                                                >
+                                                    Show all
+                                                </button>
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
+
+                                {/* Selected Contact Info */}
+                                {selectedContact && currentTenant && (
+                                    <div className="mt-2 p-2 bg-gray-50 dark:bg-gray-800 rounded-md">
+                                        <div className="flex items-center gap-2">
+                                            {(() => {
+                                                const contact = currentTenant.contacts.find(c => c.id === selectedContact)
+                                                if (!contact) return null
+
+                                                return (
+                                                    <>
+                                                        <p className="text-xs text-gray-700 dark:text-gray-300">
+                                                            Filtered to messages with <span className="font-medium">{contact.name}</span> ({contact.role})
+                                                        </p>
+                                                    </>
+                                                )
+                                            })()}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             {/* Messages */}
                             <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                                {messages[selectedTenant]?.map(message => (
-                                    <div
-                                        key={message.id}
-                                        className={cx(
-                                            "flex",
-                                            message.isFromTenant ? "justify-start" : "justify-end"
-                                        )}
-                                    >
-                                        <div className={cx(
-                                            "max-w-[70%] rounded-lg p-3 text-sm",
-                                            message.isFromTenant
-                                                ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50"
-                                                : "bg-primary text-white"
-                                        )}>
-                                            <div className="flex justify-between items-center gap-4 mb-1">
-                                                <span className="font-medium text-xs">
-                                                    {message.sender}
-                                                </span>
-                                                <span className="text-xs opacity-70">
-                                                    {message.time}
-                                                </span>
+                                {filteredMessages.length > 0 ? (
+                                    filteredMessages.map(message => (
+                                        <div
+                                            key={message.id}
+                                            className={cx(
+                                                "flex",
+                                                message.isFromTenant ? "justify-start" : "justify-end"
+                                            )}
+                                        >
+                                            <div className={cx(
+                                                "max-w-[70%] rounded-lg p-3 text-sm",
+                                                message.isFromTenant
+                                                    ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50"
+                                                    : "bg-primary text-white"
+                                            )}>
+                                                <div className="flex justify-between items-center gap-4 mb-1">
+                                                    <span className="font-medium text-xs">
+                                                        {message.sender}
+                                                    </span>
+                                                    <span className="text-xs opacity-70">
+                                                        {message.time}
+                                                    </span>
+                                                </div>
+                                                <p>{message.text}</p>
                                             </div>
-                                            <p>{message.text}</p>
                                         </div>
+                                    ))
+                                ) : (
+                                    <div className="flex flex-col items-center justify-center h-full text-center text-gray-500 dark:text-gray-400 p-4">
+                                        <p>No messages found with this contact.</p>
                                     </div>
-                                ))}
+                                )}
                             </div>
 
                             {/* Message Input */}
@@ -446,7 +623,9 @@ export function CommunicationsPanel({
                                     <div className="flex-1 relative">
                                         <input
                                             type="text"
-                                            placeholder="Type a message..."
+                                            placeholder={selectedContact
+                                                ? `Message to ${currentTenant?.contacts.find(c => c.id === selectedContact)?.name}...`
+                                                : "Type a message..."}
                                             value={messageInput}
                                             onChange={(e) => setMessageInput(e.target.value)}
                                             className={cx(
