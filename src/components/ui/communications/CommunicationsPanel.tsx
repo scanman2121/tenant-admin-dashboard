@@ -16,6 +16,7 @@ import {
 } from "@remixicon/react"
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
+import { FullScreenTenantContacts } from "./FullScreenTenantContacts"
 
 interface CommunicationsPanelProps {
     onMinimize: () => void
@@ -69,7 +70,23 @@ export function CommunicationsPanel({
     const [searchQuery, setSearchQuery] = useState("")
     const [messageInput, setMessageInput] = useState("")
     const [showActionMenu, setShowActionMenu] = useState(false)
+    const [isMobile, setIsMobile] = useState(false)
+    const [showMobileView, setShowMobileView] = useState(false)
     const actionMenuRef = useRef<HTMLDivElement>(null)
+
+    // Check for mobile screen size
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768)
+        }
+
+        checkMobile()
+        window.addEventListener('resize', checkMobile)
+
+        return () => {
+            window.removeEventListener('resize', checkMobile)
+        }
+    }, [])
 
     // Close the action menu when clicking outside
     useEffect(() => {
@@ -84,6 +101,20 @@ export function CommunicationsPanel({
             document.removeEventListener('mousedown', handleClickOutside)
         }
     }, [])
+
+    // Show mobile view when a tenant is selected on mobile
+    useEffect(() => {
+        if (isMobile && selectedTenant) {
+            setShowMobileView(true)
+        }
+    }, [isMobile, selectedTenant])
+
+    // Handle closing mobile view
+    const handleCloseMobileView = () => {
+        setShowMobileView(false)
+        // Optionally reset selected tenant if you want to go back to the tenant list
+        // setSelectedTenant(null)
+    }
 
     // Sample tenant data with contacts
     const tenants: Tenant[] = [
@@ -374,6 +405,23 @@ export function CommunicationsPanel({
         console.log(`Booking resource for tenant ${selectedTenant}`)
     }
 
+    // Render mobile view if on mobile device and showMobileView is true
+    if (isMobile && showMobileView) {
+        // Get the messages for the selected tenant
+        const tenantMessages = selectedTenant ? messages[selectedTenant] || [] : [];
+
+        return (
+            <FullScreenTenantContacts
+                onClose={handleCloseMobileView}
+                tenants={tenants}
+                messages={tenantMessages}
+                selectedTenant={selectedTenant}
+                setSelectedTenant={setSelectedTenant}
+            />
+        )
+    }
+
+    // Otherwise render the desktop view
     return (
         <div className={cx(
             "bg-white dark:bg-gray-950 rounded-t-lg shadow-lg border border-gray-200 dark:border-gray-800 overflow-hidden flex flex-col",
@@ -386,7 +434,16 @@ export function CommunicationsPanel({
                     <span className="font-medium text-sm text-gray-900 dark:text-gray-50">Tenant contacts</span>
                 </div>
                 <div className="flex items-center gap-1">
-                    {!isExpanded && onExpand && (
+                    {isMobile && (
+                        <button
+                            className="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
+                            onClick={() => setShowMobileView(true)}
+                            aria-label="Open full screen"
+                        >
+                            <RiFullscreenLine className="size-4" />
+                        </button>
+                    )}
+                    {!isExpanded && onExpand && !isMobile && (
                         <button
                             className="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
                             onClick={onExpand}
@@ -406,12 +463,19 @@ export function CommunicationsPanel({
                     ) : (
                         <button
                             className="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
-                            onClick={onClose}
-                            aria-label="Close"
+                            onClick={onMinimize}
+                            aria-label="Minimize"
                         >
                             <RiCloseLine className="size-4" />
                         </button>
                     )}
+                    <button
+                        className="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
+                        onClick={onClose}
+                        aria-label="Close"
+                    >
+                        <RiCloseLine className="size-4" />
+                    </button>
                 </div>
             </div>
 
