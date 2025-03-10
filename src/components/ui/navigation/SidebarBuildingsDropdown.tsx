@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/Dropdown"
-import { Switch } from "@/components/Switch"
+import { CustomSwitch } from "@/components/ui/CustomSwitch"
 import {
   Tooltip,
   TooltipContent,
@@ -252,7 +252,7 @@ export const BuildingsDropdownDesktop = () => {
                 "flex items-center transition-opacity duration-300",
                 !portfolioAllowed && !isAnimating ? "opacity-50 cursor-not-allowed" : "opacity-100"
               )}>
-                <Switch
+                <CustomSwitch
                   checked={isPortfolioView}
                   onCheckedChange={handlePortfolioToggle}
                   size="small"
@@ -271,7 +271,7 @@ export const BuildingsDropdownDesktop = () => {
               </div>
             </TooltipTrigger>
             {!portfolioAllowed && (
-              <TooltipContent side="bottom" className="max-w-xs">
+              <TooltipContent side="bottom">
                 <p>Portfolio view is not available for {pageName}</p>
               </TooltipContent>
             )}
@@ -423,7 +423,7 @@ export const BuildingsDropdownMobile = () => {
                   "flex items-center whitespace-nowrap px-2 py-1.5 transition-opacity duration-300",
                   !portfolioAllowed && !isAnimating ? "opacity-50 cursor-not-allowed" : "opacity-100"
                 )}>
-                  <Switch
+                  <CustomSwitch
                     checked={isPortfolioView}
                     onCheckedChange={handlePortfolioToggle}
                     size="small"
@@ -442,7 +442,7 @@ export const BuildingsDropdownMobile = () => {
                 </div>
               </TooltipTrigger>
               {!portfolioAllowed && (
-                <TooltipContent side="bottom" className="max-w-xs">
+                <TooltipContent side="bottom">
                   <p>Portfolio view is not available for {pageName}</p>
                 </TooltipContent>
               )}
