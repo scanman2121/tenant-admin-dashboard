@@ -183,10 +183,10 @@ export function Sidebar() {
 
   return (
     <nav className="hidden lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:flex-col">
-      <div className="flex h-full flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-2 dark:border-gray-800 dark:bg-gray-950">
+      <div className="flex h-full flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-3 dark:border-gray-800 dark:bg-gray-950">
         <div className="flex h-16 shrink-0 items-center">
           <Link href="/" className="pl-1.5">
-            <HqOLogo className="h-8 w-auto" />
+            <HqOLogo className="h-6 w-auto" />
             <span className="sr-only">HqO</span>
           </Link>
         </div>
@@ -221,13 +221,15 @@ export function Sidebar() {
 
                 {/* Asset Manager accordion */}
                 <li className={cx(
-                  openSection === 'assetManager' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
+                  (openSection === 'assetManager' || isInAssetManager)
+                    ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1"
+                    : ""
                 )}>
                   <button
                     onClick={() => toggleSection('assetManager')}
                     className={cx(
                       "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
-                      openSection === 'assetManager'
+                      (openSection === 'assetManager' || isInAssetManager)
                         ? "text-gray-900 dark:text-gray-50"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                       focusRing,
@@ -260,7 +262,7 @@ export function Sidebar() {
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-[13px] transition w-full",
+                              "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -277,13 +279,15 @@ export function Sidebar() {
 
                 {/* Experience Manager accordion */}
                 <li className={cx(
-                  openSection === 'experienceManager' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
+                  (openSection === 'experienceManager' || isInExperienceManager)
+                    ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1"
+                    : ""
                 )}>
                   <button
                     onClick={() => toggleSection('experienceManager')}
                     className={cx(
                       "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
-                      openSection === 'experienceManager'
+                      (openSection === 'experienceManager' || isInExperienceManager)
                         ? "text-gray-900 dark:text-gray-50"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                       focusRing,
@@ -316,7 +320,7 @@ export function Sidebar() {
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-[13px] transition w-full",
+                              "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -333,13 +337,15 @@ export function Sidebar() {
 
                 {/* Operations accordion */}
                 <li className={cx(
-                  openSection === 'operations' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
+                  (openSection === 'operations' || isInOperations)
+                    ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1"
+                    : ""
                 )}>
                   <button
                     onClick={() => toggleSection('operations')}
                     className={cx(
                       "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
-                      openSection === 'operations'
+                      (openSection === 'operations' || isInOperations)
                         ? "text-gray-900 dark:text-gray-50"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                       focusRing,
@@ -372,7 +378,7 @@ export function Sidebar() {
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-[13px] transition w-full",
+                              "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -389,13 +395,15 @@ export function Sidebar() {
 
                 {/* Payments accordion */}
                 <li className={cx(
-                  openSection === 'payments' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
+                  (openSection === 'payments' || isInPayments)
+                    ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1"
+                    : ""
                 )}>
                   <button
                     onClick={() => toggleSection('payments')}
                     className={cx(
                       "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
-                      openSection === 'payments'
+                      (openSection === 'payments' || isInPayments)
                         ? "text-gray-900 dark:text-gray-50"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                       focusRing,
@@ -428,7 +436,7 @@ export function Sidebar() {
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-[13px] transition w-full",
+                              "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -445,13 +453,15 @@ export function Sidebar() {
 
                 {/* Intelligence accordion */}
                 <li className={cx(
-                  openSection === 'intelligence' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
+                  (openSection === 'intelligence' || isInIntelligence)
+                    ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1"
+                    : ""
                 )}>
                   <button
                     onClick={() => toggleSection('intelligence')}
                     className={cx(
                       "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
-                      openSection === 'intelligence'
+                      (openSection === 'intelligence' || isInIntelligence)
                         ? "text-gray-900 dark:text-gray-50"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                       focusRing,
@@ -484,7 +494,7 @@ export function Sidebar() {
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-[13px] transition w-full",
+                              "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -501,13 +511,15 @@ export function Sidebar() {
 
                 {/* Settings and setup accordion */}
                 <li className={cx(
-                  openSection === 'settingsAndSetup' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
+                  (openSection === 'settingsAndSetup' || isInSettingsAndSetup)
+                    ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1"
+                    : ""
                 )}>
                   <button
                     onClick={() => toggleSection('settingsAndSetup')}
                     className={cx(
                       "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
-                      openSection === 'settingsAndSetup'
+                      (openSection === 'settingsAndSetup' || isInSettingsAndSetup)
                         ? "text-gray-900 dark:text-gray-50"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                       focusRing,
@@ -540,7 +552,7 @@ export function Sidebar() {
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-[13px] transition w-full",
+                              "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
