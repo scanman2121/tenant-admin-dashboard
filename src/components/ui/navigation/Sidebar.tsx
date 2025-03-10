@@ -3,7 +3,6 @@ import { siteConfig } from "@/app/siteConfig"
 import { cx, focusRing } from "@/lib/utils"
 import {
   RiArrowDownSLine,
-  RiArrowRightSLine,
   RiBuildingLine,
   RiDashboardLine,
   RiHome2Line,
@@ -22,8 +21,6 @@ import { UserProfileDesktop } from "./UserProfile"
 // Main navigation items excluding the ones that will go into the Asset Manager section
 const navigation = [
   { name: "My HqO", href: siteConfig.baseLinks.overview, icon: RiHome2Line },
-  { name: "Analytics", href: siteConfig.baseLinks.analytics, icon: RiLinkM },
-  { name: "Resources", href: siteConfig.baseLinks.resources, icon: RiLinkM },
 ] as const
 
 // Asset Manager sub-navigation items
@@ -103,64 +100,53 @@ const shortcuts = [
   },
 ] as const
 
+// Type for section IDs to ensure type safety
+type SectionId = 'assetManager' | 'payments' | 'experienceManager' | 'operations' | 'settingsAndSetup' | 'intelligence';
+
 export function Sidebar() {
   const pathname = usePathname()
-  const [isAssetManagerOpen, setIsAssetManagerOpen] = useState(false)
-  const [isPaymentsOpen, setIsPaymentsOpen] = useState(false)
-  const [isExperienceManagerOpen, setIsExperienceManagerOpen] = useState(false)
-  const [isOperationsOpen, setIsOperationsOpen] = useState(false)
-  const [isSettingsAndSetupOpen, setIsSettingsAndSetupOpen] = useState(false)
-  const [isIntelligenceOpen, setIsIntelligenceOpen] = useState(false)
+  // Use a single state for the open section
+  const [openSection, setOpenSection] = useState<SectionId | null>(null)
 
-  // Check if current path is in Asset Manager section
+  // Check if current path is in each section
   const isInAssetManager = assetManagerItems.some(item =>
     pathname === item.href || pathname.startsWith(item.href + "/")
   )
 
-  // Check if current path is in Payments section
   const isInPayments = paymentsItems.some(item =>
     pathname === item.href || pathname.startsWith(item.href + "/")
   )
 
-  // Check if current path is in Experience Manager section
   const isInExperienceManager = experienceManagerItems.some(item =>
     pathname === item.href || pathname.startsWith(item.href + "/")
   )
 
-  // Check if current path is in Operations section
   const isInOperations = operationsItems.some(item =>
     pathname === item.href || pathname.startsWith(item.href + "/")
   )
 
-  // Check if current path is in Settings and setup section
   const isInSettingsAndSetup = settingsAndSetupItems.some(item =>
     pathname === item.href || pathname.startsWith(item.href + "/")
   )
 
-  // Check if current path is in Intelligence section
   const isInIntelligence = intelligenceItems.some(item =>
     pathname === item.href || pathname.startsWith(item.href + "/")
   )
 
-  // Auto-expand sections if current path is in that section
+  // Auto-expand the section that contains the current path
   useEffect(() => {
     if (isInAssetManager) {
-      setIsAssetManagerOpen(true)
-    }
-    if (isInPayments) {
-      setIsPaymentsOpen(true)
-    }
-    if (isInExperienceManager) {
-      setIsExperienceManagerOpen(true)
-    }
-    if (isInOperations) {
-      setIsOperationsOpen(true)
-    }
-    if (isInSettingsAndSetup) {
-      setIsSettingsAndSetupOpen(true)
-    }
-    if (isInIntelligence) {
-      setIsIntelligenceOpen(true)
+      setOpenSection('assetManager')
+    } else if (isInPayments) {
+      setOpenSection('payments')
+    } else if (isInExperienceManager) {
+      setOpenSection('experienceManager')
+    } else if (isInOperations) {
+      setOpenSection('operations')
+    } else if (isInSettingsAndSetup) {
+      setOpenSection('settingsAndSetup')
+    } else if (isInIntelligence) {
+      setOpenSection('intelligence')
     }
   }, [isInAssetManager, isInPayments, isInExperienceManager, isInOperations, isInSettingsAndSetup, isInIntelligence])
 
@@ -171,6 +157,11 @@ export function Sidebar() {
     return pathname === itemHref || pathname.startsWith(itemHref)
   }
 
+  // Toggle section open/closed
+  const toggleSection = (section: SectionId) => {
+    setOpenSection(openSection === section ? null : section)
+  }
+
   // Render a navigation item
   const renderNavItem = (item: typeof navigation[number]) => (
     <li key={item.name}>
@@ -178,9 +169,9 @@ export function Sidebar() {
         href={item.href}
         className={cx(
           isActive(item.href)
-            ? "text-primary dark:text-primary-400"
+            ? "text-primary dark:text-primary-400 bg-white dark:bg-gray-900"
             : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-          "flex items-center gap-x-2.5 rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
+          "flex items-center gap-x-2.5 rounded-md px-3 py-2 text-sm transition hover:bg-gray-100 hover:dark:bg-gray-900",
           focusRing,
         )}
       >
@@ -200,51 +191,53 @@ export function Sidebar() {
           aria-label="core navigation links"
           className="flex flex-1 flex-col space-y-10"
         >
-          <ul role="list" className="space-y-0.5">
+          <ul role="list" className="space-y-1">
             {/* My HqO */}
             {renderNavItem(navigation[0])}
 
             {/* Asset Manager accordion */}
             <li>
               <button
-                onClick={() => setIsAssetManagerOpen(!isAssetManagerOpen)}
+                onClick={() => toggleSection('assetManager')}
                 className={cx(
-                  isInAssetManager
-                    ? "text-primary dark:text-primary-400"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-                  "flex w-full items-center justify-between gap-x-2.5 rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
+                  "flex w-full items-center justify-between gap-x-2.5 rounded-md px-3 py-2 text-sm transition",
+                  openSection === 'assetManager'
+                    ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50"
+                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                   focusRing,
                 )}
-                aria-expanded={isAssetManagerOpen}
+                aria-expanded={openSection === 'assetManager'}
               >
                 <span className="flex items-center gap-x-2.5">
                   <RiBuildingLine className="size-4 shrink-0" aria-hidden="true" />
                   Asset Manager
                 </span>
-                {isAssetManagerOpen ? (
-                  <RiArrowDownSLine className="size-4 shrink-0 transition-transform" aria-hidden="true" />
-                ) : (
-                  <RiArrowRightSLine className="size-4 shrink-0 transition-transform" aria-hidden="true" />
-                )}
+                <RiArrowDownSLine
+                  className={cx(
+                    "size-4 shrink-0 transition-transform duration-200",
+                    openSection === 'assetManager' ? "rotate-0" : "-rotate-90"
+                  )}
+                  aria-hidden="true"
+                />
               </button>
 
               {/* Sub-navigation items with animation */}
               <div
                 className={cx(
                   "overflow-hidden transition-all duration-300 ease-in-out",
-                  isAssetManagerOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+                  openSection === 'assetManager' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                 )}
               >
-                <ul className="mt-1 space-y-0.5 pl-6">
+                <ul className="space-y-1 pl-6">
                   {assetManagerItems.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
                         className={cx(
+                          "flex items-center rounded-md px-3 py-2 text-sm transition w-full",
                           isActive(item.href)
-                            ? "text-primary dark:text-primary-400"
-                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-                          "flex items-center rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
+                            ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                           focusRing,
                         )}
                       >
@@ -259,44 +252,46 @@ export function Sidebar() {
             {/* Experience Manager accordion */}
             <li>
               <button
-                onClick={() => setIsExperienceManagerOpen(!isExperienceManagerOpen)}
+                onClick={() => toggleSection('experienceManager')}
                 className={cx(
-                  isInExperienceManager
-                    ? "text-primary dark:text-primary-400"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-                  "flex w-full items-center justify-between gap-x-2.5 rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
+                  "flex w-full items-center justify-between gap-x-2.5 rounded-md px-3 py-2 text-sm transition",
+                  openSection === 'experienceManager'
+                    ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50"
+                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                   focusRing,
                 )}
-                aria-expanded={isExperienceManagerOpen}
+                aria-expanded={openSection === 'experienceManager'}
               >
                 <span className="flex items-center gap-x-2.5">
                   <RiMegaphoneLine className="size-4 shrink-0" aria-hidden="true" />
                   Experience Manager
                 </span>
-                {isExperienceManagerOpen ? (
-                  <RiArrowDownSLine className="size-4 shrink-0 transition-transform" aria-hidden="true" />
-                ) : (
-                  <RiArrowRightSLine className="size-4 shrink-0 transition-transform" aria-hidden="true" />
-                )}
+                <RiArrowDownSLine
+                  className={cx(
+                    "size-4 shrink-0 transition-transform duration-200",
+                    openSection === 'experienceManager' ? "rotate-0" : "-rotate-90"
+                  )}
+                  aria-hidden="true"
+                />
               </button>
 
               {/* Sub-navigation items with animation */}
               <div
                 className={cx(
                   "overflow-hidden transition-all duration-300 ease-in-out",
-                  isExperienceManagerOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+                  openSection === 'experienceManager' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                 )}
               >
-                <ul className="mt-1 space-y-0.5 pl-6">
+                <ul className="space-y-1 pl-6">
                   {experienceManagerItems.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
                         className={cx(
+                          "flex items-center rounded-md px-3 py-2 text-sm transition w-full",
                           isActive(item.href)
-                            ? "text-primary dark:text-primary-400"
-                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-                          "flex items-center rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
+                            ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                           focusRing,
                         )}
                       >
@@ -311,44 +306,46 @@ export function Sidebar() {
             {/* Operations accordion */}
             <li>
               <button
-                onClick={() => setIsOperationsOpen(!isOperationsOpen)}
+                onClick={() => toggleSection('operations')}
                 className={cx(
-                  isInOperations
-                    ? "text-primary dark:text-primary-400"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-                  "flex w-full items-center justify-between gap-x-2.5 rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
+                  "flex w-full items-center justify-between gap-x-2.5 rounded-md px-3 py-2 text-sm transition",
+                  openSection === 'operations'
+                    ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50"
+                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                   focusRing,
                 )}
-                aria-expanded={isOperationsOpen}
+                aria-expanded={openSection === 'operations'}
               >
                 <span className="flex items-center gap-x-2.5">
                   <RiDashboardLine className="size-4 shrink-0" aria-hidden="true" />
                   Operations
                 </span>
-                {isOperationsOpen ? (
-                  <RiArrowDownSLine className="size-4 shrink-0 transition-transform" aria-hidden="true" />
-                ) : (
-                  <RiArrowRightSLine className="size-4 shrink-0 transition-transform" aria-hidden="true" />
-                )}
+                <RiArrowDownSLine
+                  className={cx(
+                    "size-4 shrink-0 transition-transform duration-200",
+                    openSection === 'operations' ? "rotate-0" : "-rotate-90"
+                  )}
+                  aria-hidden="true"
+                />
               </button>
 
               {/* Sub-navigation items with animation */}
               <div
                 className={cx(
                   "overflow-hidden transition-all duration-300 ease-in-out",
-                  isOperationsOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                  openSection === 'operations' ? "max-h-96 opacity-100 mt-1" : "max-h-0 opacity-0"
                 )}
               >
-                <ul className="mt-1 space-y-0.5 pl-6">
+                <ul className="space-y-1 pl-6">
                   {operationsItems.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
                         className={cx(
+                          "flex items-center rounded-md px-3 py-2 text-sm transition w-full",
                           isActive(item.href)
-                            ? "text-primary dark:text-primary-400"
-                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-                          "flex items-center rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
+                            ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                           focusRing,
                         )}
                       >
@@ -363,44 +360,46 @@ export function Sidebar() {
             {/* Payments accordion */}
             <li>
               <button
-                onClick={() => setIsPaymentsOpen(!isPaymentsOpen)}
+                onClick={() => toggleSection('payments')}
                 className={cx(
-                  isInPayments
-                    ? "text-primary dark:text-primary-400"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-                  "flex w-full items-center justify-between gap-x-2.5 rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
+                  "flex w-full items-center justify-between gap-x-2.5 rounded-md px-3 py-2 text-sm transition",
+                  openSection === 'payments'
+                    ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50"
+                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                   focusRing,
                 )}
-                aria-expanded={isPaymentsOpen}
+                aria-expanded={openSection === 'payments'}
               >
                 <span className="flex items-center gap-x-2.5">
                   <RiReceiptLine className="size-4 shrink-0" aria-hidden="true" />
                   Payments
                 </span>
-                {isPaymentsOpen ? (
-                  <RiArrowDownSLine className="size-4 shrink-0 transition-transform" aria-hidden="true" />
-                ) : (
-                  <RiArrowRightSLine className="size-4 shrink-0 transition-transform" aria-hidden="true" />
-                )}
+                <RiArrowDownSLine
+                  className={cx(
+                    "size-4 shrink-0 transition-transform duration-200",
+                    openSection === 'payments' ? "rotate-0" : "-rotate-90"
+                  )}
+                  aria-hidden="true"
+                />
               </button>
 
               {/* Sub-navigation items with animation */}
               <div
                 className={cx(
                   "overflow-hidden transition-all duration-300 ease-in-out",
-                  isPaymentsOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+                  openSection === 'payments' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                 )}
               >
-                <ul className="mt-1 space-y-0.5 pl-6">
+                <ul className="space-y-1 pl-6">
                   {paymentsItems.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
                         className={cx(
+                          "flex items-center rounded-md px-3 py-2 text-sm transition w-full",
                           isActive(item.href)
-                            ? "text-primary dark:text-primary-400"
-                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-                          "flex items-center rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
+                            ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                           focusRing,
                         )}
                       >
@@ -415,44 +414,46 @@ export function Sidebar() {
             {/* Intelligence accordion */}
             <li>
               <button
-                onClick={() => setIsIntelligenceOpen(!isIntelligenceOpen)}
+                onClick={() => toggleSection('intelligence')}
                 className={cx(
-                  isInIntelligence
-                    ? "text-primary dark:text-primary-400"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-                  "flex w-full items-center justify-between gap-x-2.5 rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
+                  "flex w-full items-center justify-between gap-x-2.5 rounded-md px-3 py-2 text-sm transition",
+                  openSection === 'intelligence'
+                    ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50"
+                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                   focusRing,
                 )}
-                aria-expanded={isIntelligenceOpen}
+                aria-expanded={openSection === 'intelligence'}
               >
                 <span className="flex items-center gap-x-2.5">
                   <RiLineChartLine className="size-4 shrink-0" aria-hidden="true" />
                   Intelligence
                 </span>
-                {isIntelligenceOpen ? (
-                  <RiArrowDownSLine className="size-4 shrink-0 transition-transform" aria-hidden="true" />
-                ) : (
-                  <RiArrowRightSLine className="size-4 shrink-0 transition-transform" aria-hidden="true" />
-                )}
+                <RiArrowDownSLine
+                  className={cx(
+                    "size-4 shrink-0 transition-transform duration-200",
+                    openSection === 'intelligence' ? "rotate-0" : "-rotate-90"
+                  )}
+                  aria-hidden="true"
+                />
               </button>
 
               {/* Sub-navigation items with animation */}
               <div
                 className={cx(
                   "overflow-hidden transition-all duration-300 ease-in-out",
-                  isIntelligenceOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+                  openSection === 'intelligence' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                 )}
               >
-                <ul className="mt-1 space-y-0.5 pl-6">
+                <ul className="space-y-1 pl-6">
                   {intelligenceItems.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
                         className={cx(
+                          "flex items-center rounded-md px-3 py-2 text-sm transition w-full",
                           isActive(item.href)
-                            ? "text-primary dark:text-primary-400"
-                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-                          "flex items-center rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
+                            ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                           focusRing,
                         )}
                       >
@@ -467,44 +468,46 @@ export function Sidebar() {
             {/* Settings and setup accordion */}
             <li>
               <button
-                onClick={() => setIsSettingsAndSetupOpen(!isSettingsAndSetupOpen)}
+                onClick={() => toggleSection('settingsAndSetup')}
                 className={cx(
-                  isInSettingsAndSetup
-                    ? "text-primary dark:text-primary-400"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-                  "flex w-full items-center justify-between gap-x-2.5 rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
+                  "flex w-full items-center justify-between gap-x-2.5 rounded-md px-3 py-2 text-sm transition",
+                  openSection === 'settingsAndSetup'
+                    ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50"
+                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                   focusRing,
                 )}
-                aria-expanded={isSettingsAndSetupOpen}
+                aria-expanded={openSection === 'settingsAndSetup'}
               >
                 <span className="flex items-center gap-x-2.5">
                   <RiSettings5Line className="size-4 shrink-0" aria-hidden="true" />
                   Settings and setup
                 </span>
-                {isSettingsAndSetupOpen ? (
-                  <RiArrowDownSLine className="size-4 shrink-0 transition-transform" aria-hidden="true" />
-                ) : (
-                  <RiArrowRightSLine className="size-4 shrink-0 transition-transform" aria-hidden="true" />
-                )}
+                <RiArrowDownSLine
+                  className={cx(
+                    "size-4 shrink-0 transition-transform duration-200",
+                    openSection === 'settingsAndSetup' ? "rotate-0" : "-rotate-90"
+                  )}
+                  aria-hidden="true"
+                />
               </button>
 
               {/* Sub-navigation items with animation */}
               <div
                 className={cx(
                   "overflow-hidden transition-all duration-300 ease-in-out",
-                  isSettingsAndSetupOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+                  openSection === 'settingsAndSetup' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                 )}
               >
-                <ul className="mt-1 space-y-0.5 pl-6">
+                <ul className="space-y-1 pl-6">
                   {settingsAndSetupItems.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
                         className={cx(
+                          "flex items-center rounded-md px-3 py-2 text-sm transition w-full",
                           isActive(item.href)
-                            ? "text-primary dark:text-primary-400"
-                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-                          "flex items-center rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
+                            ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                           focusRing,
                         )}
                       >
@@ -515,24 +518,18 @@ export function Sidebar() {
                 </ul>
               </div>
             </li>
-
-            {/* Analytics */}
-            {renderNavItem(navigation[1])}
-
-            {/* Resources */}
-            {renderNavItem(navigation[2])}
           </ul>
           <div>
             <div className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
               Shortcuts
             </div>
-            <ul role="list" className="mt-3 space-y-0.5">
+            <ul role="list" className="mt-3 space-y-1">
               {shortcuts.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
                     className={cx(
-                      "flex items-center gap-x-2.5 rounded-md px-1.5 py-1.5 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 hover:dark:bg-gray-900 hover:dark:text-gray-50",
+                      "flex items-center gap-x-2.5 rounded-md px-3 py-2 text-sm text-gray-700 transition hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 hover:dark:bg-gray-800 hover:dark:text-gray-50",
                       focusRing,
                     )}
                   >
