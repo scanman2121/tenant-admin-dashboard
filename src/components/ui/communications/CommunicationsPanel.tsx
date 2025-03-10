@@ -2,16 +2,20 @@
 
 import { cx } from "@/lib/utils"
 import {
+    RiAddLine,
     RiAttachmentLine,
+    RiCalendarEventLine,
     RiCloseLine,
     RiEmotionLine,
     RiFullscreenLine,
     RiMessage2Line,
     RiSearchLine,
-    RiSendPlaneFill
+    RiSendPlaneFill,
+    RiToolsLine,
+    RiUserAddLine
 } from "@remixicon/react"
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 interface CommunicationsPanelProps {
     onMinimize: () => void
@@ -64,6 +68,22 @@ export function CommunicationsPanel({
     const [selectedContact, setSelectedContact] = useState<string | null>(null)
     const [searchQuery, setSearchQuery] = useState("")
     const [messageInput, setMessageInput] = useState("")
+    const [showActionMenu, setShowActionMenu] = useState(false)
+    const actionMenuRef = useRef<HTMLDivElement>(null)
+
+    // Close the action menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (actionMenuRef.current && !actionMenuRef.current.contains(event.target as Node)) {
+                setShowActionMenu(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [])
 
     // Sample tenant data with contacts
     const tenants: Tenant[] = [
@@ -335,6 +355,24 @@ export function CommunicationsPanel({
             ? messages[selectedTenant].filter(m => m.isFromTenant ? m.senderId === selectedContact : true)
             : messages[selectedTenant])
         : []
+
+    const handleCreateVisitor = () => {
+        setShowActionMenu(false)
+        // In a real app, you would open a visitor creation form
+        console.log(`Creating visitor for tenant ${selectedTenant}`)
+    }
+
+    const handleCreateWorkOrder = () => {
+        setShowActionMenu(false)
+        // In a real app, you would open a work order creation form
+        console.log(`Creating work order for tenant ${selectedTenant}`)
+    }
+
+    const handleBookResource = () => {
+        setShowActionMenu(false)
+        // In a real app, you would open a resource booking form
+        console.log(`Booking resource for tenant ${selectedTenant}`)
+    }
 
     return (
         <div className={cx(
@@ -637,6 +675,47 @@ export function CommunicationsPanel({
                                             )}
                                         />
                                         <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex gap-1">
+                                            <div className="relative" ref={actionMenuRef}>
+                                                <button
+                                                    type="button"
+                                                    className="p-1 rounded-md text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                                                    onClick={() => setShowActionMenu(!showActionMenu)}
+                                                    title="Add actions"
+                                                >
+                                                    <RiAddLine className="size-4" />
+                                                </button>
+
+                                                {showActionMenu && (
+                                                    <div className="absolute bottom-full right-0 mb-2 w-48 bg-white dark:bg-gray-900 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden z-10">
+                                                        <div className="py-1">
+                                                            <button
+                                                                type="button"
+                                                                className="flex items-center gap-2 w-full px-4 py-2 text-sm text-left text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                                                                onClick={handleCreateVisitor}
+                                                            >
+                                                                <RiUserAddLine className="size-4 text-gray-500 dark:text-gray-400" />
+                                                                <span>Create visitor</span>
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                className="flex items-center gap-2 w-full px-4 py-2 text-sm text-left text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                                                                onClick={handleCreateWorkOrder}
+                                                            >
+                                                                <RiToolsLine className="size-4 text-gray-500 dark:text-gray-400" />
+                                                                <span>Create work order</span>
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                className="flex items-center gap-2 w-full px-4 py-2 text-sm text-left text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                                                                onClick={handleBookResource}
+                                                            >
+                                                                <RiCalendarEventLine className="size-4 text-gray-500 dark:text-gray-400" />
+                                                                <span>Book resource</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
                                             <button
                                                 type="button"
                                                 className="p-1 rounded-md text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
