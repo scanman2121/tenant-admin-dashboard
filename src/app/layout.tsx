@@ -1,3 +1,4 @@
+import { cx } from "@/lib/utils"
 import type { Metadata } from "next"
 import { ThemeProvider } from "next-themes"
 import { Inter, Roboto } from "next/font/google"
@@ -64,7 +65,13 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className="font-sans antialiased text-[#2D3338]">
+      <body
+        className={cx(
+          "min-h-screen bg-white font-sans text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-50",
+          inter.variable,
+          roboto.variable,
+        )}
+      >
         <ThemeProvider defaultTheme="system" attribute="class">
           {children}
           <ToastContainer />

@@ -262,7 +262,7 @@ export function Sidebar() {
                       openSection === 'assetManager' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                     )}
                   >
-                    <ul className="space-y-1">
+                    <ul className="space-y-1 px-1">
                       {assetManagerItems.map((item) => (
                         <li key={item.name}>
                           <Link
@@ -270,7 +270,7 @@ export function Sidebar() {
                             className={cx(
                               "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
@@ -320,7 +320,7 @@ export function Sidebar() {
                       openSection === 'experienceManager' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                     )}
                   >
-                    <ul className="space-y-1">
+                    <ul className="space-y-1 px-1">
                       {experienceManagerItems.map((item) => (
                         <li key={item.name}>
                           <Link
@@ -328,7 +328,7 @@ export function Sidebar() {
                             className={cx(
                               "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
@@ -378,7 +378,7 @@ export function Sidebar() {
                       openSection === 'operations' ? "max-h-96 opacity-100 mt-1" : "max-h-0 opacity-0"
                     )}
                   >
-                    <ul className="space-y-1">
+                    <ul className="space-y-1 px-1">
                       {operationsItems.map((item) => (
                         <li key={item.name}>
                           <Link
@@ -386,7 +386,7 @@ export function Sidebar() {
                             className={cx(
                               "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
@@ -436,7 +436,7 @@ export function Sidebar() {
                       openSection === 'payments' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                     )}
                   >
-                    <ul className="space-y-1">
+                    <ul className="space-y-1 px-1">
                       {paymentsItems.map((item) => (
                         <li key={item.name}>
                           <Link
@@ -444,7 +444,7 @@ export function Sidebar() {
                             className={cx(
                               "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
@@ -494,7 +494,7 @@ export function Sidebar() {
                       openSection === 'intelligence' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                     )}
                   >
-                    <ul className="space-y-1">
+                    <ul className="space-y-1 px-1">
                       {intelligenceItems.map((item) => (
                         <li key={item.name}>
                           <Link
@@ -502,7 +502,7 @@ export function Sidebar() {
                             className={cx(
                               "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
@@ -552,7 +552,7 @@ export function Sidebar() {
                       openSection === 'settingsAndSetup' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                     )}
                   >
-                    <ul className="space-y-1">
+                    <ul className="space-y-1 px-1">
                       {settingsAndSetupItems.map((item) => (
                         <li key={item.name}>
                           <Link
@@ -560,7 +560,7 @@ export function Sidebar() {
                             className={cx(
                               "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
                               focusRing,
                             )}
