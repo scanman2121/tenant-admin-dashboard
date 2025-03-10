@@ -266,8 +266,8 @@ export function CommunicationsPanel({
                     ) : (
                         <button
                             className="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
-                            onClick={onMinimize}
-                            aria-label="Minimize"
+                            onClick={onClose}
+                            aria-label="Close"
                         >
                             <RiCloseLine className="size-4" />
                         </button>
