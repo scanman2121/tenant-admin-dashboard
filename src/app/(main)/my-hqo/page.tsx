@@ -457,25 +457,39 @@ export default function MyHqO() {
                   const ActivityIcon = getActivityIcon(activity.type);
                   return (
                     <div key={activity.id} className="flex gap-4 p-4 rounded-lg border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
-                      {/* User Avatar with Activity Icon */}
+                      {/* User Avatar with Activity Icon - Redesigned */}
                       <div className="flex-shrink-0">
-                        <div className="relative">
+                        <div className="relative flex items-center justify-center">
+                          {/* Activity type indicator ring */}
+                          <div className={cx(
+                            "absolute inset-0 rounded-full border-2",
+                            activity.type === "Event" ? "border-blue-400 dark:border-blue-500" :
+                              activity.type === "Booking" ? "border-green-400 dark:border-green-500" :
+                                activity.type === "Marketplace" ? "border-amber-400 dark:border-amber-500" :
+                                  activity.type === "Access" ? "border-violet-400 dark:border-violet-500" :
+                                    "border-rose-400 dark:border-rose-500"
+                          )}></div>
+
+                          {/* User avatar */}
                           <img
                             src={activity.user.avatar}
                             alt={activity.user.name}
-                            className="w-10 h-10 rounded-full object-cover border-2 border-white dark:border-gray-900"
+                            className="w-10 h-10 rounded-full object-cover border-2 border-white dark:border-gray-900 z-10"
                           />
-                          <div className="absolute -bottom-2 -right-2 rounded-full p-1 bg-white dark:bg-gray-900 shadow-sm">
+
+                          {/* Activity icon badge */}
+                          <div className={cx(
+                            "absolute -top-1 -right-1 rounded-full p-1.5 shadow-md z-20",
+                            activity.type === "Event" ? "bg-blue-500 text-white" :
+                              activity.type === "Booking" ? "bg-green-500 text-white" :
+                                activity.type === "Marketplace" ? "bg-amber-500 text-white" :
+                                  activity.type === "Access" ? "bg-violet-500 text-white" :
+                                    "bg-rose-500 text-white"
+                          )}>
                             <Icon
                               icon={ActivityIcon}
-                              size="sm"
-                              className={`
-                                ${activity.type === "Event" ? "text-blue-500" : ""}
-                                ${activity.type === "Booking" ? "text-green-500" : ""}
-                                ${activity.type === "Marketplace" ? "text-amber-500" : ""}
-                                ${activity.type === "Access" ? "text-violet-500" : ""}
-                                ${activity.type === "Visitor" ? "text-rose-500" : ""}
-                              `}
+                              size="xs"
+                              className="text-white"
                             />
                           </div>
                         </div>
@@ -644,3 +658,6 @@ export default function MyHqO() {
     </div>
   )
 }
+
+{/* Add extra spacing at the bottom of the page */ }
+<div className="h-24"></div>
