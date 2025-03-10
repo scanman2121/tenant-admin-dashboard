@@ -1,18 +1,19 @@
 import { PageHeader } from "@/components/PageHeader"
-import { columns } from "@/components/ui/data-table/columns"
 import { DataTable } from "@/components/ui/data-table/DataTable"
+import { discountsColumns } from "@/components/ui/data-table/discounts-columns"
 import { usage } from "@/data/data"
 
 export default function Discounts() {
+    // Filter data to only include discounts
+    const discountsData = usage.filter(item => item.discountId)
+
     return (
-        <div>
+        <div className="flex flex-col gap-5 w-full">
             <PageHeader
                 title="Discounts"
-                primaryCta="Add New Discount"
+                primaryCta="Add new discount"
             />
-            <div className="mt-4">
-                <DataTable data={usage} columns={columns} />
-            </div>
+            <DataTable data={discountsData} columns={discountsColumns} />
         </div>
     )
 } 

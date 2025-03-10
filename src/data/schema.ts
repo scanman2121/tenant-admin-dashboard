@@ -13,6 +13,26 @@ export type Usage = {
   region?: string
   stability?: number
   lastEdited?: string
+  transactionId?: string
+  transactionDate?: string
+  propertyName?: string
+  unitNumber?: string
+  tenantName?: string
+  paymentMethod?: string
+  paymentType?: string
+  amount?: number
+  dueDate?: string
+  paymentStatus?: string
+  creditId?: string
+  creditAmount?: number
+  creditReason?: string
+  creditAppliedTo?: string
+  discountId?: string
+  discountType?: string
+  discountAmount?: number
+  discountPercentage?: number
+  discountPeriod?: string
+  discountAppliedTo?: string
 }
 
 export type Visitor = {
