@@ -304,7 +304,7 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
                                             {card.icon}
                                         </div>
                                         <div>
-                                            <h4 className="font-medium text-gray-900 dark:text-gray-50 text-sm">
+                                            <h4 className="font-medium text-gray-900 dark:text-gray-50 text-xs">
                                                 {card.title}
                                             </h4>
                                             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">

@@ -576,7 +576,9 @@ export function Sidebar() {
             </li>
           </ul>
         </nav>
-        <UserProfileDesktop />
+        <div className="pb-4">
+          <UserProfileDesktop />
+        </div>
       </div>
     </nav>
   )
