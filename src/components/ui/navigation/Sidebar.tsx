@@ -196,14 +196,16 @@ export function Sidebar() {
             {renderNavItem(navigation[0])}
 
             {/* Asset Manager accordion */}
-            <li>
+            <li className={cx(
+              openSection === 'assetManager' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden" : ""
+            )}>
               <button
                 onClick={() => toggleSection('assetManager')}
                 className={cx(
-                  "flex w-full items-center justify-between gap-x-2.5 rounded-md px-3 py-2 text-sm transition",
+                  "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
                   openSection === 'assetManager'
-                    ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
+                    ? "text-gray-900 dark:text-gray-50"
+                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                   focusRing,
                 )}
                 aria-expanded={openSection === 'assetManager'}
@@ -250,14 +252,16 @@ export function Sidebar() {
             </li>
 
             {/* Experience Manager accordion */}
-            <li>
+            <li className={cx(
+              openSection === 'experienceManager' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden" : ""
+            )}>
               <button
                 onClick={() => toggleSection('experienceManager')}
                 className={cx(
-                  "flex w-full items-center justify-between gap-x-2.5 rounded-md px-3 py-2 text-sm transition",
+                  "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
                   openSection === 'experienceManager'
-                    ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
+                    ? "text-gray-900 dark:text-gray-50"
+                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                   focusRing,
                 )}
                 aria-expanded={openSection === 'experienceManager'}
@@ -304,14 +308,16 @@ export function Sidebar() {
             </li>
 
             {/* Operations accordion */}
-            <li>
+            <li className={cx(
+              openSection === 'operations' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden" : ""
+            )}>
               <button
                 onClick={() => toggleSection('operations')}
                 className={cx(
-                  "flex w-full items-center justify-between gap-x-2.5 rounded-md px-3 py-2 text-sm transition",
+                  "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
                   openSection === 'operations'
-                    ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
+                    ? "text-gray-900 dark:text-gray-50"
+                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                   focusRing,
                 )}
                 aria-expanded={openSection === 'operations'}
@@ -358,14 +364,16 @@ export function Sidebar() {
             </li>
 
             {/* Payments accordion */}
-            <li>
+            <li className={cx(
+              openSection === 'payments' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden" : ""
+            )}>
               <button
                 onClick={() => toggleSection('payments')}
                 className={cx(
-                  "flex w-full items-center justify-between gap-x-2.5 rounded-md px-3 py-2 text-sm transition",
+                  "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
                   openSection === 'payments'
-                    ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
+                    ? "text-gray-900 dark:text-gray-50"
+                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                   focusRing,
                 )}
                 aria-expanded={openSection === 'payments'}
@@ -412,14 +420,16 @@ export function Sidebar() {
             </li>
 
             {/* Intelligence accordion */}
-            <li>
+            <li className={cx(
+              openSection === 'intelligence' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden" : ""
+            )}>
               <button
                 onClick={() => toggleSection('intelligence')}
                 className={cx(
-                  "flex w-full items-center justify-between gap-x-2.5 rounded-md px-3 py-2 text-sm transition",
+                  "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
                   openSection === 'intelligence'
-                    ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
+                    ? "text-gray-900 dark:text-gray-50"
+                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                   focusRing,
                 )}
                 aria-expanded={openSection === 'intelligence'}
@@ -466,14 +476,16 @@ export function Sidebar() {
             </li>
 
             {/* Settings and setup accordion */}
-            <li>
+            <li className={cx(
+              openSection === 'settingsAndSetup' ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden" : ""
+            )}>
               <button
                 onClick={() => toggleSection('settingsAndSetup')}
                 className={cx(
-                  "flex w-full items-center justify-between gap-x-2.5 rounded-md px-3 py-2 text-sm transition",
+                  "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
                   openSection === 'settingsAndSetup'
-                    ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50"
-                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
+                    ? "text-gray-900 dark:text-gray-50"
+                    : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
                   focusRing,
                 )}
                 aria-expanded={openSection === 'settingsAndSetup'}
