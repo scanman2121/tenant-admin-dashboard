@@ -10,7 +10,6 @@ import { usePathname } from "next/navigation"
 
 interface PageTemplateProps {
     title: string
-    description?: string
     primaryCta?: string
     onPrimaryClick?: () => void
     tabs?: { name: string; href: string }[]
@@ -18,7 +17,6 @@ interface PageTemplateProps {
 
 export function PageTemplate({
     title,
-    description,
     primaryCta,
     onPrimaryClick,
     tabs
