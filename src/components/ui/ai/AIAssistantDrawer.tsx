@@ -73,13 +73,13 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
         {
             id: 'add-user',
             title: 'Add a user',
-            description: 'Create a new user account with proper permissions',
+            description: 'Add new user account',
             icon: <RiUserAddLine className="size-5" />
         },
         {
             id: 'occupancy-trends',
             title: 'Find occupancy trends',
-            description: 'Analyze building usage patterns over time',
+            description: 'Analyze building occupancy trends',
             icon: <RiLineChartLine className="size-5" />
         },
         {
