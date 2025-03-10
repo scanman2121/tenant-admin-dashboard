@@ -1,6 +1,7 @@
 "use client"
 
-import { RiCalendarEventLine, RiDoorOpenLine, RiFilterLine, RiInformationLine, RiMapPinLine, RiSearchLine, RiShoppingBag3Line, RiUserAddLine } from "@remixicon/react";
+import { cx } from "@/lib/utils";
+import { RiArrowLeftSLine, RiArrowRightSLine, RiCalendarEventLine, RiDoorOpenLine, RiFilterLine, RiInformationLine, RiMapPinLine, RiSearchLine, RiShoppingBag3Line, RiUserAddLine } from "@remixicon/react";
 import { AreaChart, Badge, Button, Card, DonutChart, Grid, Icon, Select, SelectItem, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, TextInput, Title } from "@tremor/react";
 import { useState } from "react";
 
@@ -414,124 +415,231 @@ export default function MyHqO() {
 
       {/* Recent Activity Section */}
       <section>
-        <Card>
-          <Title className="text-text-primary mb-4">Tenant Activity Stream</Title>
+        <Grid numItemsMd={1} numItemsLg={2} className="gap-6">
+          {/* Activity Stream - Left Column */}
+          <Card>
+            <Title className="text-text-primary mb-4">Tenant Activity Stream</Title>
 
-          {/* Filters and Search */}
-          <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="w-full sm:w-64">
-              <Select
-                value={selectedTenant}
-                onValueChange={setSelectedTenant}
-                icon={RiFilterLine}
-                placeholder="Filter by tenant"
-              >
-                {tenants.map((tenant) => (
-                  <SelectItem key={tenant.value} value={tenant.value}>
-                    {tenant.label}
-                  </SelectItem>
-                ))}
-              </Select>
-            </div>
-            <div className="w-full sm:w-72">
-              <TextInput
-                icon={RiSearchLine}
-                placeholder="Search activities..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-          </div>
-
-          {/* Activity Stream */}
-          <div className="space-y-4">
-            {filteredActivities.length === 0 ? (
-              <div className="py-12 text-center">
-                <Text className="text-text-secondary">No activities found matching your criteria.</Text>
+            {/* Filters and Search */}
+            <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="w-full sm:w-64">
+                <Select
+                  value={selectedTenant}
+                  onValueChange={setSelectedTenant}
+                  icon={RiFilterLine}
+                  placeholder="Filter by tenant"
+                >
+                  {tenants.map((tenant) => (
+                    <SelectItem key={tenant.value} value={tenant.value}>
+                      {tenant.label}
+                    </SelectItem>
+                  ))}
+                </Select>
               </div>
-            ) : (
-              filteredActivities.map((activity) => {
-                const ActivityIcon = getActivityIcon(activity.type);
-                return (
-                  <div key={activity.id} className="flex gap-4 p-4 rounded-lg border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
-                    {/* User Avatar */}
-                    <div className="flex-shrink-0">
-                      <div className="relative">
-                        <img
-                          src={activity.user.avatar}
-                          alt={activity.user.name}
-                          className="w-10 h-10 rounded-full object-cover"
-                        />
-                        <div className="absolute -bottom-1 -right-1 rounded-full p-1 bg-white dark:bg-gray-900">
-                          <Icon
-                            icon={ActivityIcon}
-                            size="sm"
-                            className={`
-                              ${activity.type === "Event" ? "text-blue-500" : ""}
-                              ${activity.type === "Booking" ? "text-green-500" : ""}
-                              ${activity.type === "Marketplace" ? "text-amber-500" : ""}
-                              ${activity.type === "Access" ? "text-violet-500" : ""}
-                              ${activity.type === "Visitor" ? "text-rose-500" : ""}
-                            `}
+              <div className="w-full sm:w-72">
+                <TextInput
+                  icon={RiSearchLine}
+                  placeholder="Search activities..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+            </div>
+
+            {/* Activity Stream */}
+            <div className="space-y-4 max-h-[600px] overflow-y-auto pr-1">
+              {filteredActivities.length === 0 ? (
+                <div className="py-12 text-center">
+                  <Text className="text-text-secondary">No activities found matching your criteria.</Text>
+                </div>
+              ) : (
+                filteredActivities.map((activity) => {
+                  const ActivityIcon = getActivityIcon(activity.type);
+                  return (
+                    <div key={activity.id} className="flex gap-4 p-4 rounded-lg border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
+                      {/* User Avatar with Activity Icon */}
+                      <div className="flex-shrink-0">
+                        <div className="relative">
+                          <img
+                            src={activity.user.avatar}
+                            alt={activity.user.name}
+                            className="w-10 h-10 rounded-full object-cover border-2 border-white dark:border-gray-900"
                           />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Activity Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                        <div>
-                          <p className="font-medium text-text-primary truncate">
-                            {activity.user.name}
-                            <span className="font-normal text-text-secondary"> · {activity.tenant}</span>
-                          </p>
-                          <p className="text-sm text-text-secondary">{activity.description}</p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Badge color={
-                            activity.status === "Active" || activity.status === "Approved" ? "green" :
-                              activity.status === "Completed" || activity.status === "Delivered" ? "blue" :
-                                activity.status === "Scheduled" ? "amber" : "gray"
-                          }>
-                            {activity.status}
-                          </Badge>
-                          <Text className="text-xs text-text-secondary whitespace-nowrap">{activity.date}</Text>
+                          <div className="absolute -bottom-2 -right-2 rounded-full p-1 bg-white dark:bg-gray-900 shadow-sm">
+                            <Icon
+                              icon={ActivityIcon}
+                              size="sm"
+                              className={`
+                                ${activity.type === "Event" ? "text-blue-500" : ""}
+                                ${activity.type === "Booking" ? "text-green-500" : ""}
+                                ${activity.type === "Marketplace" ? "text-amber-500" : ""}
+                                ${activity.type === "Access" ? "text-violet-500" : ""}
+                                ${activity.type === "Visitor" ? "text-rose-500" : ""}
+                              `}
+                            />
+                          </div>
                         </div>
                       </div>
 
-                      {/* Activity Details */}
-                      <div className="mt-2 flex flex-wrap gap-2">
-                        <Badge size="sm" color="gray" className="font-normal">
-                          {activity.title}
-                        </Badge>
-                        {activity.registrations && (
-                          <Badge size="sm" color="blue" className="font-normal">
-                            {activity.registrations}/{activity.capacity} registered
-                          </Badge>
-                        )}
-                        {activity.orders && (
-                          <Badge size="sm" color="amber" className="font-normal">
-                            {activity.orders} orders
-                          </Badge>
-                        )}
+                      {/* Activity Content */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                          <div>
+                            <p className="font-medium text-text-primary truncate">
+                              {activity.user.name}
+                              <span className="font-normal text-text-secondary"> · {activity.tenant}</span>
+                            </p>
+                            <p className="text-sm text-text-secondary">{activity.description}</p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Badge color={
+                              activity.status === "Active" || activity.status === "Approved" ? "green" :
+                                activity.status === "Completed" || activity.status === "Delivered" ? "blue" :
+                                  activity.status === "Scheduled" ? "amber" : "gray"
+                            }>
+                              {activity.status}
+                            </Badge>
+                            <Text className="text-xs text-text-secondary whitespace-nowrap">{activity.date}</Text>
+                          </div>
+                        </div>
+
+                        {/* Activity Details - Simplified badges */}
+                        <div className="mt-2">
+                          <Text className="text-sm text-text-primary font-medium">
+                            {activity.title}
+                            {activity.registrations && (
+                              <span className="ml-2 text-blue-500 font-normal">
+                                {activity.registrations}/{activity.capacity} registered
+                              </span>
+                            )}
+                            {activity.orders && (
+                              <span className="ml-2 text-amber-500 font-normal">
+                                {activity.orders} orders
+                              </span>
+                            )}
+                          </Text>
+                        </div>
                       </div>
                     </div>
+                  );
+                })
+              )}
+            </div>
+
+            {/* Load More Button */}
+            {filteredActivities.length > 0 && (
+              <div className="mt-6 text-center">
+                <Button variant="light" className="text-text-primary">
+                  Load more activities
+                </Button>
+              </div>
+            )}
+          </Card>
+
+          {/* Day View Calendar - Right Column */}
+          <Card>
+            <div className="flex items-center justify-between mb-4">
+              <Title className="text-text-primary">Today's Schedule</Title>
+              <div className="flex items-center gap-2">
+                <Button variant="light" size="xs" icon={RiArrowLeftSLine} />
+                <Text className="text-text-primary font-medium">{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</Text>
+                <Button variant="light" size="xs" icon={RiArrowRightSLine} />
+              </div>
+            </div>
+
+            {/* Time slots */}
+            <div className="space-y-1 max-h-[600px] overflow-y-auto pr-1">
+              {Array.from({ length: 12 }).map((_, index) => {
+                const hour = index + 8; // Start from 8 AM
+                const isPast = new Date().getHours() > hour;
+                const isCurrent = new Date().getHours() === hour;
+                const hasEvent = [9, 11, 14, 16].includes(hour);
+
+                return (
+                  <div key={hour} className={cx(
+                    "flex gap-3 py-3 border-l-2 pl-3 pr-2 rounded-r-md transition-colors",
+                    isPast ? "border-gray-200 dark:border-gray-800 text-gray-400 dark:text-gray-600" :
+                      isCurrent ? "border-primary bg-primary/5 dark:bg-primary/10" :
+                        "border-gray-300 dark:border-gray-700"
+                  )}>
+                    {/* Time */}
+                    <div className="w-16 flex-shrink-0">
+                      <Text className={cx(
+                        "font-medium",
+                        isPast ? "text-gray-400 dark:text-gray-600" :
+                          isCurrent ? "text-primary dark:text-primary-400" :
+                            "text-gray-700 dark:text-gray-300"
+                      )}>
+                        {hour > 12 ? `${hour - 12}:00 PM` : hour === 12 ? `12:00 PM` : `${hour}:00 AM`}
+                      </Text>
+                    </div>
+
+                    {/* Event */}
+                    {hasEvent && (
+                      <div className={cx(
+                        "flex-1 rounded-md p-2 border",
+                        hour === 9 ? "bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-800" :
+                          hour === 11 ? "bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-800" :
+                            hour === 14 ? "bg-amber-50 border-amber-200 dark:bg-amber-900/20 dark:border-amber-800" :
+                              "bg-violet-50 border-violet-200 dark:bg-violet-900/20 dark:border-violet-800"
+                      )}>
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <Text className={cx(
+                              "font-medium",
+                              hour === 9 ? "text-blue-700 dark:text-blue-400" :
+                                hour === 11 ? "text-green-700 dark:text-green-400" :
+                                  hour === 14 ? "text-amber-700 dark:text-amber-400" :
+                                    "text-violet-700 dark:text-violet-400"
+                            )}>
+                              {hour === 9 ? "Team Standup" :
+                                hour === 11 ? "Client Meeting" :
+                                  hour === 14 ? "Wellness Workshop" :
+                                    "Product Demo"}
+                            </Text>
+                            <Text className="text-xs text-gray-600 dark:text-gray-400">
+                              {hour === 9 ? "Conference Room B • 30 min" :
+                                hour === 11 ? "Zoom Call • 1 hour" :
+                                  hour === 14 ? "Yoga Studio • 45 min" :
+                                    "Main Auditorium • 1 hour"}
+                            </Text>
+                          </div>
+                          <div className="flex -space-x-2">
+                            <img
+                              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                              alt="Attendee"
+                              className="w-6 h-6 rounded-full border border-white dark:border-gray-900"
+                            />
+                            <img
+                              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                              alt="Attendee"
+                              className="w-6 h-6 rounded-full border border-white dark:border-gray-900"
+                            />
+                            {hour !== 9 && (
+                              <div className="w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-xs font-medium text-gray-600 dark:text-gray-300 border border-white dark:border-gray-900">
+                                +{hour === 11 ? 3 : hour === 14 ? 8 : 5}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 );
-              })
-            )}
-          </div>
+              })}
+            </div>
 
-          {/* Load More Button */}
-          {filteredActivities.length > 0 && (
-            <div className="mt-6 text-center">
+            <div className="mt-6 flex justify-between">
               <Button variant="light" className="text-text-primary">
-                Load more activities
+                <RiCalendarEventLine className="size-4 mr-1" />
+                Add event
+              </Button>
+              <Button variant="light" className="text-text-primary">
+                View full calendar
               </Button>
             </div>
-          )}
-        </Card>
+          </Card>
+        </Grid>
       </section>
     </div>
   )

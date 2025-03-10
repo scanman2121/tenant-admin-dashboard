@@ -320,20 +320,25 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
                 </div>
 
                 {/* Input */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
-                    <form onSubmit={handleSubmit} className="flex gap-2">
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-white dark:bg-gray-950">
+                    <form onSubmit={handleSubmit} className="relative">
                         <input
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="Ask me anything"
                             className={cx(
-                                "flex-1 rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm",
+                                "w-full rounded-full border border-gray-300 dark:border-gray-700 pl-4 pr-12 py-2.5 text-sm",
                                 "bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-50",
+                                "shadow-sm",
                                 "focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                             )}
                         />
-                        <Button type="submit" disabled={!input.trim()}>
+                        <Button
+                            type="submit"
+                            disabled={!input.trim()}
+                            className="absolute right-1 top-1/2 -translate-y-1/2 p-1.5 h-8 w-8 rounded-full"
+                        >
                             <RiSendPlaneFill className="size-4" />
                             <span className="sr-only">Send</span>
                         </Button>
