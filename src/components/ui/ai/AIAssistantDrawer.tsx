@@ -337,9 +337,17 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
                         <Button
                             type="submit"
                             disabled={!input.trim()}
-                            className="absolute right-1 top-1/2 -translate-y-1/2 p-1.5 h-8 w-8 rounded-full"
+                            className={cx(
+                                "absolute right-1 top-1/2 -translate-y-1/2 p-1.5 h-8 w-8 rounded-full transition-colors",
+                                input.trim()
+                                    ? "bg-primary hover:bg-primary-dark text-white"
+                                    : "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+                            )}
                         >
-                            <RiSendPlaneFill className="size-4" />
+                            <RiSendPlaneFill className={cx(
+                                "size-4",
+                                input.trim() ? "text-white" : "text-gray-500 dark:text-gray-400"
+                            )} />
                             <span className="sr-only">Send</span>
                         </Button>
                     </form>
