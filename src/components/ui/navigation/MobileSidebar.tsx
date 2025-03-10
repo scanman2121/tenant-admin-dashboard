@@ -15,8 +15,11 @@ import {
   RiArrowDownSLine,
   RiArrowRightSLine,
   RiBuildingLine,
+  RiDashboardLine,
   RiHome2Line,
+  RiLineChartLine,
   RiLinkM,
+  RiMegaphoneLine,
   RiMenuLine,
   RiReceiptLine,
   RiSettings5Line
