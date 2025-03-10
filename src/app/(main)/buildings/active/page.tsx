@@ -54,7 +54,7 @@ const allBuildingsData = [
     {
         id: "4",
         name: "200 Congress Ave",
-        imageUrl: "https://images.unsplash.com/photo-1554435493-93422e8d1c46?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        imageUrl: "https://images.unsplash.com/photo-1536697246787-1f7ae568d89a?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         location: "Austin, TX",
         type: "Office",
         floors: 18,
