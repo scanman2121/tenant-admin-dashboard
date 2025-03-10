@@ -8,7 +8,6 @@ import {
     RiCloseLine,
     RiLineChartLine,
     RiSendPlaneFill,
-    RiSparkling2Line,
     RiUserAddLine,
     RiVipCrownLine
 } from "@remixicon/react"
@@ -212,17 +211,14 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
         <>
             <div
                 className={cx(
-                    "fixed inset-y-0 right-0 z-40 w-80 bg-white dark:bg-gray-950 shadow-lg transform transition-transform duration-300 ease-in-out",
+                    "fixed inset-y-0 right-0 z-40 w-80 bg-white dark:bg-gray-950 transform transition-transform duration-300 ease-in-out",
                     "border-l border-gray-200 dark:border-gray-800",
                     isOpen ? "translate-x-0" : "translate-x-full"
                 )}
             >
                 {/* Header */}
                 <div className="flex items-center justify-between p-4">
-                    <div className="flex items-center gap-2">
-                        <RiSparkling2Line className="size-5 text-primary" />
-                        <h2 className="font-medium text-sm text-gray-900 dark:text-gray-50">Assistant</h2>
-                    </div>
+                    <h2 className="font-medium text-sm text-gray-900 dark:text-gray-50">Assistant</h2>
                     <div className="flex items-center gap-2">
                         {/* Always show the button group for testing */}
                         <div className="relative inline-flex shadow-sm rounded-md">
