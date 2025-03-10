@@ -274,7 +274,7 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
                                     className={cx(
                                         "mb-4 max-w-[85%] rounded-lg p-3 text-sm",
                                         message.role === 'user'
-                                            ? "bg-primary text-white self-end rounded-br-none"
+                                            ? "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-100 self-end rounded-br-none"
                                             : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50 self-start rounded-bl-none"
                                     )}
                                 >
