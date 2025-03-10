@@ -1,5 +1,6 @@
 "use client"
 
+import { CommunicationsTab } from "@/components/ui/communications/CommunicationsTab"
 import { Header } from "@/components/ui/navigation/Header"
 import { Sidebar } from "@/components/ui/navigation/Sidebar"
 
@@ -21,6 +22,7 @@ export default function MainLayout({
           </div>
         </div>
       </main>
+      <CommunicationsTab />
     </>
   )
 }
