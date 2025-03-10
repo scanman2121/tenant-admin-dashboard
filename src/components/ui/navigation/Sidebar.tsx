@@ -199,9 +199,9 @@ export function Sidebar() {
                   <Link
                     href={siteConfig.baseLinks.overview}
                     className={cx(
-                      "group flex items-center gap-x-3 rounded-md px-3 py-2 text-sm transition",
+                      "group flex items-center gap-x-3 rounded-md px-3 py-2 text-[13px] transition",
                       isActive(siteConfig.baseLinks.overview)
-                        ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                        ? "bg-gray-100 dark:bg-gray-800 text-primary dark:text-primary-400"
                         : "text-[#696E72] hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-50",
                       focusRing,
                     )}
@@ -226,7 +226,7 @@ export function Sidebar() {
                   <button
                     onClick={() => toggleSection('assetManager')}
                     className={cx(
-                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
+                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
                       openSection === 'assetManager'
                         ? "text-gray-900 dark:text-gray-50"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
@@ -254,13 +254,13 @@ export function Sidebar() {
                       openSection === 'assetManager' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                     )}
                   >
-                    <ul className="space-y-1 px-2">
+                    <ul className="space-y-1">
                       {assetManagerItems.map((item) => (
                         <li key={item.name}>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1 mb-1",
+                              "flex items-center rounded-md px-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -282,7 +282,7 @@ export function Sidebar() {
                   <button
                     onClick={() => toggleSection('experienceManager')}
                     className={cx(
-                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
+                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
                       openSection === 'experienceManager'
                         ? "text-gray-900 dark:text-gray-50"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
@@ -310,13 +310,13 @@ export function Sidebar() {
                       openSection === 'experienceManager' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                     )}
                   >
-                    <ul className="space-y-1 px-2">
+                    <ul className="space-y-1">
                       {experienceManagerItems.map((item) => (
                         <li key={item.name}>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
+                              "flex items-center rounded-md px-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -338,7 +338,7 @@ export function Sidebar() {
                   <button
                     onClick={() => toggleSection('operations')}
                     className={cx(
-                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
+                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
                       openSection === 'operations'
                         ? "text-gray-900 dark:text-gray-50"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
@@ -366,13 +366,13 @@ export function Sidebar() {
                       openSection === 'operations' ? "max-h-96 opacity-100 mt-1" : "max-h-0 opacity-0"
                     )}
                   >
-                    <ul className="space-y-1 px-2">
+                    <ul className="space-y-1">
                       {operationsItems.map((item) => (
                         <li key={item.name}>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
+                              "flex items-center rounded-md px-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -394,7 +394,7 @@ export function Sidebar() {
                   <button
                     onClick={() => toggleSection('payments')}
                     className={cx(
-                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
+                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
                       openSection === 'payments'
                         ? "text-gray-900 dark:text-gray-50"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
@@ -422,13 +422,13 @@ export function Sidebar() {
                       openSection === 'payments' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                     )}
                   >
-                    <ul className="space-y-1 px-2">
+                    <ul className="space-y-1">
                       {paymentsItems.map((item) => (
                         <li key={item.name}>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
+                              "flex items-center rounded-md px-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -450,7 +450,7 @@ export function Sidebar() {
                   <button
                     onClick={() => toggleSection('intelligence')}
                     className={cx(
-                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
+                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
                       openSection === 'intelligence'
                         ? "text-gray-900 dark:text-gray-50"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
@@ -478,13 +478,13 @@ export function Sidebar() {
                       openSection === 'intelligence' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                     )}
                   >
-                    <ul className="space-y-1 px-2">
+                    <ul className="space-y-1">
                       {intelligenceItems.map((item) => (
                         <li key={item.name}>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
+                              "flex items-center rounded-md px-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -506,7 +506,7 @@ export function Sidebar() {
                   <button
                     onClick={() => toggleSection('settingsAndSetup')}
                     className={cx(
-                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
+                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
                       openSection === 'settingsAndSetup'
                         ? "text-gray-900 dark:text-gray-50"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
@@ -534,13 +534,13 @@ export function Sidebar() {
                       openSection === 'settingsAndSetup' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                     )}
                   >
-                    <ul className="space-y-1 px-2">
+                    <ul className="space-y-1">
                       {settingsAndSetupItems.map((item) => (
                         <li key={item.name}>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
+                              "flex items-center rounded-md px-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",

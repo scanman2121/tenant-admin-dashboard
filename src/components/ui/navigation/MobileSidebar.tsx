@@ -57,6 +57,29 @@ const paymentsItems = [
   { name: "Discounts", href: siteConfig.baseLinks.discounts },
 ] as const
 
+const shortcuts = [
+  {
+    name: "Add new user",
+    href: "/settings/users",
+    icon: RiLinkM,
+  },
+  {
+    name: "Workspace usage",
+    href: "/settings/billing#billing-overview",
+    icon: RiLinkM,
+  },
+  {
+    name: "Cost spend control",
+    href: "/settings/billing#cost-spend-control",
+    icon: RiLinkM,
+  },
+  {
+    name: "My HqO – Rows written",
+    href: "/my-hqo#usage-overview",
+    icon: RiLinkM,
+  },
+] as const
+
 // Experience Manager sub-navigation items
 const experienceManagerItems = [
   { name: "Content", href: siteConfig.baseLinks.experienceManager.content },
@@ -97,29 +120,6 @@ const intelligenceItems = [
 
 // Type for section IDs to ensure type safety
 type SectionId = 'assetManager' | 'payments' | 'experienceManager' | 'operations' | 'settingsAndSetup' | 'intelligence';
-
-const shortcuts = [
-  {
-    name: "Add new user",
-    href: "/settings/users",
-    icon: RiLinkM,
-  },
-  {
-    name: "Workspace usage",
-    href: "/settings/billing#billing-overview",
-    icon: RiLinkM,
-  },
-  {
-    name: "Cost spend control",
-    href: "/settings/billing#cost-spend-control",
-    icon: RiLinkM,
-  },
-  {
-    name: "My HqO – Rows written",
-    href: "/my-hqo#usage-overview",
-    icon: RiLinkM,
-  },
-] as const
 
 export default function MobileSidebar() {
   const pathname = usePathname()
@@ -234,7 +234,7 @@ export default function MobileSidebar() {
                 <button
                   onClick={() => toggleSection('experienceManager')}
                   className={cx(
-                    "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
+                    "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
                     openSection === 'experienceManager'
                       ? "text-gray-900 dark:text-gray-50"
                       : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
@@ -262,14 +262,14 @@ export default function MobileSidebar() {
                     openSection === 'experienceManager' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                   )}
                 >
-                  <ul className="space-y-1 px-2">
+                  <ul className="space-y-1">
                     {experienceManagerItems.map((item) => (
                       <li key={item.name}>
                         <DrawerClose asChild>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
+                              "flex items-center rounded-md px-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -292,7 +292,7 @@ export default function MobileSidebar() {
                 <button
                   onClick={() => toggleSection('operations')}
                   className={cx(
-                    "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
+                    "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
                     openSection === 'operations'
                       ? "text-gray-900 dark:text-gray-50"
                       : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
@@ -320,14 +320,14 @@ export default function MobileSidebar() {
                     openSection === 'operations' ? "max-h-96 opacity-100 mt-1" : "max-h-0 opacity-0"
                   )}
                 >
-                  <ul className="space-y-1 px-2">
+                  <ul className="space-y-1">
                     {operationsItems.map((item) => (
                       <li key={item.name}>
                         <DrawerClose asChild>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
+                              "flex items-center rounded-md px-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -350,7 +350,7 @@ export default function MobileSidebar() {
                 <button
                   onClick={() => toggleSection('payments')}
                   className={cx(
-                    "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
+                    "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
                     openSection === 'payments'
                       ? "text-gray-900 dark:text-gray-50"
                       : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
@@ -378,14 +378,14 @@ export default function MobileSidebar() {
                     openSection === 'payments' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                   )}
                 >
-                  <ul className="space-y-1 px-2">
+                  <ul className="space-y-1">
                     {paymentsItems.map((item) => (
                       <li key={item.name}>
                         <DrawerClose asChild>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
+                              "flex items-center rounded-md px-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -408,7 +408,7 @@ export default function MobileSidebar() {
                 <button
                   onClick={() => toggleSection('assetManager')}
                   className={cx(
-                    "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
+                    "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
                     openSection === 'assetManager'
                       ? "text-gray-900 dark:text-gray-50"
                       : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
@@ -436,14 +436,14 @@ export default function MobileSidebar() {
                     openSection === 'assetManager' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                   )}
                 >
-                  <ul className="space-y-1 px-2">
+                  <ul className="space-y-1">
                     {assetManagerItems.map((item) => (
                       <li key={item.name}>
                         <DrawerClose asChild>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
+                              "flex items-center rounded-md px-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -466,7 +466,7 @@ export default function MobileSidebar() {
                 <button
                   onClick={() => toggleSection('intelligence')}
                   className={cx(
-                    "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
+                    "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
                     openSection === 'intelligence'
                       ? "text-gray-900 dark:text-gray-50"
                       : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
@@ -494,14 +494,14 @@ export default function MobileSidebar() {
                     openSection === 'intelligence' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                   )}
                 >
-                  <ul className="space-y-1 px-2">
+                  <ul className="space-y-1">
                     {intelligenceItems.map((item) => (
                       <li key={item.name}>
                         <DrawerClose asChild>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
+                              "flex items-center rounded-md px-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -524,7 +524,7 @@ export default function MobileSidebar() {
                 <button
                   onClick={() => toggleSection('settingsAndSetup')}
                   className={cx(
-                    "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-sm transition",
+                    "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
                     openSection === 'settingsAndSetup'
                       ? "text-gray-900 dark:text-gray-50"
                       : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
@@ -552,14 +552,14 @@ export default function MobileSidebar() {
                     openSection === 'settingsAndSetup' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
                   )}
                 >
-                  <ul className="space-y-1 px-2">
+                  <ul className="space-y-1">
                     {settingsAndSetupItems.map((item) => (
                       <li key={item.name}>
                         <DrawerClose asChild>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md px-3 py-2 text-sm transition w-full mx-1",
+                              "flex items-center rounded-md px-3 py-2 text-[13px] transition w-full",
                               isActive(item.href)
                                 ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
                                 : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
@@ -575,6 +575,7 @@ export default function MobileSidebar() {
                 </div>
               </li>
             </ul>
+
             <div>
               <span className="text-xs font-medium leading-6 text-gray-500">
                 Shortcuts
@@ -588,8 +589,8 @@ export default function MobileSidebar() {
                         className={cx(
                           pathname === item.href || pathname.startsWith(item.href)
                             ? "text-primary dark:text-primary-400"
-                            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-                          "flex items-center gap-x-2.5 rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
+                            : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
+                          "flex items-center gap-x-2.5 rounded-md px-3 py-2 text-[13px] transition hover:bg-gray-100 hover:dark:bg-gray-900",
                           focusRing,
                         )}
                       >
