@@ -2,10 +2,10 @@
 
 import { cx } from "@/lib/utils"
 import {
-    RiArrowDownSLine,
     RiAttachmentLine,
     RiCloseLine,
     RiEmotionLine,
+    RiFullscreenLine,
     RiMessage2Line,
     RiSearchLine,
     RiSendPlaneFill
@@ -16,6 +16,8 @@ import { useState } from "react"
 interface CommunicationsPanelProps {
     onMinimize: () => void
     onClose: () => void
+    onExpand?: () => void
+    isExpanded?: boolean
 }
 
 interface Tenant {
@@ -41,7 +43,12 @@ interface Message {
     read: boolean
 }
 
-export function CommunicationsPanel({ onMinimize, onClose }: CommunicationsPanelProps) {
+export function CommunicationsPanel({
+    onMinimize,
+    onClose,
+    onExpand,
+    isExpanded = false
+}: CommunicationsPanelProps) {
     const [selectedTenant, setSelectedTenant] = useState<string | null>(null)
     const [searchQuery, setSearchQuery] = useState("")
     const [messageInput, setMessageInput] = useState("")
@@ -228,7 +235,10 @@ export function CommunicationsPanel({ onMinimize, onClose }: CommunicationsPanel
     }
 
     return (
-        <div className="mb-2 w-[800px] h-[500px] bg-white dark:bg-gray-950 rounded-t-lg shadow-lg border border-gray-200 dark:border-gray-800 overflow-hidden flex flex-col">
+        <div className={cx(
+            "bg-white dark:bg-gray-950 rounded-t-lg shadow-lg border border-gray-200 dark:border-gray-800 overflow-hidden flex flex-col",
+            isExpanded ? "w-full h-full" : "mb-2 w-[800px] h-[500px]"
+        )}>
             {/* Header */}
             <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                 <div className="flex items-center gap-2">
@@ -236,18 +246,32 @@ export function CommunicationsPanel({ onMinimize, onClose }: CommunicationsPanel
                     <span className="font-medium text-sm text-gray-900 dark:text-gray-50">Communications</span>
                 </div>
                 <div className="flex items-center gap-1">
-                    <button
-                        className="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
-                        onClick={onMinimize}
-                    >
-                        <RiArrowDownSLine className="size-4" />
-                    </button>
-                    <button
-                        className="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
-                        onClick={onClose}
-                    >
-                        <RiCloseLine className="size-4" />
-                    </button>
+                    {!isExpanded && onExpand && (
+                        <button
+                            className="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
+                            onClick={onExpand}
+                            aria-label="Expand"
+                        >
+                            <RiFullscreenLine className="size-4" />
+                        </button>
+                    )}
+                    {isExpanded ? (
+                        <button
+                            className="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
+                            onClick={onMinimize}
+                            aria-label="Minimize"
+                        >
+                            <RiFullscreenLine className="size-4 rotate-180" />
+                        </button>
+                    ) : (
+                        <button
+                            className="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
+                            onClick={onMinimize}
+                            aria-label="Minimize"
+                        >
+                            <RiCloseLine className="size-4" />
+                        </button>
+                    )}
                 </div>
             </div>
 
