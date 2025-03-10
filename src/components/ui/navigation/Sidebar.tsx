@@ -7,7 +7,6 @@ import {
   RiBuildingLine,
   RiDashboardLine,
   RiLineChartLine,
-  RiLinkM,
   RiMegaphoneLine,
   RiReceiptLine,
   RiSettings5Line
@@ -17,11 +16,6 @@ import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import { HqOLogo } from "./HqOLogo"
 import { UserProfileDesktop } from "./UserProfile"
-
-// Main navigation items excluding the ones that will go into the Asset Manager section
-const navigation = [
-  { name: "My HqO", href: siteConfig.baseLinks.overview, icon: RiBuilding2Line },
-] as const
 
 // Asset Manager sub-navigation items
 const assetManagerItems = [
@@ -75,29 +69,6 @@ const intelligenceItems = [
   { name: "Dashboard", href: siteConfig.baseLinks.intelligence.dashboard },
   { name: "Assessments", href: siteConfig.baseLinks.intelligence.assessments },
   { name: "About Intelligence", href: siteConfig.baseLinks.intelligence.aboutIntelligence },
-] as const
-
-const shortcuts = [
-  {
-    name: "Add new user",
-    href: "/users",
-    icon: RiLinkM,
-  },
-  {
-    name: "Building usage",
-    href: "/settings/billing#billing-overview",
-    icon: RiLinkM,
-  },
-  {
-    name: "Cost spend control",
-    href: "/settings/billing#cost-spend-control",
-    icon: RiLinkM,
-  },
-  {
-    name: "My HqO – Rows written",
-    href: "/my-hqo#usage-overview",
-    icon: RiLinkM,
-  },
 ] as const
 
 // Type for section IDs to ensure type safety
@@ -167,25 +138,6 @@ export function Sidebar() {
   const toggleSection = (section: SectionId) => {
     setOpenSection(openSection === section ? null : section)
   }
-
-  // Render a navigation item
-  const renderNavItem = (item: typeof navigation[number]) => (
-    <li key={item.name}>
-      <Link
-        href={item.href}
-        className={cx(
-          isActive(item.href)
-            ? "text-primary dark:text-primary-400 bg-white dark:bg-gray-900"
-            : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-          "flex items-center gap-x-2.5 rounded-md px-3 py-2 text-sm transition hover:bg-gray-100 hover:dark:bg-gray-900",
-          focusRing,
-        )}
-      >
-        <item.icon className="size-4 shrink-0" aria-hidden="true" />
-        {item.name}
-      </Link>
-    </li>
-  )
 
   return (
     <nav className="hidden lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:flex-col">
