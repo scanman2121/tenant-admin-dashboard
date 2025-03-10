@@ -96,15 +96,6 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
         }
     ]
 
-    // For testing - initialize with a message to show the button
-    useEffect(() => {
-        if (messages.length === 0) {
-            setMessages([
-                { role: 'assistant', content: 'Hello! How can I help you today?' }
-            ])
-        }
-    }, [messages.length])
-
     // Scroll to bottom of messages when new messages are added
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
