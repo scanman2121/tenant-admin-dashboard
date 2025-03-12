@@ -46,12 +46,12 @@ const experienceManagerItems = [
 
 // Operations sub-navigation items
 const operationsItems = [
-  { name: "Access Control", href: siteConfig.baseLinks.operations.accessControl },
-  { name: "Mobile Access", href: siteConfig.baseLinks.operations.mobileAccess },
-  { name: "Visitor Management", href: siteConfig.baseLinks.operations.visitorManagement },
-  { name: "Capacity Manager", href: siteConfig.baseLinks.operations.capacityManager },
-  { name: "Resource Booking", href: siteConfig.baseLinks.operations.resourceBooking },
-  { name: "Work Orders", href: siteConfig.baseLinks.operations.workOrders },
+  { name: "Access control", href: siteConfig.baseLinks.operations.accessControl },
+  { name: "Mobile access", href: siteConfig.baseLinks.operations.mobileAccess },
+  { name: "Visitor management", href: siteConfig.baseLinks.operations.visitorManagement },
+  { name: "Capacity manager", href: siteConfig.baseLinks.operations.capacityManager },
+  { name: "Resource booking", href: siteConfig.baseLinks.operations.resourceBooking },
+  { name: "Work orders", href: siteConfig.baseLinks.operations.workOrders },
   { name: "Parking", href: siteConfig.baseLinks.operations.parking },
   { name: "Energy consumption", href: siteConfig.baseLinks.operations.energyConsumption },
 ] as const
@@ -59,7 +59,7 @@ const operationsItems = [
 // Settings and setup sub-navigation items
 const settingsAndSetupItems = [
   { name: "Features", href: siteConfig.baseLinks.settingsAndSetup.features },
-  { name: "SSO Apps", href: siteConfig.baseLinks.settingsAndSetup.ssoApps },
+  { name: "SSO apps", href: siteConfig.baseLinks.settingsAndSetup.ssoApps },
   { name: "Connected apps", href: siteConfig.baseLinks.settingsAndSetup.connectedApps },
   { name: "Settings", href: siteConfig.baseLinks.settingsAndSetup.settings },
   { name: "Theme", href: siteConfig.baseLinks.settingsAndSetup.theme },
@@ -69,7 +69,7 @@ const settingsAndSetupItems = [
 const intelligenceItems = [
   { name: "Dashboard", href: siteConfig.baseLinks.intelligence.dashboard },
   { name: "Assessments", href: siteConfig.baseLinks.intelligence.assessments },
-  { name: "About Intelligence", href: siteConfig.baseLinks.intelligence.aboutIntelligence },
+  { name: "About intelligence", href: siteConfig.baseLinks.intelligence.aboutIntelligence },
 ] as const
 
 // Type for section IDs to ensure type safety
@@ -206,7 +206,7 @@ export function Sidebar() {
                   >
                     <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
                       <RiBuildingLine className="size-4 shrink-0" aria-hidden="true" />
-                      {!isCollapsed && "Asset Manager"}
+                      {!isCollapsed && "Asset manager"}
                     </span>
                     {!isCollapsed && (
                       <RiArrowDownSLine
@@ -262,7 +262,7 @@ export function Sidebar() {
                   >
                     <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
                       <RiMegaphoneLine className="size-4 shrink-0" aria-hidden="true" />
-                      {!isCollapsed && "Experience Manager"}
+                      {!isCollapsed && "Experience manager"}
                     </span>
                     {!isCollapsed && (
                       <RiArrowDownSLine
