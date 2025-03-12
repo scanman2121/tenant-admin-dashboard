@@ -9,8 +9,6 @@ import {
   RiDashboardLine,
   RiLineChartLine,
   RiMegaphoneLine,
-  RiMenuFoldLine,
-  RiMenuUnfoldLine,
   RiReceiptLine,
   RiSettings5Line
 } from "@remixicon/react"
@@ -82,7 +80,7 @@ export function Sidebar() {
   // Use a single state for the open section
   const [openSection, setOpenSection] = useState<SectionId | null>(null)
   // Get collapsed state from context
-  const { isCollapsed, toggleCollapsed } = useContext(SidebarContext)
+  const { isCollapsed } = useContext(SidebarContext)
 
   // Check if current path is in each section
   const isInAssetManager = assetManagerItems.some(item =>
@@ -152,26 +150,11 @@ export function Sidebar() {
         "flex h-full flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 transition-all duration-300",
         isCollapsed ? "w-16 px-2" : "w-56 px-3"
       )}>
-        <div className="flex h-16 shrink-0 items-center justify-between">
-          <Link href="/" className={cx(isCollapsed ? "pl-0.5" : "pl-1.5")}>
+        <div className="flex h-16 shrink-0 items-center justify-center">
+          <Link href="/" className={cx(isCollapsed ? "pl-0" : "pl-1.5")}>
             <HqOLogo className="h-6 w-auto" />
             <span className="sr-only">HqO</span>
           </Link>
-          <button
-            onClick={toggleCollapsed}
-            className={cx(
-              "flex items-center justify-center rounded-md p-1.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
-              focusRing,
-              isCollapsed ? "ml-0" : "ml-2"
-            )}
-            aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-          >
-            {isCollapsed ? (
-              <RiMenuUnfoldLine className="size-4" aria-hidden="true" />
-            ) : (
-              <RiMenuFoldLine className="size-4" aria-hidden="true" />
-            )}
-          </button>
         </div>
         <nav className="flex flex-1 flex-col">
           <ul role="list" className="flex flex-1 flex-col gap-y-7">

@@ -3,6 +3,7 @@
 import { HeaderActions } from "./HeaderActions"
 import MobileSidebar from "./MobileSidebar"
 import { BuildingsDropdownDesktop, BuildingsDropdownMobile } from "./SidebarBuildingsDropdown"
+import { SidebarToggle } from "./SidebarToggle"
 import { UserProfileMobile } from "./UserProfile"
 
 export function Header() {
@@ -20,7 +21,10 @@ export function Header() {
 
             {/* Desktop header */}
             <div className="hidden h-16 items-center justify-between px-6 lg:flex bg-white dark:bg-gray-950">
-                <BuildingsDropdownDesktop />
+                <div className="flex items-center">
+                    <BuildingsDropdownDesktop />
+                    <SidebarToggle />
+                </div>
                 <HeaderActions />
             </div>
         </header>
