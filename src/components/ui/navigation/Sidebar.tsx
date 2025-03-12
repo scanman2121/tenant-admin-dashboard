@@ -150,7 +150,7 @@ export function Sidebar() {
         "flex h-full flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 transition-all duration-300",
         isCollapsed ? "w-16 px-2" : "w-56 px-3"
       )}>
-        <div className="flex h-16 shrink-0 items-center justify-center">
+        <div className="flex h-16 shrink-0 items-center justify-start">
           <Link href="/" className={cx(isCollapsed ? "pl-0" : "pl-1.5")}>
             <HqOLogo className="h-6 w-auto" />
             <span className="sr-only">HqO</span>
@@ -168,7 +168,7 @@ export function Sidebar() {
                       "group flex items-center gap-x-3 rounded-md py-2 text-[13px] transition",
                       isCollapsed ? "px-2 justify-center" : "px-3",
                       isActive(siteConfig.baseLinks.overview)
-                        ? "bg-gray-100 dark:bg-gray-800 text-primary dark:text-primary-400"
+                        ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                       focusRing,
                     )}
@@ -229,7 +229,7 @@ export function Sidebar() {
                             className={cx(
                               "block rounded-md py-2 pl-10 pr-2 text-[13px] transition",
                               isActive(item.href)
-                                ? "bg-gray-50 dark:bg-gray-900 text-primary dark:text-primary-400"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
                                 : "text-gray-600 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                               focusRing,
                             )}
@@ -285,7 +285,7 @@ export function Sidebar() {
                             className={cx(
                               "block rounded-md py-2 pl-10 pr-2 text-[13px] transition",
                               isActive(item.href)
-                                ? "bg-gray-50 dark:bg-gray-900 text-primary dark:text-primary-400"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
                                 : "text-gray-600 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                               focusRing,
                             )}
@@ -341,7 +341,7 @@ export function Sidebar() {
                             className={cx(
                               "block rounded-md py-2 pl-10 pr-2 text-[13px] transition",
                               isActive(item.href)
-                                ? "bg-gray-50 dark:bg-gray-900 text-primary dark:text-primary-400"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
                                 : "text-gray-600 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                               focusRing,
                             )}
@@ -397,7 +397,7 @@ export function Sidebar() {
                             className={cx(
                               "block rounded-md py-2 pl-10 pr-2 text-[13px] transition",
                               isActive(item.href)
-                                ? "bg-gray-50 dark:bg-gray-900 text-primary dark:text-primary-400"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
                                 : "text-gray-600 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                               focusRing,
                             )}
@@ -453,7 +453,7 @@ export function Sidebar() {
                             className={cx(
                               "block rounded-md py-2 pl-10 pr-2 text-[13px] transition",
                               isActive(item.href)
-                                ? "bg-gray-50 dark:bg-gray-900 text-primary dark:text-primary-400"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
                                 : "text-gray-600 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                               focusRing,
                             )}
@@ -509,7 +509,7 @@ export function Sidebar() {
                             className={cx(
                               "block rounded-md py-2 pl-10 pr-2 text-[13px] transition",
                               isActive(item.href)
-                                ? "bg-gray-50 dark:bg-gray-900 text-primary dark:text-primary-400"
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm mx-1"
                                 : "text-gray-600 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                               focusRing,
                             )}
