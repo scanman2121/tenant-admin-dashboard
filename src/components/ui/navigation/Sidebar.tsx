@@ -16,6 +16,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useContext, useEffect, useState } from "react"
 import { HqOLogo } from "./HqOLogo"
+import { SidebarPopover } from "./SidebarPopover"
 import { UserProfileDesktop } from "./UserProfile"
 
 // Asset Manager sub-navigation items
@@ -192,32 +193,41 @@ export function Sidebar() {
                     ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1"
                     : ""
                 )}>
-                  <button
-                    onClick={() => toggleSection('assetManager')}
-                    className={cx(
-                      "flex w-full items-center gap-x-2.5 py-2 text-[13px] transition",
-                      isCollapsed ? "px-2 justify-center" : "px-3 justify-between",
-                      (openSection === 'assetManager' || isInAssetManager)
-                        ? "text-gray-900 dark:text-gray-50"
-                        : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
-                      focusRing,
-                    )}
-                    aria-expanded={openSection === 'assetManager'}
-                  >
-                    <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
-                      <RiBuildingLine className="size-4 shrink-0" aria-hidden="true" />
-                      {!isCollapsed && "Asset manager"}
-                    </span>
-                    {!isCollapsed && (
-                      <RiArrowDownSLine
-                        className={cx(
-                          "size-4 shrink-0 transition-transform duration-300 ease-in-out",
-                          openSection === 'assetManager' ? "rotate-0" : "-rotate-90"
-                        )}
-                        aria-hidden="true"
-                      />
-                    )}
-                  </button>
+                  {isCollapsed ? (
+                    <SidebarPopover
+                      icon={<RiBuildingLine className="size-4 shrink-0" aria-hidden="true" />}
+                      title="Asset manager"
+                      items={assetManagerItems}
+                      isActive={isActive}
+                    />
+                  ) : (
+                    <button
+                      onClick={() => toggleSection('assetManager')}
+                      className={cx(
+                        "flex w-full items-center gap-x-2.5 py-2 text-[13px] transition",
+                        isCollapsed ? "px-2 justify-center" : "px-3 justify-between",
+                        (openSection === 'assetManager' || isInAssetManager)
+                          ? "text-gray-900 dark:text-gray-50"
+                          : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
+                        focusRing,
+                      )}
+                      aria-expanded={openSection === 'assetManager'}
+                    >
+                      <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
+                        <RiBuildingLine className="size-4 shrink-0" aria-hidden="true" />
+                        {!isCollapsed && "Asset manager"}
+                      </span>
+                      {!isCollapsed && (
+                        <RiArrowDownSLine
+                          className={cx(
+                            "size-4 shrink-0 transition-transform duration-300 ease-in-out",
+                            openSection === 'assetManager' ? "rotate-0" : "-rotate-90"
+                          )}
+                          aria-hidden="true"
+                        />
+                      )}
+                    </button>
+                  )}
 
                   {/* Sub-navigation items with animation */}
                   {!isCollapsed && openSection === 'assetManager' && (
@@ -248,32 +258,41 @@ export function Sidebar() {
                     ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1"
                     : ""
                 )}>
-                  <button
-                    onClick={() => toggleSection('experienceManager')}
-                    className={cx(
-                      "flex w-full items-center gap-x-2.5 py-2 text-[13px] transition",
-                      isCollapsed ? "px-2 justify-center" : "px-3 justify-between",
-                      (openSection === 'experienceManager' || isInExperienceManager)
-                        ? "text-gray-900 dark:text-gray-50"
-                        : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
-                      focusRing,
-                    )}
-                    aria-expanded={openSection === 'experienceManager'}
-                  >
-                    <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
-                      <RiMegaphoneLine className="size-4 shrink-0" aria-hidden="true" />
-                      {!isCollapsed && "Experience manager"}
-                    </span>
-                    {!isCollapsed && (
-                      <RiArrowDownSLine
-                        className={cx(
-                          "size-4 shrink-0 transition-transform duration-300 ease-in-out",
-                          openSection === 'experienceManager' ? "rotate-0" : "-rotate-90"
-                        )}
-                        aria-hidden="true"
-                      />
-                    )}
-                  </button>
+                  {isCollapsed ? (
+                    <SidebarPopover
+                      icon={<RiMegaphoneLine className="size-4 shrink-0" aria-hidden="true" />}
+                      title="Experience manager"
+                      items={experienceManagerItems}
+                      isActive={isActive}
+                    />
+                  ) : (
+                    <button
+                      onClick={() => toggleSection('experienceManager')}
+                      className={cx(
+                        "flex w-full items-center gap-x-2.5 py-2 text-[13px] transition",
+                        isCollapsed ? "px-2 justify-center" : "px-3 justify-between",
+                        (openSection === 'experienceManager' || isInExperienceManager)
+                          ? "text-gray-900 dark:text-gray-50"
+                          : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
+                        focusRing,
+                      )}
+                      aria-expanded={openSection === 'experienceManager'}
+                    >
+                      <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
+                        <RiMegaphoneLine className="size-4 shrink-0" aria-hidden="true" />
+                        {!isCollapsed && "Experience manager"}
+                      </span>
+                      {!isCollapsed && (
+                        <RiArrowDownSLine
+                          className={cx(
+                            "size-4 shrink-0 transition-transform duration-300 ease-in-out",
+                            openSection === 'experienceManager' ? "rotate-0" : "-rotate-90"
+                          )}
+                          aria-hidden="true"
+                        />
+                      )}
+                    </button>
+                  )}
 
                   {/* Sub-navigation items with animation */}
                   {!isCollapsed && openSection === 'experienceManager' && (
@@ -304,32 +323,41 @@ export function Sidebar() {
                     ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1"
                     : ""
                 )}>
-                  <button
-                    onClick={() => toggleSection('operations')}
-                    className={cx(
-                      "flex w-full items-center gap-x-2.5 py-2 text-[13px] transition",
-                      isCollapsed ? "px-2 justify-center" : "px-3 justify-between",
-                      (openSection === 'operations' || isInOperations)
-                        ? "text-gray-900 dark:text-gray-50"
-                        : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
-                      focusRing,
-                    )}
-                    aria-expanded={openSection === 'operations'}
-                  >
-                    <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
-                      <RiDashboardLine className="size-4 shrink-0" aria-hidden="true" />
-                      {!isCollapsed && "Operations"}
-                    </span>
-                    {!isCollapsed && (
-                      <RiArrowDownSLine
-                        className={cx(
-                          "size-4 shrink-0 transition-transform duration-300 ease-in-out",
-                          openSection === 'operations' ? "rotate-0" : "-rotate-90"
-                        )}
-                        aria-hidden="true"
-                      />
-                    )}
-                  </button>
+                  {isCollapsed ? (
+                    <SidebarPopover
+                      icon={<RiDashboardLine className="size-4 shrink-0" aria-hidden="true" />}
+                      title="Operations"
+                      items={operationsItems}
+                      isActive={isActive}
+                    />
+                  ) : (
+                    <button
+                      onClick={() => toggleSection('operations')}
+                      className={cx(
+                        "flex w-full items-center gap-x-2.5 py-2 text-[13px] transition",
+                        isCollapsed ? "px-2 justify-center" : "px-3 justify-between",
+                        (openSection === 'operations' || isInOperations)
+                          ? "text-gray-900 dark:text-gray-50"
+                          : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
+                        focusRing,
+                      )}
+                      aria-expanded={openSection === 'operations'}
+                    >
+                      <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
+                        <RiDashboardLine className="size-4 shrink-0" aria-hidden="true" />
+                        {!isCollapsed && "Operations"}
+                      </span>
+                      {!isCollapsed && (
+                        <RiArrowDownSLine
+                          className={cx(
+                            "size-4 shrink-0 transition-transform duration-300 ease-in-out",
+                            openSection === 'operations' ? "rotate-0" : "-rotate-90"
+                          )}
+                          aria-hidden="true"
+                        />
+                      )}
+                    </button>
+                  )}
 
                   {/* Sub-navigation items with animation */}
                   {!isCollapsed && openSection === 'operations' && (
@@ -360,32 +388,41 @@ export function Sidebar() {
                     ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1"
                     : ""
                 )}>
-                  <button
-                    onClick={() => toggleSection('payments')}
-                    className={cx(
-                      "flex w-full items-center gap-x-2.5 py-2 text-[13px] transition",
-                      isCollapsed ? "px-2 justify-center" : "px-3 justify-between",
-                      (openSection === 'payments' || isInPayments)
-                        ? "text-gray-900 dark:text-gray-50"
-                        : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
-                      focusRing,
-                    )}
-                    aria-expanded={openSection === 'payments'}
-                  >
-                    <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
-                      <RiReceiptLine className="size-4 shrink-0" aria-hidden="true" />
-                      {!isCollapsed && "Payments"}
-                    </span>
-                    {!isCollapsed && (
-                      <RiArrowDownSLine
-                        className={cx(
-                          "size-4 shrink-0 transition-transform duration-300 ease-in-out",
-                          openSection === 'payments' ? "rotate-0" : "-rotate-90"
-                        )}
-                        aria-hidden="true"
-                      />
-                    )}
-                  </button>
+                  {isCollapsed ? (
+                    <SidebarPopover
+                      icon={<RiReceiptLine className="size-4 shrink-0" aria-hidden="true" />}
+                      title="Payments"
+                      items={paymentsItems}
+                      isActive={isActive}
+                    />
+                  ) : (
+                    <button
+                      onClick={() => toggleSection('payments')}
+                      className={cx(
+                        "flex w-full items-center gap-x-2.5 py-2 text-[13px] transition",
+                        isCollapsed ? "px-2 justify-center" : "px-3 justify-between",
+                        (openSection === 'payments' || isInPayments)
+                          ? "text-gray-900 dark:text-gray-50"
+                          : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
+                        focusRing,
+                      )}
+                      aria-expanded={openSection === 'payments'}
+                    >
+                      <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
+                        <RiReceiptLine className="size-4 shrink-0" aria-hidden="true" />
+                        {!isCollapsed && "Payments"}
+                      </span>
+                      {!isCollapsed && (
+                        <RiArrowDownSLine
+                          className={cx(
+                            "size-4 shrink-0 transition-transform duration-300 ease-in-out",
+                            openSection === 'payments' ? "rotate-0" : "-rotate-90"
+                          )}
+                          aria-hidden="true"
+                        />
+                      )}
+                    </button>
+                  )}
 
                   {/* Sub-navigation items with animation */}
                   {!isCollapsed && openSection === 'payments' && (
@@ -416,32 +453,41 @@ export function Sidebar() {
                     ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1"
                     : ""
                 )}>
-                  <button
-                    onClick={() => toggleSection('intelligence')}
-                    className={cx(
-                      "flex w-full items-center gap-x-2.5 py-2 text-[13px] transition",
-                      isCollapsed ? "px-2 justify-center" : "px-3 justify-between",
-                      (openSection === 'intelligence' || isInIntelligence)
-                        ? "text-gray-900 dark:text-gray-50"
-                        : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
-                      focusRing,
-                    )}
-                    aria-expanded={openSection === 'intelligence'}
-                  >
-                    <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
-                      <RiLineChartLine className="size-4 shrink-0" aria-hidden="true" />
-                      {!isCollapsed && "Intelligence"}
-                    </span>
-                    {!isCollapsed && (
-                      <RiArrowDownSLine
-                        className={cx(
-                          "size-4 shrink-0 transition-transform duration-300 ease-in-out",
-                          openSection === 'intelligence' ? "rotate-0" : "-rotate-90"
-                        )}
-                        aria-hidden="true"
-                      />
-                    )}
-                  </button>
+                  {isCollapsed ? (
+                    <SidebarPopover
+                      icon={<RiLineChartLine className="size-4 shrink-0" aria-hidden="true" />}
+                      title="Intelligence"
+                      items={intelligenceItems}
+                      isActive={isActive}
+                    />
+                  ) : (
+                    <button
+                      onClick={() => toggleSection('intelligence')}
+                      className={cx(
+                        "flex w-full items-center gap-x-2.5 py-2 text-[13px] transition",
+                        isCollapsed ? "px-2 justify-center" : "px-3 justify-between",
+                        (openSection === 'intelligence' || isInIntelligence)
+                          ? "text-gray-900 dark:text-gray-50"
+                          : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
+                        focusRing,
+                      )}
+                      aria-expanded={openSection === 'intelligence'}
+                    >
+                      <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
+                        <RiLineChartLine className="size-4 shrink-0" aria-hidden="true" />
+                        {!isCollapsed && "Intelligence"}
+                      </span>
+                      {!isCollapsed && (
+                        <RiArrowDownSLine
+                          className={cx(
+                            "size-4 shrink-0 transition-transform duration-300 ease-in-out",
+                            openSection === 'intelligence' ? "rotate-0" : "-rotate-90"
+                          )}
+                          aria-hidden="true"
+                        />
+                      )}
+                    </button>
+                  )}
 
                   {/* Sub-navigation items with animation */}
                   {!isCollapsed && openSection === 'intelligence' && (
@@ -472,32 +518,41 @@ export function Sidebar() {
                     ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1"
                     : ""
                 )}>
-                  <button
-                    onClick={() => toggleSection('settingsAndSetup')}
-                    className={cx(
-                      "flex w-full items-center gap-x-2.5 py-2 text-[13px] transition",
-                      isCollapsed ? "px-2 justify-center" : "px-3 justify-between",
-                      (openSection === 'settingsAndSetup' || isInSettingsAndSetup)
-                        ? "text-gray-900 dark:text-gray-50"
-                        : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
-                      focusRing,
-                    )}
-                    aria-expanded={openSection === 'settingsAndSetup'}
-                  >
-                    <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
-                      <RiSettings5Line className="size-4 shrink-0" aria-hidden="true" />
-                      {!isCollapsed && "Settings and setup"}
-                    </span>
-                    {!isCollapsed && (
-                      <RiArrowDownSLine
-                        className={cx(
-                          "size-4 shrink-0 transition-transform duration-300 ease-in-out",
-                          openSection === 'settingsAndSetup' ? "rotate-0" : "-rotate-90"
-                        )}
-                        aria-hidden="true"
-                      />
-                    )}
-                  </button>
+                  {isCollapsed ? (
+                    <SidebarPopover
+                      icon={<RiSettings5Line className="size-4 shrink-0" aria-hidden="true" />}
+                      title="Settings and setup"
+                      items={settingsAndSetupItems}
+                      isActive={isActive}
+                    />
+                  ) : (
+                    <button
+                      onClick={() => toggleSection('settingsAndSetup')}
+                      className={cx(
+                        "flex w-full items-center gap-x-2.5 py-2 text-[13px] transition",
+                        isCollapsed ? "px-2 justify-center" : "px-3 justify-between",
+                        (openSection === 'settingsAndSetup' || isInSettingsAndSetup)
+                          ? "text-gray-900 dark:text-gray-50"
+                          : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
+                        focusRing,
+                      )}
+                      aria-expanded={openSection === 'settingsAndSetup'}
+                    >
+                      <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
+                        <RiSettings5Line className="size-4 shrink-0" aria-hidden="true" />
+                        {!isCollapsed && "Settings and setup"}
+                      </span>
+                      {!isCollapsed && (
+                        <RiArrowDownSLine
+                          className={cx(
+                            "size-4 shrink-0 transition-transform duration-300 ease-in-out",
+                            openSection === 'settingsAndSetup' ? "rotate-0" : "-rotate-90"
+                          )}
+                          aria-hidden="true"
+                        />
+                      )}
+                    </button>
+                  )}
 
                   {/* Sub-navigation items with animation */}
                   {!isCollapsed && openSection === 'settingsAndSetup' && (
