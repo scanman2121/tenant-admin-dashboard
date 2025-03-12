@@ -1,4 +1,5 @@
 "use client"
+import { SidebarContext } from "@/app/(main)/layout"
 import { siteConfig } from "@/app/siteConfig"
 import { cx, focusRing } from "@/lib/utils"
 import {
@@ -8,12 +9,14 @@ import {
   RiDashboardLine,
   RiLineChartLine,
   RiMegaphoneLine,
+  RiMenuFoldLine,
+  RiMenuUnfoldLine,
   RiReceiptLine,
   RiSettings5Line
 } from "@remixicon/react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { HqOLogo } from "./HqOLogo"
 import { UserProfileDesktop } from "./UserProfile"
 
@@ -78,6 +81,8 @@ export function Sidebar() {
   const pathname = usePathname()
   // Use a single state for the open section
   const [openSection, setOpenSection] = useState<SectionId | null>(null)
+  // Get collapsed state from context
+  const { isCollapsed, toggleCollapsed } = useContext(SidebarContext)
 
   // Check if current path is in each section
   const isInAssetManager = assetManagerItems.some(item =>
@@ -136,17 +141,37 @@ export function Sidebar() {
 
   // Toggle section open/closed
   const toggleSection = (section: SectionId) => {
+    // Don't toggle sections when sidebar is collapsed
+    if (isCollapsed) return
     setOpenSection(openSection === section ? null : section)
   }
 
   return (
     <nav className="hidden lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:flex-col">
-      <div className="flex h-full flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-3 dark:border-gray-800 dark:bg-gray-950">
-        <div className="flex h-16 shrink-0 items-center">
-          <Link href="/" className="pl-1.5">
+      <div className={cx(
+        "flex h-full flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 transition-all duration-300",
+        isCollapsed ? "w-16 px-2" : "w-56 px-3"
+      )}>
+        <div className="flex h-16 shrink-0 items-center justify-between">
+          <Link href="/" className={cx(isCollapsed ? "pl-0.5" : "pl-1.5")}>
             <HqOLogo className="h-6 w-auto" />
             <span className="sr-only">HqO</span>
           </Link>
+          <button
+            onClick={toggleCollapsed}
+            className={cx(
+              "flex items-center justify-center rounded-md p-1.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
+              focusRing,
+              isCollapsed ? "ml-0" : "ml-2"
+            )}
+            aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {isCollapsed ? (
+              <RiMenuUnfoldLine className="size-4" aria-hidden="true" />
+            ) : (
+              <RiMenuFoldLine className="size-4" aria-hidden="true" />
+            )}
+          </button>
         </div>
         <nav className="flex flex-1 flex-col">
           <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -157,7 +182,8 @@ export function Sidebar() {
                   <Link
                     href={siteConfig.baseLinks.overview}
                     className={cx(
-                      "group flex items-center gap-x-3 rounded-md px-3 py-2 text-[13px] transition",
+                      "group flex items-center gap-x-3 rounded-md py-2 text-[13px] transition",
+                      isCollapsed ? "px-2 justify-center" : "px-3",
                       isActive(siteConfig.baseLinks.overview)
                         ? "bg-gray-100 dark:bg-gray-800 text-primary dark:text-primary-400"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
@@ -173,20 +199,21 @@ export function Sidebar() {
                       )}
                       aria-hidden="true"
                     />
-                    My HqO
+                    {!isCollapsed && <span>My HqO</span>}
                   </Link>
                 </li>
 
                 {/* Asset Manager accordion */}
                 <li className={cx(
-                  (openSection === 'assetManager' || isInAssetManager)
+                  (openSection === 'assetManager' || isInAssetManager) && !isCollapsed
                     ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1"
                     : ""
                 )}>
                   <button
                     onClick={() => toggleSection('assetManager')}
                     className={cx(
-                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
+                      "flex w-full items-center gap-x-2.5 py-2 text-[13px] transition",
+                      isCollapsed ? "px-2 justify-center" : "px-3 justify-between",
                       (openSection === 'assetManager' || isInAssetManager)
                         ? "text-gray-900 dark:text-gray-50"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
@@ -194,36 +221,33 @@ export function Sidebar() {
                     )}
                     aria-expanded={openSection === 'assetManager'}
                   >
-                    <span className="flex items-center gap-x-2.5">
+                    <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
                       <RiBuildingLine className="size-4 shrink-0" aria-hidden="true" />
-                      Asset Manager
+                      {!isCollapsed && "Asset Manager"}
                     </span>
-                    <RiArrowDownSLine
-                      className={cx(
-                        "size-4 shrink-0 transition-transform duration-300 ease-in-out",
-                        openSection === 'assetManager' ? "rotate-0" : "-rotate-90"
-                      )}
-                      aria-hidden="true"
-                    />
+                    {!isCollapsed && (
+                      <RiArrowDownSLine
+                        className={cx(
+                          "size-4 shrink-0 transition-transform duration-300 ease-in-out",
+                          openSection === 'assetManager' ? "rotate-0" : "-rotate-90"
+                        )}
+                        aria-hidden="true"
+                      />
+                    )}
                   </button>
 
                   {/* Sub-navigation items with animation */}
-                  <div
-                    className={cx(
-                      "overflow-hidden transition-all duration-300 ease-in-out",
-                      openSection === 'assetManager' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
-                    )}
-                  >
-                    <ul className="space-y-1 px-1">
+                  {!isCollapsed && openSection === 'assetManager' && (
+                    <ul className="mt-1 space-y-1">
                       {assetManagerItems.map((item) => (
                         <li key={item.name}>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
+                              "block rounded-md py-2 pl-10 pr-2 text-[13px] transition",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                                : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                                ? "bg-gray-50 dark:bg-gray-900 text-primary dark:text-primary-400"
+                                : "text-gray-600 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                               focusRing,
                             )}
                           >
@@ -232,19 +256,20 @@ export function Sidebar() {
                         </li>
                       ))}
                     </ul>
-                  </div>
+                  )}
                 </li>
 
                 {/* Experience Manager accordion */}
                 <li className={cx(
-                  (openSection === 'experienceManager' || isInExperienceManager)
+                  (openSection === 'experienceManager' || isInExperienceManager) && !isCollapsed
                     ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1"
                     : ""
                 )}>
                   <button
                     onClick={() => toggleSection('experienceManager')}
                     className={cx(
-                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
+                      "flex w-full items-center gap-x-2.5 py-2 text-[13px] transition",
+                      isCollapsed ? "px-2 justify-center" : "px-3 justify-between",
                       (openSection === 'experienceManager' || isInExperienceManager)
                         ? "text-gray-900 dark:text-gray-50"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
@@ -252,36 +277,33 @@ export function Sidebar() {
                     )}
                     aria-expanded={openSection === 'experienceManager'}
                   >
-                    <span className="flex items-center gap-x-2.5">
+                    <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
                       <RiMegaphoneLine className="size-4 shrink-0" aria-hidden="true" />
-                      Experience Manager
+                      {!isCollapsed && "Experience Manager"}
                     </span>
-                    <RiArrowDownSLine
-                      className={cx(
-                        "size-4 shrink-0 transition-transform duration-300 ease-in-out",
-                        openSection === 'experienceManager' ? "rotate-0" : "-rotate-90"
-                      )}
-                      aria-hidden="true"
-                    />
+                    {!isCollapsed && (
+                      <RiArrowDownSLine
+                        className={cx(
+                          "size-4 shrink-0 transition-transform duration-300 ease-in-out",
+                          openSection === 'experienceManager' ? "rotate-0" : "-rotate-90"
+                        )}
+                        aria-hidden="true"
+                      />
+                    )}
                   </button>
 
                   {/* Sub-navigation items with animation */}
-                  <div
-                    className={cx(
-                      "overflow-hidden transition-all duration-300 ease-in-out",
-                      openSection === 'experienceManager' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
-                    )}
-                  >
-                    <ul className="space-y-1 px-1">
+                  {!isCollapsed && openSection === 'experienceManager' && (
+                    <ul className="mt-1 space-y-1">
                       {experienceManagerItems.map((item) => (
                         <li key={item.name}>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
+                              "block rounded-md py-2 pl-10 pr-2 text-[13px] transition",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                                : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                                ? "bg-gray-50 dark:bg-gray-900 text-primary dark:text-primary-400"
+                                : "text-gray-600 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                               focusRing,
                             )}
                           >
@@ -290,19 +312,20 @@ export function Sidebar() {
                         </li>
                       ))}
                     </ul>
-                  </div>
+                  )}
                 </li>
 
                 {/* Operations accordion */}
                 <li className={cx(
-                  (openSection === 'operations' || isInOperations)
+                  (openSection === 'operations' || isInOperations) && !isCollapsed
                     ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1"
                     : ""
                 )}>
                   <button
                     onClick={() => toggleSection('operations')}
                     className={cx(
-                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
+                      "flex w-full items-center gap-x-2.5 py-2 text-[13px] transition",
+                      isCollapsed ? "px-2 justify-center" : "px-3 justify-between",
                       (openSection === 'operations' || isInOperations)
                         ? "text-gray-900 dark:text-gray-50"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
@@ -310,36 +333,33 @@ export function Sidebar() {
                     )}
                     aria-expanded={openSection === 'operations'}
                   >
-                    <span className="flex items-center gap-x-2.5">
+                    <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
                       <RiDashboardLine className="size-4 shrink-0" aria-hidden="true" />
-                      Operations
+                      {!isCollapsed && "Operations"}
                     </span>
-                    <RiArrowDownSLine
-                      className={cx(
-                        "size-4 shrink-0 transition-transform duration-300 ease-in-out",
-                        openSection === 'operations' ? "rotate-0" : "-rotate-90"
-                      )}
-                      aria-hidden="true"
-                    />
+                    {!isCollapsed && (
+                      <RiArrowDownSLine
+                        className={cx(
+                          "size-4 shrink-0 transition-transform duration-300 ease-in-out",
+                          openSection === 'operations' ? "rotate-0" : "-rotate-90"
+                        )}
+                        aria-hidden="true"
+                      />
+                    )}
                   </button>
 
                   {/* Sub-navigation items with animation */}
-                  <div
-                    className={cx(
-                      "overflow-hidden transition-all duration-300 ease-in-out",
-                      openSection === 'operations' ? "max-h-96 opacity-100 mt-1" : "max-h-0 opacity-0"
-                    )}
-                  >
-                    <ul className="space-y-1 px-1">
+                  {!isCollapsed && openSection === 'operations' && (
+                    <ul className="mt-1 space-y-1">
                       {operationsItems.map((item) => (
                         <li key={item.name}>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
+                              "block rounded-md py-2 pl-10 pr-2 text-[13px] transition",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                                : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                                ? "bg-gray-50 dark:bg-gray-900 text-primary dark:text-primary-400"
+                                : "text-gray-600 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                               focusRing,
                             )}
                           >
@@ -348,19 +368,20 @@ export function Sidebar() {
                         </li>
                       ))}
                     </ul>
-                  </div>
+                  )}
                 </li>
 
                 {/* Payments accordion */}
                 <li className={cx(
-                  (openSection === 'payments' || isInPayments)
+                  (openSection === 'payments' || isInPayments) && !isCollapsed
                     ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1"
                     : ""
                 )}>
                   <button
                     onClick={() => toggleSection('payments')}
                     className={cx(
-                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
+                      "flex w-full items-center gap-x-2.5 py-2 text-[13px] transition",
+                      isCollapsed ? "px-2 justify-center" : "px-3 justify-between",
                       (openSection === 'payments' || isInPayments)
                         ? "text-gray-900 dark:text-gray-50"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
@@ -368,36 +389,33 @@ export function Sidebar() {
                     )}
                     aria-expanded={openSection === 'payments'}
                   >
-                    <span className="flex items-center gap-x-2.5">
+                    <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
                       <RiReceiptLine className="size-4 shrink-0" aria-hidden="true" />
-                      Payments
+                      {!isCollapsed && "Payments"}
                     </span>
-                    <RiArrowDownSLine
-                      className={cx(
-                        "size-4 shrink-0 transition-transform duration-300 ease-in-out",
-                        openSection === 'payments' ? "rotate-0" : "-rotate-90"
-                      )}
-                      aria-hidden="true"
-                    />
+                    {!isCollapsed && (
+                      <RiArrowDownSLine
+                        className={cx(
+                          "size-4 shrink-0 transition-transform duration-300 ease-in-out",
+                          openSection === 'payments' ? "rotate-0" : "-rotate-90"
+                        )}
+                        aria-hidden="true"
+                      />
+                    )}
                   </button>
 
                   {/* Sub-navigation items with animation */}
-                  <div
-                    className={cx(
-                      "overflow-hidden transition-all duration-300 ease-in-out",
-                      openSection === 'payments' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
-                    )}
-                  >
-                    <ul className="space-y-1 px-1">
+                  {!isCollapsed && openSection === 'payments' && (
+                    <ul className="mt-1 space-y-1">
                       {paymentsItems.map((item) => (
                         <li key={item.name}>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
+                              "block rounded-md py-2 pl-10 pr-2 text-[13px] transition",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                                : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                                ? "bg-gray-50 dark:bg-gray-900 text-primary dark:text-primary-400"
+                                : "text-gray-600 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                               focusRing,
                             )}
                           >
@@ -406,19 +424,20 @@ export function Sidebar() {
                         </li>
                       ))}
                     </ul>
-                  </div>
+                  )}
                 </li>
 
                 {/* Intelligence accordion */}
                 <li className={cx(
-                  (openSection === 'intelligence' || isInIntelligence)
+                  (openSection === 'intelligence' || isInIntelligence) && !isCollapsed
                     ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1"
                     : ""
                 )}>
                   <button
                     onClick={() => toggleSection('intelligence')}
                     className={cx(
-                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
+                      "flex w-full items-center gap-x-2.5 py-2 text-[13px] transition",
+                      isCollapsed ? "px-2 justify-center" : "px-3 justify-between",
                       (openSection === 'intelligence' || isInIntelligence)
                         ? "text-gray-900 dark:text-gray-50"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
@@ -426,36 +445,33 @@ export function Sidebar() {
                     )}
                     aria-expanded={openSection === 'intelligence'}
                   >
-                    <span className="flex items-center gap-x-2.5">
+                    <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
                       <RiLineChartLine className="size-4 shrink-0" aria-hidden="true" />
-                      Intelligence
+                      {!isCollapsed && "Intelligence"}
                     </span>
-                    <RiArrowDownSLine
-                      className={cx(
-                        "size-4 shrink-0 transition-transform duration-300 ease-in-out",
-                        openSection === 'intelligence' ? "rotate-0" : "-rotate-90"
-                      )}
-                      aria-hidden="true"
-                    />
+                    {!isCollapsed && (
+                      <RiArrowDownSLine
+                        className={cx(
+                          "size-4 shrink-0 transition-transform duration-300 ease-in-out",
+                          openSection === 'intelligence' ? "rotate-0" : "-rotate-90"
+                        )}
+                        aria-hidden="true"
+                      />
+                    )}
                   </button>
 
                   {/* Sub-navigation items with animation */}
-                  <div
-                    className={cx(
-                      "overflow-hidden transition-all duration-300 ease-in-out",
-                      openSection === 'intelligence' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
-                    )}
-                  >
-                    <ul className="space-y-1 px-1">
+                  {!isCollapsed && openSection === 'intelligence' && (
+                    <ul className="mt-1 space-y-1">
                       {intelligenceItems.map((item) => (
                         <li key={item.name}>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
+                              "block rounded-md py-2 pl-10 pr-2 text-[13px] transition",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                                : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                                ? "bg-gray-50 dark:bg-gray-900 text-primary dark:text-primary-400"
+                                : "text-gray-600 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                               focusRing,
                             )}
                           >
@@ -464,19 +480,20 @@ export function Sidebar() {
                         </li>
                       ))}
                     </ul>
-                  </div>
+                  )}
                 </li>
 
                 {/* Settings and setup accordion */}
                 <li className={cx(
-                  (openSection === 'settingsAndSetup' || isInSettingsAndSetup)
+                  (openSection === 'settingsAndSetup' || isInSettingsAndSetup) && !isCollapsed
                     ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1"
                     : ""
                 )}>
                   <button
                     onClick={() => toggleSection('settingsAndSetup')}
                     className={cx(
-                      "flex w-full items-center justify-between gap-x-2.5 px-3 py-2 text-[13px] transition",
+                      "flex w-full items-center gap-x-2.5 py-2 text-[13px] transition",
+                      isCollapsed ? "px-2 justify-center" : "px-3 justify-between",
                       (openSection === 'settingsAndSetup' || isInSettingsAndSetup)
                         ? "text-gray-900 dark:text-gray-50"
                         : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900 rounded-md",
@@ -484,36 +501,33 @@ export function Sidebar() {
                     )}
                     aria-expanded={openSection === 'settingsAndSetup'}
                   >
-                    <span className="flex items-center gap-x-2.5">
+                    <span className={cx("flex items-center", isCollapsed ? "" : "gap-x-2.5")}>
                       <RiSettings5Line className="size-4 shrink-0" aria-hidden="true" />
-                      Settings and setup
+                      {!isCollapsed && "Settings and setup"}
                     </span>
-                    <RiArrowDownSLine
-                      className={cx(
-                        "size-4 shrink-0 transition-transform duration-300 ease-in-out",
-                        openSection === 'settingsAndSetup' ? "rotate-0" : "-rotate-90"
-                      )}
-                      aria-hidden="true"
-                    />
+                    {!isCollapsed && (
+                      <RiArrowDownSLine
+                        className={cx(
+                          "size-4 shrink-0 transition-transform duration-300 ease-in-out",
+                          openSection === 'settingsAndSetup' ? "rotate-0" : "-rotate-90"
+                        )}
+                        aria-hidden="true"
+                      />
+                    )}
                   </button>
 
                   {/* Sub-navigation items with animation */}
-                  <div
-                    className={cx(
-                      "overflow-hidden transition-all duration-300 ease-in-out",
-                      openSection === 'settingsAndSetup' ? "max-h-64 opacity-100 mt-1" : "max-h-0 opacity-0"
-                    )}
-                  >
-                    <ul className="space-y-1 px-1">
+                  {!isCollapsed && openSection === 'settingsAndSetup' && (
+                    <ul className="mt-1 space-y-1">
                       {settingsAndSetupItems.map((item) => (
                         <li key={item.name}>
                           <Link
                             href={item.href}
                             className={cx(
-                              "flex items-center rounded-md pl-[34px] pr-3 py-2 text-[13px] transition w-full",
+                              "block rounded-md py-2 pl-10 pr-2 text-[13px] transition",
                               isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                                : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                                ? "bg-gray-50 dark:bg-gray-900 text-primary dark:text-primary-400"
+                                : "text-gray-600 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
                               focusRing,
                             )}
                           >
@@ -522,15 +536,17 @@ export function Sidebar() {
                         </li>
                       ))}
                     </ul>
-                  </div>
+                  )}
                 </li>
               </ul>
             </li>
+
+            {/* User profile at the bottom */}
+            <li className="mt-auto">
+              <UserProfileDesktop isCollapsed={isCollapsed} />
+            </li>
           </ul>
         </nav>
-        <div className="pb-4">
-          <UserProfileDesktop />
-        </div>
       </div>
     </nav>
   )
