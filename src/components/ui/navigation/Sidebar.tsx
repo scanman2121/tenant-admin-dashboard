@@ -199,6 +199,7 @@ export function Sidebar() {
                       title="Asset manager"
                       items={assetManagerItems}
                       isActive={isActive}
+                      isInSection={isInAssetManager}
                     />
                   ) : (
                     <button
@@ -264,6 +265,7 @@ export function Sidebar() {
                       title="Experience manager"
                       items={experienceManagerItems}
                       isActive={isActive}
+                      isInSection={isInExperienceManager}
                     />
                   ) : (
                     <button
@@ -329,6 +331,7 @@ export function Sidebar() {
                       title="Operations"
                       items={operationsItems}
                       isActive={isActive}
+                      isInSection={isInOperations}
                     />
                   ) : (
                     <button
@@ -394,6 +397,7 @@ export function Sidebar() {
                       title="Payments"
                       items={paymentsItems}
                       isActive={isActive}
+                      isInSection={isInPayments}
                     />
                   ) : (
                     <button
@@ -459,6 +463,7 @@ export function Sidebar() {
                       title="Intelligence"
                       items={intelligenceItems}
                       isActive={isActive}
+                      isInSection={isInIntelligence}
                     />
                   ) : (
                     <button
@@ -524,6 +529,7 @@ export function Sidebar() {
                       title="Settings and setup"
                       items={settingsAndSetupItems}
                       isActive={isActive}
+                      isInSection={isInSettingsAndSetup}
                     />
                   ) : (
                     <button
