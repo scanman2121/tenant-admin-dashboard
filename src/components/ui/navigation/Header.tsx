@@ -21,7 +21,7 @@ export function Header() {
 
             {/* Desktop header */}
             <div className="hidden h-16 items-center justify-between px-6 lg:flex bg-white dark:bg-gray-950">
-                <div className="flex items-center">
+                <div className="flex items-center -ml-3">
                     <SidebarToggle />
                     <BuildingsDropdownDesktop />
                 </div>
