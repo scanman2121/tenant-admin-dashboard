@@ -7,9 +7,9 @@ import { useEffect, useState } from "react"
 import { AIAssistantDrawer } from "../ai/AIAssistantDrawer"
 import { FullScreenAIAssistant } from "../ai/FullScreenAIAssistant"
 import { CreatePopover } from "../create/CreatePopover"
+import { QRScannerModal } from "../qr/QRScannerModal"
 import { FullScreenNotifications } from "../notifications/FullScreenNotifications"
 import { NotificationsPopover } from "../notifications/NotificationsPopover"
-import { QRScannerModal } from "../qr/QRScannerModal"
 
 export function HeaderActions() {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
@@ -145,7 +145,7 @@ export function HeaderActions() {
             </div>
 
             {/* QR Scanner Modal */}
-            <QRScannerModal
+            <QRScannerModal 
                 isOpen={isQRScannerOpen}
                 onClose={() => setIsQRScannerOpen(false)}
             />
