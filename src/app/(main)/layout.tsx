@@ -1,14 +1,20 @@
 "use client"
 
 import { CommunicationsTab } from "@/components/ui/communications/CommunicationsTab"
+import { FloatingActionBar } from "@/components/ui/navigation/FloatingActionBar"
 import { Header } from "@/components/ui/navigation/Header"
 import { Sidebar } from "@/components/ui/navigation/Sidebar"
 import { createContext, useContext, useEffect, useState } from "react"
 
 // Create a context for the sidebar collapsed state
-export const SidebarContext = createContext({
-  isCollapsed: false,
-  toggleCollapsed: () => { }
+type SidebarContextType = {
+  collapsed: boolean
+  toggleCollapsed: () => void
+}
+
+const SidebarContext = createContext<SidebarContextType>({
+  collapsed: false,
+  toggleCollapsed: () => { },
 })
 
 // Custom hook to use the sidebar context
@@ -16,48 +22,43 @@ export const useSidebar = () => useContext(SidebarContext)
 
 export default function MainLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
-  // State to track if sidebar is collapsed
-  const [isCollapsed, setIsCollapsed] = useState(false)
+}) {
+  const [collapsed, setCollapsed] = useState(false)
 
   // Load collapsed state from localStorage on mount
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const savedCollapsedState = localStorage.getItem('sidebarCollapsed')
-      if (savedCollapsedState) {
-        setIsCollapsed(savedCollapsedState === 'true')
-      }
+    const savedCollapsed = localStorage.getItem("sidebarCollapsed")
+    if (savedCollapsed) {
+      setCollapsed(savedCollapsed === "true")
     }
   }, [])
 
   // Save collapsed state to localStorage when it changes
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('sidebarCollapsed', isCollapsed.toString())
-    }
-  }, [isCollapsed])
+    localStorage.setItem("sidebarCollapsed", collapsed.toString())
+  }, [collapsed])
 
-  // Toggle sidebar collapsed state
   const toggleCollapsed = () => {
-    setIsCollapsed(!isCollapsed)
+    setCollapsed(!collapsed)
   }
 
   return (
-    <SidebarContext.Provider value={{ isCollapsed, toggleCollapsed }}>
-      <Sidebar />
-      <main className={`transition-all duration-300 main-content-wrapper bg-[#F6F7F8] dark:bg-gray-950 ${isCollapsed ? 'lg:pl-16' : 'lg:pl-56'}`}>
-        <div className="mx-auto max-w-screen-2xl">
+    <SidebarContext.Provider value={{ collapsed, toggleCollapsed }}>
+      <div className="flex h-screen bg-gray-50 dark:bg-gray-950">
+        <Sidebar />
+        <div className="flex flex-col flex-1 w-0 overflow-hidden">
           <Header />
-          <div className="pt-6">
-            <div className="px-4 sm:px-6 md:px-6 lg:px-10">
-              {children}
+          <main className="relative flex-1 overflow-y-auto focus:outline-none">
+            <div className="py-6">
+              <div className="px-4 sm:px-6 md:px-8">{children}</div>
             </div>
-          </div>
+          </main>
+          <CommunicationsTab />
+          <FloatingActionBar />
         </div>
-      </main>
-      <CommunicationsTab />
+      </div>
     </SidebarContext.Provider>
   )
 }

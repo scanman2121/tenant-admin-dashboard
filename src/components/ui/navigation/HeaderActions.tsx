@@ -83,6 +83,24 @@ export function HeaderActions() {
         // Desktop uses the popover which is handled by the NotificationsPopover component
     }
 
+    // If on mobile, only show the notifications button
+    // All other buttons are moved to the FloatingActionBar
+    if (isMobile) {
+        return (
+            <Button
+                variant="ghost"
+                onClick={handleNotificationsClick}
+                className={cx(
+                    "group relative flex items-center rounded-md p-2 text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
+                    focusRing
+                )}
+            >
+                <RiNotification3Line className="size-5" aria-hidden="true" />
+                <span className="sr-only">Notifications</span>
+            </Button>
+        );
+    }
+
     return (
         <>
             <div className="flex items-center gap-x-1">
@@ -111,23 +129,6 @@ export function HeaderActions() {
                     <span className="sr-only">Search</span>
                 </Button>
 
-                {/* Notifications - Desktop uses popover, mobile uses full screen */}
-                {isMobile ? (
-                    <Button
-                        variant="ghost"
-                        onClick={handleNotificationsClick}
-                        className={cx(
-                            "group relative flex items-center rounded-md p-2 text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
-                            focusRing
-                        )}
-                    >
-                        <RiNotification3Line className="size-5" aria-hidden="true" />
-                        <span className="sr-only">Notifications</span>
-                    </Button>
-                ) : (
-                    <NotificationsPopover />
-                )}
-
                 <Button
                     variant="ghost"
                     onClick={handleAIAssistantClick}
@@ -142,6 +143,8 @@ export function HeaderActions() {
                 </Button>
 
                 <CreatePopover />
+
+                <NotificationsPopover />
             </div>
 
             {/* QR Scanner Modal */}

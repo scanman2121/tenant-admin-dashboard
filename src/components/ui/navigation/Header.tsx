@@ -1,32 +1,45 @@
 "use client"
 
+import { useEffect, useState } from "react"
+import { FloatingActionBar } from "./FloatingActionBar"
 import { HeaderActions } from "./HeaderActions"
-import MobileSidebar from "./MobileSidebar"
-import { BuildingsDropdownDesktop, BuildingsDropdownMobile } from "./SidebarBuildingsDropdown"
+import { BuildingsDropdownDesktop } from "./SidebarBuildingsDropdown"
 import { SidebarToggle } from "./SidebarToggle"
-import { UserProfileMobile } from "./UserProfile"
 
 export function Header() {
-    return (
-        <header className="sticky top-0 z-40 bg-[#F6F7F8] border-0 shadow-none dark:bg-gray-950 lg:ml-[2px]">
-            {/* Mobile header */}
-            <div className="flex h-16 items-center justify-between px-2 lg:hidden bg-[#F6F7F8] dark:bg-gray-950">
-                <BuildingsDropdownMobile />
-                <div className="flex items-center gap-1 sm:gap-2">
-                    <HeaderActions />
-                    <UserProfileMobile />
-                    <MobileSidebar />
-                </div>
-            </div>
+    const [isMobile, setIsMobile] = useState(false)
 
-            {/* Desktop header */}
-            <div className="hidden h-16 items-center justify-between px-6 lg:flex bg-[#F6F7F8] dark:bg-gray-950">
-                <div className="flex items-center">
+    // Check if screen is mobile (under 1024px)
+    useEffect(() => {
+        const checkScreenSize = () => {
+            setIsMobile(window.innerWidth < 1024)
+        }
+
+        // Initial check
+        checkScreenSize()
+
+        // Add event listener for window resize
+        window.addEventListener('resize', checkScreenSize)
+
+        // Cleanup
+        return () => {
+            window.removeEventListener('resize', checkScreenSize)
+        }
+    }, [])
+
+    return (
+        <header className="sticky top-0 z-20 flex h-16 items-center gap-4 border-b border-gray-200 bg-white px-4 dark:border-gray-800 dark:bg-gray-950 sm:px-6">
+            <div className="flex flex-1 items-center gap-4">
+                {/* Desktop Header (1024px and above) */}
+                <div className="flex items-center gap-4">
                     <SidebarToggle />
                     <BuildingsDropdownDesktop />
                 </div>
-                <HeaderActions />
             </div>
+            <HeaderActions />
+
+            {/* Floating Action Bar for Mobile */}
+            {isMobile && <FloatingActionBar />}
         </header>
     )
 } 

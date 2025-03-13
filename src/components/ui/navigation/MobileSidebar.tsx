@@ -32,11 +32,6 @@ import { UserProfileMobile } from "./UserProfile"
 // Main navigation items excluding the ones that will go into the Asset Manager section
 const navigation = [
   { name: "My HqO", href: siteConfig.baseLinks.overview, icon: RiBuilding2Line },
-  {
-    name: "Settings & setup",
-    href: siteConfig.baseLinks.settings.general,
-    icon: RiSettings5Line,
-  },
 ] as const
 
 // Asset Manager sub-navigation items
@@ -68,12 +63,12 @@ const experienceManagerItems = [
 
 // Operations sub-navigation items
 const operationsItems = [
-  { name: "Access Control", href: siteConfig.baseLinks.operations.accessControl },
-  { name: "Mobile Access", href: siteConfig.baseLinks.operations.mobileAccess },
-  { name: "Visitor Management", href: siteConfig.baseLinks.operations.visitorManagement },
-  { name: "Capacity Manager", href: siteConfig.baseLinks.operations.capacityManager },
-  { name: "Resource Booking", href: siteConfig.baseLinks.operations.resourceBooking },
-  { name: "Work Orders", href: siteConfig.baseLinks.operations.workOrders },
+  { name: "Access control", href: siteConfig.baseLinks.operations.accessControl },
+  { name: "Mobile access", href: siteConfig.baseLinks.operations.mobileAccess },
+  { name: "Visitor management", href: siteConfig.baseLinks.operations.visitorManagement },
+  { name: "Capacity manager", href: siteConfig.baseLinks.operations.capacityManager },
+  { name: "Resource booking", href: siteConfig.baseLinks.operations.resourceBooking },
+  { name: "Work orders", href: siteConfig.baseLinks.operations.workOrders },
   { name: "Parking", href: siteConfig.baseLinks.operations.parking },
   { name: "Energy consumption", href: siteConfig.baseLinks.operations.energyConsumption },
 ] as const
@@ -81,7 +76,7 @@ const operationsItems = [
 // Settings and setup sub-navigation items
 const settingsAndSetupItems = [
   { name: "Features", href: siteConfig.baseLinks.settingsAndSetup.features },
-  { name: "SSO Apps", href: siteConfig.baseLinks.settingsAndSetup.ssoApps },
+  { name: "SSO apps", href: siteConfig.baseLinks.settingsAndSetup.ssoApps },
   { name: "Connected apps", href: siteConfig.baseLinks.settingsAndSetup.connectedApps },
   { name: "Settings", href: siteConfig.baseLinks.settingsAndSetup.settings },
   { name: "Theme", href: siteConfig.baseLinks.settingsAndSetup.theme },
@@ -91,7 +86,7 @@ const settingsAndSetupItems = [
 const intelligenceItems = [
   { name: "Dashboard", href: siteConfig.baseLinks.intelligence.dashboard },
   { name: "Assessments", href: siteConfig.baseLinks.intelligence.assessments },
-  { name: "About Intelligence", href: siteConfig.baseLinks.intelligence.aboutIntelligence },
+  { name: "About intelligence", href: siteConfig.baseLinks.intelligence.aboutIntelligence },
 ] as const
 
 export default function MobileSidebar() {
@@ -225,25 +220,6 @@ export default function MobileSidebar() {
                 </li>
               ))}
 
-              {/* My HqO link */}
-              <li>
-                <DrawerClose asChild>
-                  <Link
-                    href={siteConfig.baseLinks.overview}
-                    className={cx(
-                      isActive(siteConfig.baseLinks.overview)
-                        ? "text-primary dark:text-primary-400"
-                        : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-                      "flex items-center gap-x-2.5 rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
-                      focusRing,
-                    )}
-                  >
-                    <RiBuilding2Line className="size-4 shrink-0 text-[#696E72]" aria-hidden="true" />
-                    My HqO
-                  </Link>
-                </DrawerClose>
-              </li>
-
               {/* Asset Manager accordion */}
               <li className={cx(
                 isInAssetManager ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
@@ -279,6 +255,62 @@ export default function MobileSidebar() {
                 >
                   <ul className="mt-1 space-y-0.5 px-1">
                     {assetManagerItems.map((item) => (
+                      <li key={item.name}>
+                        <DrawerClose asChild>
+                          <Link
+                            href={item.href}
+                            className={cx(
+                              isActive(item.href)
+                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
+                                : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
+                              "flex items-center rounded-md px-1.5 py-1.5 text-sm font-medium transition w-full",
+                              focusRing,
+                            )}
+                          >
+                            {item.name}
+                          </Link>
+                        </DrawerClose>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+
+              {/* Payments accordion */}
+              <li className={cx(
+                isInPayments ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
+              )}>
+                <button
+                  onClick={() => setIsPaymentsOpen(!isPaymentsOpen)}
+                  className={cx(
+                    "flex w-full items-center justify-between gap-x-2.5 rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
+                    isInPayments
+                      ? "text-gray-900 dark:text-gray-50"
+                      : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
+                    focusRing,
+                  )}
+                  aria-expanded={isPaymentsOpen}
+                >
+                  <span className="flex items-center gap-x-2.5">
+                    <RiReceiptLine className="size-4 shrink-0" aria-hidden="true" />
+                    Payments
+                  </span>
+                  {isPaymentsOpen ? (
+                    <RiArrowDownSLine className="size-4 shrink-0 transition-transform" aria-hidden="true" />
+                  ) : (
+                    <RiArrowRightSLine className="size-4 shrink-0 transition-transform" aria-hidden="true" />
+                  )}
+                </button>
+
+                {/* Sub-navigation items with animation */}
+                <div
+                  className={cx(
+                    "overflow-hidden transition-all duration-300 ease-in-out",
+                    isPaymentsOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+                  )}
+                >
+                  <ul className="mt-1 space-y-0.5 px-1">
+                    {paymentsItems.map((item) => (
                       <li key={item.name}>
                         <DrawerClose asChild>
                           <Link
@@ -386,67 +418,11 @@ export default function MobileSidebar() {
                 <div
                   className={cx(
                     "overflow-hidden transition-all duration-300 ease-in-out",
-                    isOperationsOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                    isOperationsOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
                   )}
                 >
                   <ul className="mt-1 space-y-0.5 px-1">
                     {operationsItems.map((item) => (
-                      <li key={item.name}>
-                        <DrawerClose asChild>
-                          <Link
-                            href={item.href}
-                            className={cx(
-                              isActive(item.href)
-                                ? "bg-white dark:bg-gray-900 text-primary dark:text-primary-400 shadow-sm"
-                                : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-800",
-                              "flex items-center rounded-md px-1.5 py-1.5 text-sm font-medium transition w-full",
-                              focusRing,
-                            )}
-                          >
-                            {item.name}
-                          </Link>
-                        </DrawerClose>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </li>
-
-              {/* Payments accordion */}
-              <li className={cx(
-                isInPayments ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
-              )}>
-                <button
-                  onClick={() => setIsPaymentsOpen(!isPaymentsOpen)}
-                  className={cx(
-                    "flex w-full items-center justify-between gap-x-2.5 rounded-md px-1.5 py-1.5 text-sm font-medium transition hover:bg-gray-100 hover:dark:bg-gray-900",
-                    isInPayments
-                      ? "text-gray-900 dark:text-gray-50"
-                      : "text-gray-700 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50",
-                    focusRing,
-                  )}
-                  aria-expanded={isPaymentsOpen}
-                >
-                  <span className="flex items-center gap-x-2.5">
-                    <RiReceiptLine className="size-4 shrink-0" aria-hidden="true" />
-                    Payments
-                  </span>
-                  {isPaymentsOpen ? (
-                    <RiArrowDownSLine className="size-4 shrink-0 transition-transform" aria-hidden="true" />
-                  ) : (
-                    <RiArrowRightSLine className="size-4 shrink-0 transition-transform" aria-hidden="true" />
-                  )}
-                </button>
-
-                {/* Sub-navigation items with animation */}
-                <div
-                  className={cx(
-                    "overflow-hidden transition-all duration-300 ease-in-out",
-                    isPaymentsOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
-                  )}
-                >
-                  <ul className="mt-1 space-y-0.5 px-1">
-                    {paymentsItems.map((item) => (
                       <li key={item.name}>
                         <DrawerClose asChild>
                           <Link
@@ -524,7 +500,7 @@ export default function MobileSidebar() {
                 </div>
               </li>
 
-              {/* Settings and setup accordion */}
+              {/* Settings & Setup accordion */}
               <li className={cx(
                 isInSettingsAndSetup ? "bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden pb-1" : ""
               )}>
@@ -541,7 +517,7 @@ export default function MobileSidebar() {
                 >
                   <span className="flex items-center gap-x-2.5">
                     <RiSettings5Line className="size-4 shrink-0" aria-hidden="true" />
-                    Settings and setup
+                    Settings & setup
                   </span>
                   {isSettingsAndSetupOpen ? (
                     <RiArrowDownSLine className="size-4 shrink-0 transition-transform" aria-hidden="true" />

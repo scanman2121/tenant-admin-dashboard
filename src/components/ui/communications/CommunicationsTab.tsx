@@ -9,6 +9,25 @@ export function CommunicationsTab() {
     const [isOpen, setIsOpen] = useState(false)
     const [isMinimized, setIsMinimized] = useState(false)
     const [isExpanded, setIsExpanded] = useState(false)
+    const [isMobile, setIsMobile] = useState(false)
+
+    // Check if screen is mobile (under 1024px)
+    useEffect(() => {
+        const checkScreenSize = () => {
+            setIsMobile(window.innerWidth < 1024)
+        }
+
+        // Initial check
+        checkScreenSize()
+
+        // Add event listener for window resize
+        window.addEventListener('resize', checkScreenSize)
+
+        // Cleanup
+        return () => {
+            window.removeEventListener('resize', checkScreenSize)
+        }
+    }, [])
 
     // Close the panel when Escape key is pressed
     useEffect(() => {
@@ -53,6 +72,11 @@ export function CommunicationsTab() {
         setIsOpen(false)
         setIsMinimized(false)
         setIsExpanded(false)
+    }
+
+    // Don't render anything on mobile as it will be handled by FloatingActionBar
+    if (isMobile) {
+        return null
     }
 
     return (
