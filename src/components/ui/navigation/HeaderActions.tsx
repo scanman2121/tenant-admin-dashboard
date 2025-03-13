@@ -7,9 +7,9 @@ import { useEffect, useState } from "react"
 import { AIAssistantDrawer } from "../ai/AIAssistantDrawer"
 import { FullScreenAIAssistant } from "../ai/FullScreenAIAssistant"
 import { CreatePopover } from "../create/CreatePopover"
-import { QRScannerModal } from "../qr/QRScannerModal"
 import { FullScreenNotifications } from "../notifications/FullScreenNotifications"
 import { NotificationsPopover } from "../notifications/NotificationsPopover"
+import { QRScannerModal } from "../qr/QRScannerModal"
 
 export function HeaderActions() {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
@@ -91,7 +91,7 @@ export function HeaderActions() {
                     variant="ghost"
                     onClick={handleQRScannerClick}
                     className={cx(
-                        "group flex items-center rounded-md p-2 text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
+                        "group flex items-center rounded-md p-2 text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
                         focusRing
                     )}
                 >
@@ -103,7 +103,7 @@ export function HeaderActions() {
                     variant="ghost"
                     onClick={() => setIsSearchOpen(true)}
                     className={cx(
-                        "group flex items-center rounded-md p-2 text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
+                        "group flex items-center rounded-md p-2 text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
                         focusRing
                     )}
                 >
@@ -117,7 +117,7 @@ export function HeaderActions() {
                         variant="ghost"
                         onClick={handleNotificationsClick}
                         className={cx(
-                            "group relative flex items-center rounded-md p-2 text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
+                            "group relative flex items-center rounded-md p-2 text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
                             focusRing
                         )}
                     >
@@ -132,7 +132,7 @@ export function HeaderActions() {
                     variant="ghost"
                     onClick={handleAIAssistantClick}
                     className={cx(
-                        "group flex items-center rounded-md p-2 text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
+                        "group flex items-center rounded-md p-2 text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
                         focusRing,
                         (isAIDrawerOpen || isFullScreenAIOpen) && "text-primary dark:text-primary-400"
                     )}
@@ -145,7 +145,7 @@ export function HeaderActions() {
             </div>
 
             {/* QR Scanner Modal */}
-            <QRScannerModal 
+            <QRScannerModal
                 isOpen={isQRScannerOpen}
                 onClose={() => setIsQRScannerOpen(false)}
             />

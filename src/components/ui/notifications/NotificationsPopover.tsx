@@ -35,13 +35,19 @@ export function NotificationsPopover() {
         )
     }
 
+    // Combined handler for reading and closing
+    const handleReadAndClose = (id: string) => {
+        handleMarkAsRead(id)
+        setIsOpen(false)
+    }
+
     return (
         <Popover open={isOpen} onOpenChange={setIsOpen}>
             <PopoverTrigger asChild>
                 <Button
                     variant="ghost"
                     className={cx(
-                        "group relative flex items-center rounded-md p-2 text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
+                        "group relative flex items-center rounded-md p-2 text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
                         focusRing
                     )}
                 >
@@ -56,65 +62,62 @@ export function NotificationsPopover() {
             </PopoverTrigger>
             <PopoverContent
                 align="end"
-                sideOffset={8}
-                className="w-80 p-0 max-h-[calc(100vh-100px)] flex flex-col"
+                sideOffset={16}
+                className="w-[380px] p-0 max-h-[calc(100vh-100px)] overflow-hidden"
             >
-                <div className="flex items-center justify-between p-3 border-b border-gray-200 dark:border-gray-800">
-                    <h3 className="font-medium text-gray-900 dark:text-gray-50">Notifications</h3>
-                    <div className="flex items-center gap-1">
-                        {unreadCount > 0 && (
-                            <Button
-                                variant="ghost"
-                                onClick={handleMarkAllAsRead}
-                                className="flex items-center gap-1 text-xs py-1 px-2 h-7"
-                            >
-                                <RiCheckLine className="size-3.5" />
-                                Mark all as read
-                            </Button>
-                        )}
+                <div className="flex items-center justify-between border-b border-gray-200 p-4 dark:border-gray-800">
+                    <h2 className="text-sm font-medium text-gray-900 dark:text-gray-50">Notifications</h2>
+                    <div className="flex items-center gap-x-2">
                         <Button
                             variant="ghost"
-                            className="p-1.5 h-7 w-7"
-                            asChild
+                            onClick={handleMarkAllAsRead}
+                            className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 p-1"
                         >
-                            <Link href="/settings/general#notification-settings">
+                            <RiCheckLine className="size-4" />
+                            <span className="sr-only">Mark all as read</span>
+                        </Button>
+                        <Link href="/settings/notifications">
+                            <Button
+                                variant="ghost"
+                                className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 p-1"
+                            >
                                 <RiSettings3Line className="size-4" />
                                 <span className="sr-only">Notification settings</span>
-                            </Link>
-                        </Button>
+                            </Button>
+                        </Link>
                     </div>
                 </div>
-
-                <div className="overflow-y-auto">
-                    {notifications.length > 0 ? (
-                        <div className="divide-y divide-gray-200 dark:divide-gray-800">
-                            {notifications.map(notification => (
-                                <NotificationItem
-                                    key={notification.id}
-                                    notification={notification}
-                                    onRead={handleMarkAsRead}
-                                />
-                            ))}
+                <div className="overflow-y-auto max-h-[400px]">
+                    {notifications.length === 0 ? (
+                        <div className="p-4 text-center text-sm text-gray-500">
+                            No notifications
                         </div>
                     ) : (
-                        <div className="flex flex-col items-center justify-center p-6 text-center">
-                            <RiNotification3Line className="size-8 text-gray-400" />
-                            <p className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-50">No notifications</p>
-                            <p className="mt-1 text-sm text-gray-500">You're all caught up!</p>
-                        </div>
+                        <ul className="divide-y divide-gray-200 dark:divide-gray-800">
+                            {notifications.map((notification) => (
+                                <li key={notification.id} onClick={() => setIsOpen(false)}>
+                                    <NotificationItem
+                                        notification={notification}
+                                        onRead={handleMarkAsRead}
+                                    />
+                                </li>
+                            ))}
+                        </ul>
                     )}
                 </div>
-
-                <div className="mt-auto p-2 border-t border-gray-200 dark:border-gray-800">
-                    <Button
-                        variant="ghost"
-                        className="w-full justify-center text-sm text-primary hover:text-primary-dark hover:bg-primary/5"
-                        asChild
+                <div className="border-t border-gray-200 p-4 dark:border-gray-800">
+                    <Link
+                        href="/notifications"
+                        className={cx(
+                            "block w-full rounded-md py-2 px-3 text-center text-sm font-medium",
+                            "bg-gray-50 text-gray-900 hover:bg-gray-100",
+                            "dark:bg-gray-900 dark:text-gray-50 dark:hover:bg-gray-800",
+                            focusRing
+                        )}
+                        onClick={() => setIsOpen(false)}
                     >
-                        <Link href="/notifications">
-                            View all notifications
-                        </Link>
-                    </Button>
+                        View all notifications
+                    </Link>
                 </div>
             </PopoverContent>
         </Popover>
