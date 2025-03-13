@@ -35,12 +35,6 @@ export function NotificationsPopover() {
         )
     }
 
-    // Combined handler for reading and closing
-    const handleReadAndClose = (id: string) => {
-        handleMarkAsRead(id)
-        setIsOpen(false)
-    }
-
     return (
         <Popover open={isOpen} onOpenChange={setIsOpen}>
             <PopoverTrigger asChild>
