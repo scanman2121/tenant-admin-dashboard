@@ -50,7 +50,7 @@ export function PageTemplate({
                     </div>
                 </>
             ) : (
-                <div className="rounded-md border">
+                <div>
                     <DataTable data={usage} columns={columns} />
                 </div>
             )}

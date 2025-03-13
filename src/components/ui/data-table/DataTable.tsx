@@ -59,8 +59,8 @@ export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
   })
 
   return (
-    <>
-      <div className="space-y-3">
+    <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
+      <div className="space-y-3 p-4">
         <Filterbar table={table} />
         <div className="relative overflow-x-auto">
           <Table>
@@ -93,14 +93,14 @@ export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
                   <TableRow
                     key={row.id}
                     onClick={() => row.toggleSelected(!row.getIsSelected())}
-                    className="group select-none hover:bg-gray-50 hover:dark:bg-gray-900"
+                    className="group select-none hover:bg-gray-50 hover:dark:bg-gray-800"
                   >
                     {row.getVisibleCells().map((cell, index) => (
                       <TableCell
                         key={cell.id}
                         className={cx(
                           row.getIsSelected()
-                            ? "bg-gray-50 dark:bg-gray-900"
+                            ? "bg-gray-50 dark:bg-gray-800"
                             : "",
                           "relative whitespace-nowrap py-4 text-gray-600 first:w-10 dark:text-gray-400",
                           cell.column.columnDef.meta?.className,
@@ -133,6 +133,6 @@ export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
         </div>
         <DataTablePagination table={table} pageSize={pageSize} />
       </div>
-    </>
+    </div>
   )
 }
