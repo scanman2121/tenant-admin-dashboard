@@ -41,7 +41,7 @@ export function NotificationsPopover() {
                 <Button
                     variant="ghost"
                     className={cx(
-                        "group relative flex items-center rounded-md p-2 text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
+                        "group relative flex items-center rounded-md p-2 text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
                         focusRing
                     )}
                 >

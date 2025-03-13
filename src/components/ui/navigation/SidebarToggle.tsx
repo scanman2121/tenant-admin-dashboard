@@ -14,7 +14,7 @@ export function SidebarToggle() {
             variant="ghost"
             onClick={toggleCollapsed}
             className={cx(
-                "flex items-center justify-center rounded-md p-1.5 text-gray-500 hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
+                "flex items-center justify-center rounded-md p-1.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
                 focusRing,
                 "mr-2"
             )}

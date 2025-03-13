@@ -67,7 +67,7 @@ export default function RootLayout({
       </head>
       <body
         className={cx(
-          "min-h-screen font-sans text-gray-900 antialiased bg-[#f5f5f5] dark:bg-gray-950 dark:text-gray-50",
+          "min-h-screen font-sans text-gray-900 antialiased bg-[#F6F7F8] dark:bg-gray-950 dark:text-gray-50",
           inter.variable,
           roboto.variable,
         )}

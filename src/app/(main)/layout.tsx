@@ -43,7 +43,7 @@ export default function MainLayout({
   return (
     <SidebarContext.Provider value={{ isCollapsed, toggleCollapsed }}>
       <Sidebar />
-      <main className={`transition-all duration-300 main-content-wrapper bg-[#f5f5f5] dark:bg-gray-950 ${isCollapsed ? 'lg:pl-16' : 'lg:pl-56'}`}>
+      <main className={`transition-all duration-300 main-content-wrapper bg-[#F6F7F8] dark:bg-gray-950 ${isCollapsed ? 'lg:pl-16' : 'lg:pl-56'}`}>
         <div className="mx-auto max-w-screen-2xl">
           <Header />
           <div className="pt-6">
