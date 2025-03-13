@@ -24,15 +24,19 @@ export default function MainLayout({
 
   // Load collapsed state from localStorage on mount
   useEffect(() => {
-    const savedCollapsedState = localStorage.getItem('sidebarCollapsed')
-    if (savedCollapsedState) {
-      setIsCollapsed(savedCollapsedState === 'true')
+    if (typeof window !== 'undefined') {
+      const savedCollapsedState = localStorage.getItem('sidebarCollapsed')
+      if (savedCollapsedState) {
+        setIsCollapsed(savedCollapsedState === 'true')
+      }
     }
   }, [])
 
   // Save collapsed state to localStorage when it changes
   useEffect(() => {
-    localStorage.setItem('sidebarCollapsed', isCollapsed.toString())
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('sidebarCollapsed', isCollapsed.toString())
+    }
   }, [isCollapsed])
 
   // Toggle sidebar collapsed state

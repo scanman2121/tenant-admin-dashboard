@@ -155,7 +155,97 @@ export const BuildingsDropdownDesktop = () => {
 
   return (
     <div className="flex items-center gap-x-4">
-      <div className="w-[280px]">
+      {/* Compact dropdown for smaller screens (below 1024px) */}
+      <div className="lg:hidden w-auto">
+        <DropdownMenu
+          open={dropdownOpen}
+          onOpenChange={setDropdownOpen}
+          modal={false}
+        >
+          <DropdownMenuTrigger asChild>
+            <button
+              className={cx(
+                "flex items-center gap-x-1 rounded-md border border-gray-300 bg-white p-1.5 text-sm shadow-sm transition-all hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-950 hover:dark:bg-gray-900",
+                focusInput,
+              )}
+              ref={dropdownTriggerRef}
+            >
+              <div className="flex shrink-0 items-center">
+                {isPortfolioView ? (
+                  <span
+                    className="flex aspect-square size-6 items-center justify-center rounded bg-primary p-1 text-xs font-medium text-white dark:bg-primary-400"
+                    aria-hidden="true"
+                  >
+                    <RiBuildingLine className="size-4" />
+                  </span>
+                ) : (
+                  <div className="relative size-6 overflow-hidden rounded">
+                    <Image
+                      src={selectedBuilding.imageUrl}
+                      alt={selectedBuilding.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                )}
+              </div>
+              <RiExpandUpDownLine
+                className="size-4 shrink-0 text-gray-500"
+                aria-hidden="true"
+              />
+              <span className="sr-only">
+                {isPortfolioView ? "All buildings" : selectedBuilding.name}
+              </span>
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            className="w-[280px]"
+            hidden={hasOpenDialog}
+            onCloseAutoFocus={(event) => {
+              if (focusRef.current) {
+                focusRef.current.focus()
+                focusRef.current = null
+                event.preventDefault()
+              }
+            }}
+          >
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>
+                Buildings ({buildings.length})
+              </DropdownMenuLabel>
+              {buildings.map((building) => (
+                <DropdownMenuItem
+                  key={building.value}
+                  onSelect={() => handleBuildingSelect(building)}
+                >
+                  <div className="flex w-full items-center gap-x-2.5">
+                    <div className="relative size-6 overflow-hidden rounded">
+                      <Image
+                        src={building.imageUrl}
+                        alt={building.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-50">
+                      {building.name}
+                    </p>
+                  </div>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <ModalAddBuilding
+              onSelect={handleDialogItemSelect}
+              onOpenChange={handleDialogItemOpenChange}
+              itemName="Add building"
+            />
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      {/* Full dropdown for larger screens (1024px and above) */}
+      <div className="hidden lg:block w-[280px]">
         <DropdownMenu
           open={dropdownOpen}
           onOpenChange={setDropdownOpen}
@@ -167,6 +257,7 @@ export const BuildingsDropdownDesktop = () => {
                 "flex w-full items-center gap-x-2.5 rounded-md border border-gray-300 bg-white p-1.5 text-sm shadow-sm transition-all hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-950 hover:dark:bg-gray-900",
                 focusInput,
               )}
+              ref={dropdownTriggerRef}
             >
               <div className="flex shrink-0 items-center gap-x-2.5">
                 {isPortfolioView ? (

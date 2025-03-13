@@ -25,6 +25,7 @@ export function SidebarToggle() {
             ) : (
                 <RiMenuFoldLine className="size-5" aria-hidden="true" />
             )}
+            <span className="sr-only">{isCollapsed ? "Expand" : "Collapse"} sidebar</span>
         </Button>
     )
 } 
