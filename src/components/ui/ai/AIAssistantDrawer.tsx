@@ -5,6 +5,7 @@ import { cx } from "@/lib/utils"
 import {
     RiCalendarEventLine,
     RiCloseLine,
+    RiHistoryLine,
     RiLineChartLine,
     RiSendPlaneFill,
     RiUserAddLine,
@@ -206,6 +207,14 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
             <div className="flex items-center justify-between p-4">
                 <h2 className="font-medium text-sm text-gray-900 dark:text-gray-50">AI Assistant</h2>
                 <div className="flex items-center gap-2">
+                    <Button
+                        variant="ghost"
+                        className="p-1.5 h-8 w-8"
+                        onClick={togglePreviousChats}
+                    >
+                        <RiHistoryLine className="size-5" />
+                        <span className="sr-only">Previous chats</span>
+                    </Button>
                     <Button
                         variant="secondary"
                         className="py-1 px-3 h-8 text-xs"
