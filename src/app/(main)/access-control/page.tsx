@@ -1,5 +1,6 @@
 "use client"
 
+import { Badge } from "@/components/ui/badge"
 import { DataTable } from "@/components/ui/data-table/DataTable"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { RiDoorLockLine, RiKey2Line, RiTeamLine } from "@remixicon/react"
@@ -34,13 +35,15 @@ const credentialsColumns = [
         accessorKey: "status",
         cell: ({ row }: { row: any }) => {
             const status = row.getValue("status") as string
+            const variants = {
+                Active: "default",
+                Inactive: "secondary",
+                Pending: "outline",
+            } as const
             return (
-                <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${status === "Active" ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300" :
-                    status === "Inactive" ? "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300" :
-                        "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300"
-                    }`}>
-                    {status}
-                </span>
+                <Badge variant={variants[status as keyof typeof variants]}>
+                    • {status}
+                </Badge>
             )
         }
     }
@@ -100,16 +103,16 @@ export default function AccessControl() {
                 <div className="flex items-center justify-between">
                     <div>
                         <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
-                            Access control
+                            Access Control
                         </h1>
                         <p className="mt-1 text-sm text-gray-500">
                             Manage credentials and access points
                         </p>
                     </div>
                     <div className="flex items-center gap-3">
-                        <Text className="text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full whitespace-nowrap">
+                        <Badge variant="secondary" className="text-sm">
                             {dashboardMetrics.availableCredentials} credentials available
-                        </Text>
+                        </Badge>
                         <Button
                             variant="primary"
                             size="sm"
@@ -131,7 +134,7 @@ export default function AccessControl() {
                         <Grid numItemsMd={2} numItemsLg={4} className="gap-6">
                             <Card className="space-y-3">
                                 <div className="flex items-center gap-3">
-                                    <div className="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary">
+                                    <div className="flex items-center justify-center size-8 rounded-full bg-blue-500/10 text-blue-500">
                                         <RiKey2Line className="size-4" />
                                     </div>
                                     <Text>Total credentials</Text>
@@ -141,7 +144,7 @@ export default function AccessControl() {
 
                             <Card className="space-y-3">
                                 <div className="flex items-center gap-3">
-                                    <div className="flex items-center justify-center size-8 rounded-full bg-green-500/10 text-green-500">
+                                    <div className="flex items-center justify-center size-8 rounded-full bg-blue-500/10 text-blue-500">
                                         <RiTeamLine className="size-4" />
                                     </div>
                                     <Text>Active users</Text>
@@ -151,7 +154,7 @@ export default function AccessControl() {
 
                             <Card className="space-y-3">
                                 <div className="flex items-center gap-3">
-                                    <div className="flex items-center justify-center size-8 rounded-full bg-amber-500/10 text-amber-500">
+                                    <div className="flex items-center justify-center size-8 rounded-full bg-blue-500/10 text-blue-500">
                                         <RiKey2Line className="size-4" />
                                     </div>
                                     <Text>Available credentials</Text>
