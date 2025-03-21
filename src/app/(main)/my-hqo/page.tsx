@@ -1,8 +1,8 @@
 "use client"
 
 import { cx } from "@/lib/utils";
-import { RiCalendarEventLine, RiDoorOpenLine, RiFilterLine, RiInformationLine, RiMapPinLine, RiSearchLine, RiShoppingBag3Line, RiUserAddLine } from "@remixicon/react";
-import { Badge, Button, Card, Grid, Icon, Select, SelectItem, Text, TextInput, Title } from "@tremor/react";
+import { RiCalendarEventLine, RiDoorOpenLine, RiInformationLine, RiMapPinLine, RiSearchLine, RiShoppingBag3Line, RiUserAddLine } from "@remixicon/react";
+import { Badge, Button, Card, Grid, Icon, Text, TextInput, Title } from "@tremor/react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -102,15 +102,6 @@ const recentActivityData = [
   },
 ];
 
-// List of tenants for the filter
-const tenants = [
-  { value: "all", label: "All Tenants" },
-  { value: "Acme Inc", label: "Acme Inc" },
-  { value: "Global Tech", label: "Global Tech" },
-  { value: "Innovate Solutions", label: "Innovate Solutions" },
-  { value: "Tech Innovators", label: "Tech Innovators" },
-];
-
 // Mock data for upcoming visitors and vendors
 const upcomingVisitorsAndVendors = [
   {
@@ -160,18 +151,16 @@ const upcomingVisitorsAndVendors = [
 ] as const;
 
 export default function MyHqO() {
-  const [selectedTenant, setSelectedTenant] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Filter activities based on tenant selection and search query
+  // Filter activities based on search query only
   const filteredActivities = recentActivityData.filter(activity => {
-    const matchesTenant = selectedTenant === "all" || activity.tenant === selectedTenant;
     const matchesSearch = searchQuery === "" ||
       activity.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       activity.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
       activity.user.name.toLowerCase().includes(searchQuery.toLowerCase());
 
-    return matchesTenant && matchesSearch;
+    return matchesSearch;
   });
 
   // Function to get the appropriate icon for each activity type
@@ -205,30 +194,14 @@ export default function MyHqO() {
           <Card>
             <Title className="text-text-primary mb-4">Activity Stream</Title>
 
-            {/* Filters and Search */}
-            <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="w-full sm:w-64">
-                <Select
-                  value={selectedTenant}
-                  onValueChange={setSelectedTenant}
-                  icon={RiFilterLine}
-                  placeholder="Filter by tenant"
-                >
-                  {tenants.map((tenant) => (
-                    <SelectItem key={tenant.value} value={tenant.value}>
-                      {tenant.label}
-                    </SelectItem>
-                  ))}
-                </Select>
-              </div>
-              <div className="w-full sm:w-72">
-                <TextInput
-                  icon={RiSearchLine}
-                  placeholder="Search activities..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
+            {/* Search */}
+            <div className="mb-6">
+              <TextInput
+                icon={RiSearchLine}
+                placeholder="Search activities..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
             </div>
 
             {/* Activity Stream */}
@@ -242,43 +215,21 @@ export default function MyHqO() {
                   const ActivityIcon = getActivityIcon(activity.type);
                   return (
                     <div key={activity.id} className="flex gap-4 p-4 rounded-lg border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
-                      {/* User Avatar with Activity Icon - Redesigned */}
+                      {/* Activity Icon */}
                       <div className="flex-shrink-0">
-                        <div className="relative flex items-center justify-center">
-                          {/* Activity type indicator ring */}
-                          <div className={cx(
-                            "absolute inset-0 rounded-full border-2",
-                            activity.type === "Event" ? "border-blue-400 dark:border-blue-500" :
-                              activity.type === "Booking" ? "border-green-400 dark:border-green-500" :
-                                activity.type === "Marketplace" ? "border-amber-400 dark:border-amber-500" :
-                                  activity.type === "Access" ? "border-violet-400 dark:border-violet-500" :
-                                    "border-rose-400 dark:border-rose-500"
-                          )}></div>
-
-                          {/* User avatar */}
-                          <Image
-                            src={activity.user.avatar}
-                            alt={activity.user.name}
-                            width={40}
-                            height={40}
-                            className="w-10 h-10 rounded-full object-cover border-2 border-white dark:border-gray-900 z-10"
+                        <div className={cx(
+                          "flex items-center justify-center size-10 rounded-full",
+                          activity.type === "Event" ? "bg-blue-500 text-white" :
+                            activity.type === "Booking" ? "bg-green-500 text-white" :
+                              activity.type === "Marketplace" ? "bg-amber-500 text-white" :
+                                activity.type === "Access" ? "bg-violet-500 text-white" :
+                                  "bg-rose-500 text-white"
+                        )}>
+                          <Icon
+                            icon={ActivityIcon}
+                            size="md"
+                            className="text-white"
                           />
-
-                          {/* Activity icon badge */}
-                          <div className={cx(
-                            "absolute -top-1 -right-1 rounded-full p-1.5 shadow-md z-20",
-                            activity.type === "Event" ? "bg-blue-500 text-white" :
-                              activity.type === "Booking" ? "bg-green-500 text-white" :
-                                activity.type === "Marketplace" ? "bg-amber-500 text-white" :
-                                  activity.type === "Access" ? "bg-violet-500 text-white" :
-                                    "bg-rose-500 text-white"
-                          )}>
-                            <Icon
-                              icon={ActivityIcon}
-                              size="xs"
-                              className="text-white"
-                            />
-                          </div>
                         </div>
                       </div>
 
@@ -304,7 +255,7 @@ export default function MyHqO() {
                           </div>
                         </div>
 
-                        {/* Activity Details - Simplified badges */}
+                        {/* Activity Details */}
                         <div className="mt-2">
                           <Text className="text-sm text-text-primary font-medium">
                             {activity.title}
