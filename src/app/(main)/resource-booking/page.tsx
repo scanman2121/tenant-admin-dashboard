@@ -1,7 +1,9 @@
 "use client"
 
+import { Button } from "@/components/Button"
+import { PageHeader } from "@/components/PageHeader"
 import { DataTable } from "@/components/ui/data-table/DataTable"
-import { useState } from "react"
+import { RiAddLine } from "@remixicon/react"
 
 // Define columns for the resource booking table
 const resourceBookingColumns = [
@@ -51,46 +53,44 @@ const mockResourceBookingData = [
         name: "Conference Room A",
         type: "Meeting Room",
         capacity: "10",
-        location: "2nd Floor",
-        status: "Available",
+        location: "Floor 1",
+        status: "Available"
     },
     {
         id: "2",
-        name: "Desk 101",
-        type: "Hot Desk",
-        capacity: "1",
-        location: "3rd Floor",
-        status: "Booked",
+        name: "Conference Room B",
+        type: "Meeting Room",
+        capacity: "20",
+        location: "Floor 2",
+        status: "Booked"
     },
     {
         id: "3",
-        name: "Training Room",
-        type: "Meeting Room",
-        capacity: "20",
-        location: "1st Floor",
-        status: "Available",
-    },
+        name: "Phone Booth 1",
+        type: "Phone Booth",
+        capacity: "1",
+        location: "Floor 1",
+        status: "Available"
+    }
 ]
 
 export default function ResourceBooking() {
-    const [data] = useState(mockResourceBookingData)
-
     return (
-        <div className="container mx-auto px-4 py-6 lg:px-8 lg:py-8">
-            <div className="flex flex-col gap-6">
-                <div className="flex items-center justify-between">
-                    <div>
-                        <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
-                            Resource Booking
-                        </h1>
-                        <p className="mt-1 text-sm text-gray-500">
-                            Book meeting rooms, desks, and other resources
-                        </p>
-                    </div>
-                </div>
-                <div className="rounded-lg border border-gray-200 dark:border-gray-800">
-                    <DataTable columns={resourceBookingColumns} data={data} />
-                </div>
+        <div className="space-y-6">
+            <PageHeader
+                title="Resource booking"
+                customButtons={
+                    <Button className="flex items-center gap-2">
+                        <RiAddLine className="size-5" />
+                        Book a resource
+                    </Button>
+                }
+            />
+            <div className="rounded-lg border bg-card">
+                <DataTable
+                    data={mockResourceBookingData}
+                    columns={resourceBookingColumns}
+                />
             </div>
         </div>
     )
