@@ -126,7 +126,7 @@ export function ChartCard({
           </dt>
           {selectedPeriod !== "no-comparison" && (
             <Badge variant={getBadgeType(evolution)}>
-              {percentageFormatter(evolution)}
+              {percentageFormatter.format(evolution)}
             </Badge>
           )}
         </div>
