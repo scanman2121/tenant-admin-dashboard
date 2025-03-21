@@ -1,7 +1,7 @@
 "use client"
 
 import { cx } from "@/lib/utils";
-import { RiApps2Line, RiArrowRightLine, RiCalendarEventLine, RiCheckLine, RiDoorOpenLine, RiInformationLine, RiMapPinLine, RiSearchLine, RiSettings4Line, RiShoppingBag3Line, RiTeamLine, RiUserAddLine } from "@remixicon/react";
+import { RiApps2Line, RiArrowRightLine, RiCalendarEventLine, RiCheckLine, RiDoorOpenLine, RiInformationLine, RiMapPinLine, RiSearchLine, RiSettings4Line, RiShoppingBag3Line, RiUserAddLine } from "@remixicon/react";
 import { Badge, Button, Card, Grid, Icon, ProgressBar, Text, TextInput, Title } from "@tremor/react";
 import Image from "next/image";
 import { useState } from "react";
@@ -277,53 +277,6 @@ export default function MyHqO() {
                 <Button variant="light" size="xs" className="p-1.5">
                   <RiArrowRightLine className="size-4" />
                 </Button>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* Add Administrators Card */}
-        <Card className="relative overflow-hidden">
-          {/* Background Pattern */}
-          <div className="absolute right-0 top-0 h-full w-1/3 bg-gradient-to-l from-primary/5 to-transparent" />
-
-          <div className="relative">
-            <div className="flex items-center justify-between mb-6">
-              <Title className="text-text-primary">Add team members</Title>
-              <Button variant="secondary" size="sm" className="inline-flex items-center gap-2">
-                Add admin users
-                <RiArrowRightLine className="size-4" />
-              </Button>
-            </div>
-
-            <Text className="text-text-secondary">Invite your colleagues to help manage your space. They'll be able to:</Text>
-
-            <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <div className="flex items-start gap-3">
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary">
-                    <RiSettings4Line className="size-4" />
-                  </div>
-                </div>
-                <Text className="text-gray-700 dark:text-gray-300">Manage building settings and configurations</Text>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary">
-                    <RiTeamLine className="size-4" />
-                  </div>
-                </div>
-                <Text className="text-gray-700 dark:text-gray-300">Add and manage user accounts</Text>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary">
-                    <RiUserAddLine className="size-4" />
-                  </div>
-                </div>
-                <Text className="text-gray-700 dark:text-gray-300">Handle visitor management and access control</Text>
               </div>
             </div>
           </div>
