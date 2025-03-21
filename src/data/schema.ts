@@ -57,3 +57,14 @@ export type OverviewData = {
   "Sign outs": number
   "Support calls": number
 }
+
+export type User = {
+  id: string
+  name: string
+  email: string
+  role: string
+  company: string
+  status: "active" | "inactive" | "invited"
+  avatarUrl?: string
+  initials: string
+}

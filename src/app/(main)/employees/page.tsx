@@ -5,17 +5,17 @@ import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { DataTable } from "@/components/ui/data-table/DataTable"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { roles, users } from "@/data/data"
+import { roles } from "@/data/data"
+import { User } from "@/data/schema"
 import { RiUserAddLine } from "@remixicon/react"
 import { Row, Table } from "@tanstack/react-table"
 import Image from "next/image"
 import { useState } from "react"
 
-// Define columns for the employees table
 const employeesColumns = [
     {
         id: "select",
-        header: ({ table }: { table: Table<any> }) => (
+        header: ({ table }: { table: Table<User> }) => (
             <Checkbox
                 checked={
                     table.getIsAllPageRowsSelected()
@@ -30,7 +30,7 @@ const employeesColumns = [
                 aria-label="Select all"
             />
         ),
-        cell: ({ row }: { row: Row<any> }) => (
+        cell: ({ row }: { row: Row<User> }) => (
             <Checkbox
                 checked={row.getIsSelected()}
                 onCheckedChange={(value) => {
@@ -50,12 +50,12 @@ const employeesColumns = [
     },
     {
         accessorKey: "name",
-        header: "Employee",
-        cell: ({ row }: { row: any }) => {
+        header: "Employee name",
+        cell: ({ row }: { row: Row<User> }) => {
             const name = row.getValue("name") as string;
-            const email = row.original.email as string;
-            const avatarUrl = row.original.avatarUrl as string;
-            const initials = row.original.initials as string;
+            const email = row.original.email;
+            const avatarUrl = row.original.avatarUrl;
+            const initials = row.original.initials;
 
             return (
                 <div className="flex items-center gap-3">
@@ -68,16 +68,16 @@ const employeesColumns = [
                                 className="object-cover"
                             />
                         ) : (
-                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-sm font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted text-sm font-medium">
                                 {initials}
                             </div>
                         )}
                     </div>
                     <div>
-                        <div className="font-medium text-gray-900 dark:text-gray-50">
+                        <div className="font-medium">
                             {name}
                         </div>
-                        <div className="text-sm text-gray-500">
+                        <div className="text-sm text-muted-foreground">
                             {email}
                         </div>
                     </div>
@@ -85,13 +85,13 @@ const employeesColumns = [
             );
         },
         meta: {
-            displayName: "Employee",
+            displayName: "Employee name",
         },
     },
     {
         accessorKey: "role",
         header: "Role",
-        cell: ({ row }: { row: any }) => {
+        cell: ({ row }: { row: Row<User> }) => {
             const role = row.getValue("role") as string;
             const roleLabel = roles.find(r => r.value === role)?.label || role;
 
@@ -106,22 +106,11 @@ const employeesColumns = [
         enableColumnFilter: true,
     },
     {
-        accessorKey: "email",
-        header: "Email",
-        cell: ({ row }: { row: any }) => {
-            const email = row.getValue("email") as string;
-            return <span className="text-gray-600 dark:text-gray-400">{email}</span>;
-        },
-        meta: {
-            displayName: "Email",
-        },
-    },
-    {
         accessorKey: "company",
         header: "Company",
-        cell: ({ row }: { row: any }) => {
+        cell: ({ row }: { row: Row<User> }) => {
             const company = row.getValue("company") as string;
-            return <span className="text-gray-600 dark:text-gray-400">{company}</span>;
+            return <span className="text-muted-foreground">{company}</span>;
         },
         meta: {
             displayName: "Company",
@@ -132,7 +121,7 @@ const employeesColumns = [
     {
         accessorKey: "status",
         header: "Status",
-        cell: ({ row }: { row: any }) => {
+        cell: ({ row }: { row: Row<User> }) => {
             const status = row.getValue("status") as "active" | "inactive" | "invited"
             const variants = {
                 active: "default",
@@ -153,49 +142,102 @@ const employeesColumns = [
     },
 ]
 
+const tabs = [
+    {
+        value: "all",
+        label: "All team members",
+    },
+    {
+        value: "active",
+        label: "Active",
+    },
+    {
+        value: "inactive",
+        label: "Inactive",
+    },
+    {
+        value: "invited",
+        label: "Invited",
+    },
+]
+
+const mockUsers: User[] = [
+    {
+        id: "1",
+        name: "John Smith",
+        email: "john.smith@example.com",
+        role: "admin",
+        company: "Acme Corp",
+        status: "active",
+        initials: "JS"
+    },
+    {
+        id: "2",
+        name: "Emma Davis",
+        email: "emma.davis@example.com",
+        role: "user",
+        company: "Tech Solutions",
+        status: "invited",
+        initials: "ED"
+    },
+    {
+        id: "3",
+        name: "Michael Brown",
+        email: "michael.brown@example.com",
+        role: "manager",
+        company: "Global Services",
+        status: "inactive",
+        initials: "MB"
+    }
+]
+
 export default function Employees() {
-    const [data] = useState(users)
+    const [data] = useState(mockUsers)
     const [selectedTab, setSelectedTab] = useState("all")
 
     return (
-        <div className="space-y-6">
-            {/* Header */}
+        <div className="flex flex-col gap-8 p-8">
             <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-50">Team Members</h1>
-                <Button size="lg" onClick={() => { }}>
+                <div>
+                    <h1 className="text-2xl font-semibold tracking-tight">Team Members</h1>
+                    <p className="text-sm text-muted-foreground">
+                        Manage your team members and their access
+                    </p>
+                </div>
+                <Button>
                     <RiUserAddLine className="mr-1.5 h-5 w-5" />
                     Add team member
                 </Button>
             </div>
 
-            {/* Tabs */}
-            <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
+            <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
                 <TabsList>
-                    <TabsTrigger value="all">All</TabsTrigger>
-                    <TabsTrigger value="active">Active</TabsTrigger>
-                    <TabsTrigger value="inactive">Inactive</TabsTrigger>
-                    <TabsTrigger value="invited">Invited</TabsTrigger>
+                    {tabs.map((tab) => (
+                        <TabsTrigger key={tab.value} value={tab.value}>
+                            {tab.label}
+                        </TabsTrigger>
+                    ))}
                 </TabsList>
 
-                <TabsContent value="all">
+                <TabsContent value="all" className="mt-4">
                     <DataTable columns={employeesColumns} data={data} />
                 </TabsContent>
 
-                <TabsContent value="active">
+                <TabsContent value="active" className="mt-4">
                     <DataTable
                         columns={employeesColumns}
                         data={data.filter(user => user.status === "active")}
                     />
                 </TabsContent>
 
-                <TabsContent value="inactive">
+                <TabsContent value="inactive" className="mt-4">
                     <DataTable
                         columns={employeesColumns}
                         data={data.filter(user => user.status === "inactive")}
                     />
                 </TabsContent>
 
-                <TabsContent value="invited">
+                <TabsContent value="invited" className="mt-4">
                     <DataTable
                         columns={employeesColumns}
                         data={data.filter(user => user.status === "invited")}
