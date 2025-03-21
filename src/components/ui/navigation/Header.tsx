@@ -7,26 +7,7 @@ import { BuildingsDropdownDesktop } from "./SidebarBuildingsDropdown"
 import { SidebarToggle } from "./SidebarToggle"
 
 export function Header() {
-    const [isMobile, setIsMobile] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
-
-    // Check if screen is mobile (under 1024px)
-    useEffect(() => {
-        const checkIfMobile = () => {
-            setIsMobile(window.innerWidth < 1024)
-        }
-
-        // Initial check
-        checkIfMobile()
-
-        // Add event listener for window resize
-        window.addEventListener('resize', checkIfMobile)
-
-        // Cleanup
-        return () => {
-            window.removeEventListener('resize', checkIfMobile)
-        }
-    }, [])
 
     // Handle scroll events
     useEffect(() => {
