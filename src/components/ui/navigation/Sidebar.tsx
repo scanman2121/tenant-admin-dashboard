@@ -106,22 +106,6 @@ export function Sidebar() {
             <HqOLogo className="h-6 w-auto" />
             <span className="sr-only">HqO</span>
           </Link>
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className={cx(
-              "ml-auto rounded-md p-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-50",
-              focusRing
-            )}
-            aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-          >
-            <RiArrowDownSLine
-              className={cx(
-                "size-4 shrink-0 transition-transform duration-300",
-                isCollapsed ? "-rotate-90" : "rotate-90"
-              )}
-              aria-hidden="true"
-            />
-          </button>
         </div>
         <div className="flex flex-1 flex-col overflow-y-auto">
           <nav className="flex-1">
