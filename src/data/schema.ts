@@ -80,3 +80,13 @@ export type Vendor = {
   buildings: string[]
   status: "active" | "inactive"
 }
+
+export type WorkOrder = {
+  id: string
+  title: string
+  status: "completed" | "in-progress" | "pending"
+  priority: "high" | "medium" | "low"
+  submittedBy: string
+  submittedDate: string
+  building: string
+}

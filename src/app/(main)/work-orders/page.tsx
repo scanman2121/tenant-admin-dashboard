@@ -4,26 +4,46 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/data-table/DataTable"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { WorkOrder } from "@/data/schema"
 import { RiAddLine } from "@remixicon/react"
+import { Row } from "@tanstack/react-table"
 import { useState } from "react"
 
-// Define columns for the work orders table
 const workOrderColumns = [
     {
-        id: "id",
-        header: "ID",
         accessorKey: "id",
+        header: "Work order ID",
+        cell: ({ row }: { row: Row<WorkOrder> }) => {
+            const id = row.getValue("id") as string
+            return (
+                <div className="font-medium">
+                    {id}
+                </div>
+            )
+        },
+        meta: {
+            displayName: "Work order ID",
+        },
     },
     {
-        id: "title",
-        header: "Title",
         accessorKey: "title",
+        header: "Title",
+        cell: ({ row }: { row: Row<WorkOrder> }) => {
+            const title = row.getValue("title") as string
+            return (
+                <div className="font-medium">
+                    {title}
+                </div>
+            )
+        },
+        meta: {
+            displayName: "Title",
+        },
     },
     {
-        id: "status",
-        header: "Status",
         accessorKey: "status",
-        cell: ({ row }: { row: any }) => {
+        header: "Status",
+        cell: ({ row }: { row: Row<WorkOrder> }) => {
             const status = row.getValue("status") as "completed" | "in-progress" | "pending"
             const variants = {
                 completed: "default",
@@ -35,13 +55,15 @@ const workOrderColumns = [
                     • {status}
                 </Badge>
             )
-        }
+        },
+        meta: {
+            displayName: "Status",
+        },
     },
     {
-        id: "priority",
-        header: "Priority",
         accessorKey: "priority",
-        cell: ({ row }: { row: any }) => {
+        header: "Priority",
+        cell: ({ row }: { row: Row<WorkOrder> }) => {
             const priority = row.getValue("priority") as "high" | "medium" | "low"
             const variants = {
                 high: "destructive",
@@ -53,27 +75,59 @@ const workOrderColumns = [
                     • {priority}
                 </Badge>
             )
-        }
+        },
+        meta: {
+            displayName: "Priority",
+        },
     },
     {
-        id: "submittedBy",
-        header: "Submitted by",
         accessorKey: "submittedBy",
+        header: "Submitted by",
+        cell: ({ row }: { row: Row<WorkOrder> }) => {
+            const submittedBy = row.getValue("submittedBy") as string
+            return (
+                <div className="text-muted-foreground">
+                    {submittedBy}
+                </div>
+            )
+        },
+        meta: {
+            displayName: "Submitted by",
+        },
     },
     {
-        id: "submittedDate",
-        header: "Submitted date",
         accessorKey: "submittedDate",
+        header: "Submitted date",
+        cell: ({ row }: { row: Row<WorkOrder> }) => {
+            const submittedDate = row.getValue("submittedDate") as string
+            return (
+                <div className="text-muted-foreground">
+                    {submittedDate}
+                </div>
+            )
+        },
+        meta: {
+            displayName: "Submitted date",
+        },
     },
     {
-        id: "building",
-        header: "Building",
         accessorKey: "building",
+        header: "Building",
+        cell: ({ row }: { row: Row<WorkOrder> }) => {
+            const building = row.getValue("building") as string
+            return (
+                <div className="text-muted-foreground">
+                    {building}
+                </div>
+            )
+        },
+        meta: {
+            displayName: "Building",
+        },
     },
 ]
 
-// Mock data for work orders
-const mockWorkOrdersData = [
+const mockWorkOrders: WorkOrder[] = [
     {
         id: "WO-2024-001",
         title: "Broken AC in Meeting Room 3",
@@ -103,54 +157,74 @@ const mockWorkOrdersData = [
     },
 ]
 
+const tabs = [
+    {
+        value: "all",
+        label: "All work orders",
+    },
+    {
+        value: "completed",
+        label: "Completed",
+    },
+    {
+        value: "in-progress",
+        label: "In progress",
+    },
+    {
+        value: "pending",
+        label: "Pending",
+    },
+]
+
 export default function WorkOrdersPage() {
     const [selectedTab, setSelectedTab] = useState("all")
 
     return (
-        <div className="space-y-6">
-            {/* Header */}
+        <div className="flex flex-col gap-8 p-8">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-50">Work Orders</h1>
-                    <p className="mt-1 text-sm text-gray-500">Manage and track maintenance requests</p>
+                    <h1 className="text-2xl font-semibold tracking-tight">Work Orders</h1>
+                    <p className="text-sm text-muted-foreground">
+                        Manage and track maintenance requests
+                    </p>
                 </div>
-                <Button size="lg">
+                <Button>
                     <RiAddLine className="mr-1.5 h-5 w-5" />
                     Create work order
                 </Button>
             </div>
 
-            {/* Tabs */}
-            <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
+            <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
                 <TabsList>
-                    <TabsTrigger value="all">All</TabsTrigger>
-                    <TabsTrigger value="completed">Completed</TabsTrigger>
-                    <TabsTrigger value="in-progress">In Progress</TabsTrigger>
-                    <TabsTrigger value="pending">Pending</TabsTrigger>
+                    {tabs.map((tab) => (
+                        <TabsTrigger key={tab.value} value={tab.value}>
+                            {tab.label}
+                        </TabsTrigger>
+                    ))}
                 </TabsList>
 
-                <TabsContent value="all">
-                    <DataTable columns={workOrderColumns} data={mockWorkOrdersData} />
+                <TabsContent value="all" className="mt-4">
+                    <DataTable columns={workOrderColumns} data={mockWorkOrders} />
                 </TabsContent>
 
-                <TabsContent value="completed">
+                <TabsContent value="completed" className="mt-4">
                     <DataTable
                         columns={workOrderColumns}
-                        data={mockWorkOrdersData.filter(order => order.status === "completed")}
+                        data={mockWorkOrders.filter(order => order.status === "completed")}
                     />
                 </TabsContent>
 
-                <TabsContent value="in-progress">
+                <TabsContent value="in-progress" className="mt-4">
                     <DataTable
                         columns={workOrderColumns}
-                        data={mockWorkOrdersData.filter(order => order.status === "in-progress")}
+                        data={mockWorkOrders.filter(order => order.status === "in-progress")}
                     />
                 </TabsContent>
 
-                <TabsContent value="pending">
+                <TabsContent value="pending" className="mt-4">
                     <DataTable
                         columns={workOrderColumns}
-                        data={mockWorkOrdersData.filter(order => order.status === "pending")}
+                        data={mockWorkOrders.filter(order => order.status === "pending")}
                     />
                 </TabsContent>
             </Tabs>
