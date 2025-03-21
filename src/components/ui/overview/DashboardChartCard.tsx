@@ -22,8 +22,8 @@ export type CardProps = {
 }
 
 const formattingMap = {
-  currency: formatters.currency,
-  unit: formatters.unit,
+  currency: (value: number | null) => value !== null ? formatters.currency.format(value) : '-',
+  unit: (value: number | null) => value !== null ? formatters.number.format(value) : '-',
 }
 
 export const getBadgeType = (value: number) => {

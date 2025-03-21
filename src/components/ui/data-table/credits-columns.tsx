@@ -80,8 +80,11 @@ export const creditsColumns = [
             displayName: "Amount",
         },
         cell: ({ getValue }) => {
+            const value = getValue()
             return (
-                <span className="font-medium">{formatters.currency(getValue())}</span>
+                <span className="font-medium">
+                    {value !== undefined ? formatters.currency.format(value) : '-'}
+                </span>
             )
         },
     }),
