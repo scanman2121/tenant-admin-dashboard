@@ -1,11 +1,10 @@
 // Tremor Raw Button [v0.1.1]
 
+import { cn } from "@/lib/utils"
 import { Slot } from "@radix-ui/react-slot"
 import { RiLoader2Fill } from "@remixicon/react"
-import React from "react"
+import React, { forwardRef } from "react"
 import { tv, type VariantProps } from "tailwind-variants"
-
-import { cx, focusRing } from "@/lib/utils"
 
 const buttonVariants = tv({
   base: [
@@ -99,9 +98,10 @@ interface ButtonProps
   asChild?: boolean
   isLoading?: boolean
   loadingText?: string
+  size?: "sm" | "md" | "lg"
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       asChild,
@@ -111,6 +111,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       variant,
       children,
+      size = "md",
       ...props
     }: ButtonProps,
     forwardedRef,
@@ -119,7 +120,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <Component
         ref={forwardedRef}
-        className={cx(buttonVariants({ variant }), className)}
+        className={cn(
+          buttonVariants({ variant }),
+          className,
+          {
+            "text-sm px-3 py-1.5 rounded-md": size === "sm",
+            "text-sm px-4 py-2 rounded-lg": size === "md",
+            "text-base px-6 py-3 rounded-lg": size === "lg",
+          }
+        )}
         disabled={disabled || isLoading}
         {...props}
       >
