@@ -36,12 +36,17 @@ import { HqOLogo } from "./HqOLogo"
 import { UserProfileMobile } from "./UserProfile"
 
 // Main navigation items
-const navigation = [
+const mainNavigation = [
   { name: "My HqO", href: siteConfig.baseLinks.overview, icon: RiBuilding2Line },
   { name: "Buildings", href: siteConfig.baseLinks.buildings, icon: RiBuildingLine },
   { name: "Employees", href: siteConfig.baseLinks.employees, icon: RiTeamLine },
   { name: "Vendors", href: siteConfig.baseLinks.vendors, icon: RiStore3Line },
   { name: "Visitors", href: siteConfig.baseLinks.visitors, icon: RiUserAddLine },
+  { name: "Access control", href: siteConfig.baseLinks.accessControl, icon: RiDoorLockLine },
+  { name: "Resource booking", href: siteConfig.baseLinks.resourceBooking, icon: RiCalendarLine },
+  { name: "Parking", href: siteConfig.baseLinks.parking, icon: RiParkingLine },
+  { name: "Work orders", href: siteConfig.baseLinks.workOrders, icon: RiToolsLine },
+  { name: "Credits", href: siteConfig.baseLinks.credits, icon: RiCoinLine },
 ] as const
 
 // Communications sub-navigation items
@@ -62,19 +67,6 @@ const intelligenceItems = [
   { name: "Dashboard", href: siteConfig.baseLinks.intelligence.dashboard },
   { name: "Assessments", href: siteConfig.baseLinks.intelligence.assessments },
   { name: "About intelligence", href: siteConfig.baseLinks.intelligence.aboutIntelligence },
-] as const
-
-const mainNavigation = [
-  { name: "My HqO", href: siteConfig.baseLinks.overview, icon: RiBuilding2Line },
-  { name: "Buildings", href: siteConfig.baseLinks.buildings, icon: RiBuildingLine },
-  { name: "Employees", href: siteConfig.baseLinks.employees, icon: RiTeamLine },
-  { name: "Vendors", href: siteConfig.baseLinks.vendors, icon: RiStore3Line },
-  { name: "Visitors", href: siteConfig.baseLinks.visitors, icon: RiUserAddLine },
-  { name: "Access control", href: siteConfig.baseLinks.accessControl, icon: RiDoorLockLine },
-  { name: "Resource booking", href: siteConfig.baseLinks.resourceBooking, icon: RiCalendarLine },
-  { name: "Parking", href: siteConfig.baseLinks.parking, icon: RiParkingLine },
-  { name: "Work orders", href: siteConfig.baseLinks.workOrders, icon: RiToolsLine },
-  { name: "Credits", href: siteConfig.baseLinks.credits, icon: RiCoinLine },
 ] as const
 
 export default function MobileSidebar() {
@@ -155,7 +147,7 @@ export default function MobileSidebar() {
           >
             <ul role="list" className="space-y-1.5">
               {/* Regular navigation items */}
-              {navigation.map((item) => (
+              {mainNavigation.map((item) => (
                 <li key={item.name}>
                   <DrawerClose asChild>
                     <Link
