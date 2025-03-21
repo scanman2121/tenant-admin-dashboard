@@ -2,6 +2,8 @@
 
 import { ProgressBar } from "@/components/ProgressBar"
 import TremorPricingSection from "@/components/TremorPricingSection"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -9,7 +11,6 @@ import { Separator } from "@/components/ui/separator"
 import { Switch } from "@/components/ui/switch"
 import { cx } from "@/lib/utils"
 import { RiArrowRightUpLine } from "@remixicon/react"
-import { Button } from "@tremor/react"
 import React from "react"
 
 const data: {
@@ -57,23 +58,20 @@ export default function Billing() {
   return (
     <div className="space-y-10">
       <Card className="p-6">
-        <h4 className="text-sm font-medium text-gray-900 dark:text-gray-50">
-          This workspace is currently on free plan
-        </h4>
-        <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-          Boost your analytics and unlock advanced features with our premium
-          plans.{" "}
-          <a
-            href="#"
-            className="inline-flex items-center gap-1 text-blue-600 hover:underline hover:underline-offset-4 dark:text-blue-400"
-          >
+        <div className="flex items-center justify-between">
+          <div>
+            <h4 className="text-lg font-medium">
+              Free Plan
+            </h4>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Boost your analytics and unlock advanced features with our premium plans.
+            </p>
+          </div>
+          <Button variant="outline" className="flex items-center gap-1">
             Compare plans
-            <RiArrowRightUpLine
-              className="size-4 shrink-0"
-              aria-hidden="true"
-            />
-          </a>
-        </p>
+            <RiArrowRightUpLine className="size-4 shrink-0" aria-hidden="true" />
+          </Button>
+        </div>
       </Card>
 
       {/* Tremor Pricing Section */}
@@ -85,29 +83,28 @@ export default function Billing() {
             <div>
               <h2
                 id="billing-overview"
-                className="text-lg font-medium text-gray-900 dark:text-gray-50"
+                className="text-lg font-medium"
               >
                 Billing
               </h2>
-              <p className="mt-1 text-sm leading-6 text-gray-500">
-                Overview of current billing cycle based on fixed and on-demand
-                charges.
+              <p className="mt-1 text-sm text-muted-foreground">
+                Overview of current billing cycle based on fixed and on-demand charges
               </p>
             </div>
             <div className="md:col-span-2">
               <Card>
                 <ul
                   role="list"
-                  className="w-full divide-y divide-gray-200 dark:divide-gray-800"
+                  className="w-full divide-y"
                 >
                   {data.map((item) => (
                     <li key={item.name} className="px-4 py-4 text-sm">
                       <div className="w-full">
                         <div className="flex items-center justify-between">
-                          <p className="font-medium text-gray-900 dark:text-gray-50">
+                          <p className="font-medium">
                             {item.name}
                           </p>
-                          <p className="font-medium text-gray-700 dark:text-gray-300">
+                          <p className="font-medium">
                             {item.value}
                           </p>
                         </div>
@@ -115,7 +112,7 @@ export default function Billing() {
                           {item.percentageValue && (
                             <ProgressBar value={item.percentageValue} />
                           )}
-                          <p className="mt-1 flex items-center justify-between text-xs text-gray-500">
+                          <p className="mt-1 flex items-center justify-between text-xs text-muted-foreground">
                             <span>{item.description}</span>
                             <span>{item.capacity}</span>
                           </p>
@@ -124,8 +121,8 @@ export default function Billing() {
                     </li>
                   ))}
                 </ul>
-                <div className="border-t border-gray-200 px-4 py-4 dark:border-gray-800">
-                  <p className="flex items-center justify-between text-sm font-medium text-gray-900 dark:text-gray-50">
+                <div className="border-t px-4 py-4">
+                  <p className="flex items-center justify-between text-sm font-medium">
                     <span>Total for May 24</span>
                     <span className="font-semibold">$280</span>
                   </p>
@@ -134,19 +131,21 @@ export default function Billing() {
             </div>
           </div>
         </section>
+
         <Separator />
+
         <section aria-labelledby="cost-spend-control">
           <form>
             <div className="grid grid-cols-1 gap-x-14 gap-y-8 md:grid-cols-3">
               <div>
                 <h2
                   id="cost-spend-control"
-                  className="text-lg font-medium text-gray-900 dark:text-gray-50"
+                  className="text-lg font-medium"
                 >
                   Cost spend control
                 </h2>
-                <p className="mt-1 text-sm leading-6 text-gray-500">
-                  Set hard caps for on-demand charges.
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Set hard caps for on-demand charges
                 </p>
               </div>
               <div className="md:col-span-2">
@@ -157,24 +156,24 @@ export default function Billing() {
                       <div>
                         {isSpendMgmtEnabled ? (
                           <>
-                            <p className="text-sm font-medium text-gray-900 dark:text-gray-50">
-                              &#36;280 / 350 (62.2&#37;)
+                            <p className="text-sm font-medium">
+                              $280 / $350 (62.2%)
                             </p>
                             <Label
                               htmlFor="spend-mgmt"
-                              className="text-gray-500 dark:text-gray-500"
+                              className="text-muted-foreground"
                             >
                               Spend management enabled
                             </Label>
                           </>
                         ) : (
                           <>
-                            <p className="text-sm font-medium text-gray-900 dark:text-gray-50">
-                              &#36;0 / 0 (0&#37;)
+                            <p className="text-sm font-medium">
+                              $0 / $0 (0%)
                             </p>
                             <Label
                               htmlFor="spend-mgmt"
-                              className="text-gray-500 dark:text-gray-500"
+                              className="text-muted-foreground"
                             >
                               Spend management disabled
                             </Label>
@@ -220,6 +219,7 @@ export default function Billing() {
                             name="hard-cap"
                             defaultValue={350}
                             type="number"
+                            placeholder="Enter amount"
                             className="mt-2"
                           />
                         </div>
@@ -230,14 +230,14 @@ export default function Billing() {
                           <Input
                             id="email"
                             name="email"
-                            placeholder="admin@company.com"
+                            placeholder="Enter your email"
                             type="email"
                             className="mt-2"
                           />
                         </div>
                       </div>
                       <div className="mt-6 flex justify-end">
-                        <Button variant="primary" size="sm">Update</Button>
+                        <Button>Update</Button>
                       </div>
                     </div>
                   </div>
@@ -246,82 +246,62 @@ export default function Billing() {
             </div>
           </form>
         </section>
+
         <Separator />
+
         <section aria-labelledby="add-ons">
-          <form>
-            <div className="grid grid-cols-1 gap-x-14 gap-y-8 md:grid-cols-3">
-              <div>
-                <h2
-                  id="add-ons"
-                  className="text-lg font-medium text-gray-900 dark:text-gray-50"
-                >
-                  Add-ons
-                </h2>
-                <p className="mt-1 text-sm leading-6 text-gray-500">
-                  Additional services to boost your services.
-                </p>
-              </div>
-              <div className="space-y-6 md:col-span-2">
-                <Card className="overflow-hidden p-0">
-                  <div className="px-4 pb-6 pt-4">
-                    <span className="text-sm text-gray-500">$25/month</span>
-                    <h4 className="mt-4 text-sm font-medium text-gray-900 dark:text-gray-50">
-                      Advanced bot protection
-                    </h4>
-                    <p className="mt-2 max-w-xl text-sm leading-6 text-gray-500">
-                      Safeguard your assets with our cutting-edge bot
-                      protection. Our AI solution identifies and mitigates
-                      automated traffic to protect your workspace from bad bots.
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-between border-t border-gray-200 bg-gray-50 p-4 dark:border-gray-900 dark:bg-gray-900">
-                    <div className="flex items-center gap-3">
-                      <Switch id="bot-protection" />
-                      <Label htmlFor="bot-protection">Activate</Label>
-                    </div>
-                    <a
-                      href="#"
-                      className="inline-flex items-center gap-1 text-sm text-blue-600 hover:underline hover:underline-offset-4 dark:text-blue-400"
-                    >
-                      Learn more
-                      <RiArrowRightUpLine
-                        className="size-4 shrink-0"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </div>
-                </Card>
-                <Card className="overflow-hidden p-0">
-                  <div className="px-4 pb-6 pt-4">
-                    <span className="text-sm text-gray-500">$50/month</span>
-                    <h4 className="mt-4 text-sm font-medium text-gray-900 dark:text-gray-50">
-                      Workspace insights
-                    </h4>
-                    <p className="mt-2 max-w-xl text-sm leading-6 text-gray-500">
-                      Real-time analysis of your workspace&#39;s usage, enabling
-                      you to make well-informed decisions for optimization.
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-between border-t border-gray-200 bg-gray-50 p-4 dark:border-gray-900 dark:bg-gray-900">
-                    <div className="flex items-center gap-3">
-                      <Switch id="insights" />
-                      <Label htmlFor="insights">Activate</Label>
-                    </div>
-                    <a
-                      href="#"
-                      className="inline-flex items-center gap-1 text-sm text-blue-600 hover:underline hover:underline-offset-4 dark:text-blue-400"
-                    >
-                      Learn more
-                      <RiArrowRightUpLine
-                        className="size-4 shrink-0"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </div>
-                </Card>
-              </div>
+          <div className="grid grid-cols-1 gap-x-14 gap-y-8 md:grid-cols-3">
+            <div>
+              <h2
+                id="add-ons"
+                className="text-lg font-medium"
+              >
+                Add-ons
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Enhance your workspace with additional features
+              </p>
             </div>
-          </form>
+            <div className="space-y-6 md:col-span-2">
+              <Card className="p-4">
+                <div className="flex items-start justify-between gap-10">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-sm font-medium">
+                        Query super caching
+                      </h4>
+                      <Badge variant="outline">New</Badge>
+                    </div>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      Improve query performance by caching results in memory.
+                      Available in multiple regions.
+                    </p>
+                  </div>
+                  <Button variant="outline">
+                    Configure
+                  </Button>
+                </div>
+              </Card>
+              <Card className="p-4">
+                <div className="flex items-start justify-between gap-10">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-sm font-medium">
+                        Advanced analytics
+                      </h4>
+                      <Badge variant="outline">Coming soon</Badge>
+                    </div>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      Get deeper insights with advanced analytics and reporting tools.
+                    </p>
+                  </div>
+                  <Button variant="outline" disabled>
+                    Configure
+                  </Button>
+                </div>
+              </Card>
+            </div>
+          </div>
         </section>
       </div>
     </div>
