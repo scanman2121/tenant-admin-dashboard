@@ -92,8 +92,8 @@ const credentialsColumns = [
             const status = row.getValue("status") as string
             return (
                 <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${status === "Active" ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300" :
-                        status === "Inactive" ? "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300" :
-                            "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300"
+                    status === "Inactive" ? "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300" :
+                        "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300"
                     }`}>
                     {status}
                 </span>
@@ -236,7 +236,7 @@ export default function AccessControl() {
                         {/* Credentials Panel */}
                         <TabPanel>
                             <div className="mt-6 rounded-lg border border-gray-200 dark:border-gray-800">
-                                <DataTable columns={accessControlColumns} data={data} />
+                                <DataTable columns={credentialsColumns} data={mockCredentialsData} />
                             </div>
                         </TabPanel>
                     </TabPanels>
