@@ -2,14 +2,12 @@
 
 import { Button } from "@/components/Button"
 import { RiSparkling2Line } from "@remixicon/react"
-import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { AIAssistantDrawer } from "../ai/AIAssistantDrawer"
 import { FullScreenAIAssistant } from "../ai/FullScreenAIAssistant"
 import { CreatePopover } from "../create/CreatePopover"
 
 export function FloatingActionBar() {
-    const router = useRouter()
     const [isAIDrawerOpen, setIsAIDrawerOpen] = useState(false)
     const [isFullScreenAIOpen, setIsFullScreenAIOpen] = useState(false)
     const [isMobile, setIsMobile] = useState(false)

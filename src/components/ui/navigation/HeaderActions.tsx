@@ -3,11 +3,9 @@
 import { Button } from "@/components/Button"
 import { RiNotification3Line, RiSparkling2Line } from "@remixicon/react"
 import { useTheme } from "next-themes"
-import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 export function HeaderActions() {
-    const router = useRouter()
     const { theme, setTheme } = useTheme()
     const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
 

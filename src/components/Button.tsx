@@ -1,6 +1,6 @@
 // Tremor Raw Button [v0.1.1]
 
-import { cn } from "@/lib/utils"
+import { cn, focusRing } from "@/lib/utils"
 import { Slot } from "@radix-ui/react-slot"
 import { RiLoader2Fill } from "@remixicon/react"
 import React, { forwardRef } from "react"
@@ -25,7 +25,7 @@ const buttonVariants = tv({
         // background color
         "bg-primary dark:bg-primary-400",
         // hover color
-        "hover:bg-primary-dark dark:hover:bg-primary",
+        "hover:bg-primary-600 dark:hover:bg-primary-300",
         // disabled
         "disabled:bg-primary-100 disabled:text-gray-400",
         "disabled:dark:bg-primary-800 disabled:dark:text-primary-400",
@@ -65,12 +65,11 @@ const buttonVariants = tv({
         // text color
         "text-gray-900 dark:text-gray-50",
         // background color
-        "bg-white dark:bg-gray-950",
+        "bg-transparent",
         // hover color
-        "hover:bg-gray-50 dark:hover:bg-gray-900",
+        "hover:bg-gray-100 dark:hover:bg-gray-800",
         // disabled
-        "disabled:text-gray-400",
-        "disabled:dark:text-gray-600",
+        "disabled:text-gray-400 dark:disabled:text-gray-600",
       ],
       destructive: [
         // text color
@@ -93,7 +92,7 @@ const buttonVariants = tv({
 })
 
 interface ButtonProps
-  extends React.ComponentPropsWithoutRef<"button">,
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
   VariantProps<typeof buttonVariants> {
   asChild?: boolean
   isLoading?: boolean
@@ -102,55 +101,38 @@ interface ButtonProps
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      asChild,
-      isLoading = false,
-      loadingText,
-      className,
-      disabled,
-      variant,
-      children,
-      size = "md",
-      ...props
-    }: ButtonProps,
-    forwardedRef,
-  ) => {
-    const Component = asChild ? Slot : "button"
+  ({ className, variant, size = "md", asChild = false, isLoading, loadingText, children, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button"
     return (
-      <Component
-        ref={forwardedRef}
+      <Comp
         className={cn(
           buttonVariants({ variant }),
-          className,
           {
             "text-sm px-3 py-1.5 rounded-md": size === "sm",
             "text-sm px-4 py-2 rounded-lg": size === "md",
             "text-base px-6 py-3 rounded-lg": size === "lg",
-          }
+          },
+          className
         )}
-        disabled={disabled || isLoading}
+        ref={ref}
+        disabled={props.disabled || isLoading}
         {...props}
       >
         {isLoading ? (
-          <span className="pointer-events-none flex shrink-0 items-center justify-center gap-1.5">
-            <RiLoader2Fill
-              className="size-4 shrink-0 animate-spin"
-              aria-hidden="true"
-            />
-            <span className="sr-only">
-              {loadingText ? loadingText : "Loading"}
-            </span>
-            {loadingText ? loadingText : children}
+          <span className="pointer-events-none flex items-center gap-2">
+            <RiLoader2Fill className="size-4 animate-spin" aria-hidden="true" />
+            <span>{loadingText || children}</span>
           </span>
         ) : (
           children
         )}
-      </Component>
+      </Comp>
     )
-  },
+  }
 )
 
 Button.displayName = "Button"
 
-export { Button, buttonVariants, type ButtonProps }
+export { Button, buttonVariants }
+export type { ButtonProps }
+
