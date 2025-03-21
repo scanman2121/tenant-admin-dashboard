@@ -35,20 +35,15 @@ export type Usage = {
   discountAppliedTo?: string
 }
 
-export type VisitorStatus = "checked-in" | "checked-out" | "expected"
-
-export interface Visitor {
-  id: string
-  checkInTime: string | null
-  checkOutTime: string | null
+export type Visitor = {
+  checkInTime: string
   visitorName: string
   company: string
   hostName: string
   purpose: string
-  status: VisitorStatus
+  status: string
+  checkOutTime: string | null
   badgeNumber: string
-  email?: string
-  phone?: string
 }
 
 export type OverviewData = {
@@ -61,56 +56,4 @@ export type OverviewData = {
   Logins: number
   "Sign outs": number
   "Support calls": number
-}
-
-export type User = {
-  id: string
-  name: string
-  email: string
-  role: string
-  company: string
-  status: "active" | "inactive" | "invited"
-  avatarUrl?: string
-  initials: string
-}
-
-export type Vendor = {
-  id: string
-  name: string
-  logoUrl: string
-  category: string
-  contact: string
-  email: string
-  phone: string
-  buildings: string[]
-  status: "active" | "inactive"
-}
-
-export type WorkOrder = {
-  id: string
-  title: string
-  status: "completed" | "in-progress" | "pending"
-  priority: "high" | "medium" | "low"
-  submittedBy: string
-  submittedDate: string
-  building: string
-}
-
-export type BuildingStatus = "active" | "inactive" | "maintenance"
-export type BuildingType = "office" | "mixed-use" | "residential" | "retail"
-
-export interface Building {
-  id: string
-  name: string
-  imageUrl: string
-  location: string
-  type: BuildingType
-  floors: number
-  tenants: number
-  status: BuildingStatus
-  lastUpdated: string
-  description?: string
-  amenities?: string[]
-  totalSquareFeet?: number
-  yearBuilt?: number
 }

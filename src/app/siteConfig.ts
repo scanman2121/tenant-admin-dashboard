@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "Dashboard",
   url: "https://dashboard.tremor.so",
-  description: "The only dashboard you will ever need",
+  description: "The only dashboard you will ever need.",
   baseLinks: {
     home: "/",
     overview: "/my-hqo",
@@ -19,13 +19,12 @@ export const siteConfig = {
     settings: {
       general: "/settings/general",
       billing: "/settings/billing",
-      users: "/settings/users",
     },
     // Communications section (formerly Experience Manager)
     communications: {
-      content: "/communications/content",
-      notifications: "/communications/notifications",
-      surveys: "/communications/surveys",
+      content: "/experience-manager/content",
+      notifications: "/experience-manager/notifications",
+      surveys: "/experience-manager/surveys",
     },
     // Settings and setup section
     settingsAndSetup: {
@@ -41,4 +40,4 @@ export const siteConfig = {
   },
 }
 
-export type SiteConfig = typeof siteConfig
+export type siteConfig = typeof siteConfig

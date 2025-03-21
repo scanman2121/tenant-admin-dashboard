@@ -1,107 +1,119 @@
 "use client"
 
-import { Badge } from "@/components/ui/badge"
-import { Visitor, VisitorStatus } from "@/data/schema"
-import { ColumnDef } from "@tanstack/react-table"
+import { Badge, BadgeProps } from "@/components/Badge"
+import { Visitor } from "@/data/schema"
+import { ColumnDef, createColumnHelper } from "@tanstack/react-table"
 import { DataTableColumnHeader } from "./DataTableColumnHeader"
 import { DataTableRowActions } from "./DataTableRowActions"
 
-export const visitorColumns: ColumnDef<Visitor>[] = [
-    {
-        accessorKey: "checkInTime",
+const columnHelper = createColumnHelper<Visitor>()
+
+export const visitorColumns = [
+    columnHelper.accessor("checkInTime", {
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Check-in time" />
         ),
-        cell: ({ row }) => {
-            const time = row.getValue("checkInTime")
-            return time || "-"
-        }
-    },
-    {
-        accessorKey: "visitorName",
+        enableSorting: true,
+        meta: {
+            className: "text-left",
+            displayName: "Check-in time",
+        },
+    }),
+    columnHelper.accessor("visitorName", {
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Visitor name" />
         ),
-    },
-    {
-        accessorKey: "company",
+        enableSorting: true,
+        meta: {
+            className: "text-left",
+            displayName: "Visitor name",
+        },
+    }),
+    columnHelper.accessor("company", {
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Company" />
         ),
-    },
-    {
-        accessorKey: "hostName",
+        enableSorting: false,
+        meta: {
+            className: "text-left",
+            displayName: "Company",
+        },
+    }),
+    columnHelper.accessor("hostName", {
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Host" />
         ),
-    },
-    {
-        accessorKey: "purpose",
+        enableSorting: true,
+        meta: {
+            className: "text-left",
+            displayName: "Host",
+        },
+    }),
+    columnHelper.accessor("purpose", {
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Purpose" />
         ),
-    },
-    {
-        accessorKey: "status",
+        enableSorting: false,
+        meta: {
+            className: "text-left",
+            displayName: "Purpose",
+        },
+    }),
+    columnHelper.accessor("status", {
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Status" />
         ),
+        enableSorting: false,
+        meta: {
+            className: "text-left",
+            displayName: "Status",
+        },
         cell: ({ row }) => {
-            const status = row.getValue("status") as VisitorStatus
+            const status = row.getValue("status")
+            let variant: BadgeProps["variant"] = "default"
 
-            const statusConfig = {
-                "checked-in": { label: "• Checked in", variant: "default" as const },
-                "checked-out": { label: "• Checked out", variant: "secondary" as const },
-                "expected": { label: "• Expected", variant: "outline" as const },
+            if (status === "Checked In") {
+                variant = "success"
+            } else if (status === "Expected") {
+                variant = "warning"
             }
 
-            const config = statusConfig[status]
-
             return (
-                <Badge variant={config.variant}>
-                    {config.label}
+                <Badge variant={variant}>
+                    {status as React.ReactNode}
                 </Badge>
             )
         },
-    },
-    {
-        accessorKey: "checkOutTime",
+    }),
+    columnHelper.accessor("checkOutTime", {
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Check-out time" />
         ),
-        cell: ({ row }) => {
-            const time = row.getValue("checkOutTime")
-            return time || "-"
-        }
-    },
-    {
-        accessorKey: "badgeNumber",
+        enableSorting: true,
+        meta: {
+            className: "text-left",
+            displayName: "Check-out time",
+        },
+    }),
+    columnHelper.accessor("badgeNumber", {
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Badge #" />
         ),
-    },
-    {
-        accessorKey: "email",
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Email" />
-        ),
-        cell: ({ row }) => {
-            const email = row.getValue("email")
-            return email || "-"
-        }
-    },
-    {
-        accessorKey: "phone",
-        header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Phone" />
-        ),
-        cell: ({ row }) => {
-            const phone = row.getValue("phone")
-            return phone || "-"
-        }
-    },
-    {
+        enableSorting: false,
+        meta: {
+            className: "text-left",
+            displayName: "Badge #",
+        },
+    }),
+    columnHelper.display({
         id: "actions",
+        header: "",
+        enableSorting: false,
+        enableHiding: false,
+        meta: {
+            className: "text-right",
+            displayName: "Actions",
+        },
         cell: ({ row }) => <DataTableRowActions row={row} />,
-    },
-] 
+    }),
+] as ColumnDef<Visitor>[] 

@@ -124,7 +124,6 @@ export const users: {
   role: string
   company: string
   avatarUrl?: string
-  status: "active" | "inactive" | "invited"
 }[] = [
     {
       name: "Tenny",
@@ -132,7 +131,6 @@ export const users: {
       email: "tenny@acme.com",
       role: "viewer",
       company: "Acme Inc",
-      status: "active",
       avatarUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
@@ -141,7 +139,6 @@ export const users: {
       email: "a.stone@gmail.com",
       role: "viewer",
       company: "Acme Inc",
-      status: "active",
     },
     {
       name: "Emily Luisa Bernacle",
@@ -149,7 +146,6 @@ export const users: {
       email: "e.luis.bernacle@gmail.com",
       role: "member",
       company: "Acme Inc",
-      status: "active",
     },
     {
       name: "Aaron Wave",
@@ -157,7 +153,6 @@ export const users: {
       email: "a.flow@acme.com",
       role: "contributor",
       company: "Acme Inc",
-      status: "inactive",
     },
     {
       name: "Thomas Palstein",
@@ -165,7 +160,6 @@ export const users: {
       email: "t.palstein@acme.com",
       role: "viewer",
       company: "Acme Inc",
-      status: "active",
     },
     {
       name: "Sarah Johnson",
@@ -173,7 +167,6 @@ export const users: {
       email: "s.johnson@gmail.com",
       role: "admin",
       company: "Acme Inc",
-      status: "active",
     },
     {
       name: "Megan Katherina Brown",
@@ -181,7 +174,6 @@ export const users: {
       email: "m.lovelybrown@gmail.com",
       role: "contributor",
       company: "Acme Inc",
-      status: "inactive",
     },
   ]
 
@@ -810,55 +802,33 @@ export const visitorStatuses: { value: string; label: string; variant: string }[
 
 export const visitors = [
   {
-    id: "V001",
-    checkInTime: "2024-03-19T09:30:00",
-    checkOutTime: "2024-03-19T16:45:00",
-    visitorName: "John Smith",
-    company: "Tech Solutions Inc",
-    hostName: "Sarah Johnson",
+    checkInTime: "09:30 AM",
+    visitorName: "Sarah Johnson",
+    company: "Acme Corp",
+    hostName: "Michael Chen",
     purpose: "Client Meeting",
-    status: "checked-out",
-    badgeNumber: "B1001",
-    email: "john.smith@techsolutions.com",
-    phone: "+1 (555) 123-4567"
+    status: "Checked In",
+    checkOutTime: null,
+    badgeNumber: "V1001",
   },
   {
-    id: "V002",
-    checkInTime: "2024-03-19T10:15:00",
-    checkOutTime: null,
-    visitorName: "Maria Garcia",
-    company: "Design Co",
-    hostName: "Thomas Palstein",
-    purpose: "Project Review",
-    status: "checked-in",
-    badgeNumber: "B1002",
-    email: "m.garcia@designco.com",
-    phone: "+1 (555) 234-5678"
-  },
-  {
-    id: "V003",
-    checkInTime: null,
-    checkOutTime: null,
-    visitorName: "David Lee",
-    company: "Global Innovations",
-    hostName: "Emily Luisa Bernacle",
+    checkInTime: "10:15 AM",
+    visitorName: "James Wilson",
+    company: "Tech Solutions",
+    hostName: "Emily Brown",
     purpose: "Interview",
-    status: "expected",
-    badgeNumber: "B1003",
-    email: "david.lee@globalinnovations.com",
-    phone: "+1 (555) 345-6789"
+    status: "Checked Out",
+    checkOutTime: "11:45 AM",
+    badgeNumber: "V1002",
   },
   {
-    id: "V004",
-    checkInTime: null,
+    checkInTime: "02:00 PM",
+    visitorName: "Maria Garcia",
+    company: "Global Services",
+    hostName: "David Kim",
+    purpose: "Vendor Meeting",
+    status: "Expected",
     checkOutTime: null,
-    visitorName: "Rachel Chen",
-    company: "Marketing Pro",
-    hostName: "Aaron Wave",
-    purpose: "Presentation",
-    status: "expected",
-    badgeNumber: "B1004",
-    email: "r.chen@marketingpro.com",
-    phone: "+1 (555) 456-7890"
-  }
-] as const
+    badgeNumber: "V1003",
+  },
+]
