@@ -1,20 +1,10 @@
 "use client"
 
 import { Button } from "@/components/Button"
-import { TabNavigation, TabNavigationLink } from "@/components/TabNavigation"
 import { DataTable } from "@/components/ui/data-table/DataTable"
 import { RiAddLine } from "@remixicon/react"
 import Image from "next/image"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { useState } from "react"
-
-// Define tabs for the Vendors page
-const tabs = [
-    { name: "All Vendors", href: "/vendors" },
-    { name: "Active", href: "/vendors/active" },
-    { name: "Inactive", href: "/vendors/inactive" },
-] as const
 
 // Mock data for vendors
 const vendorsData = [
@@ -79,10 +69,11 @@ const vendorsData = [
 const vendorsColumns = [
     {
         accessorKey: "name",
-        header: "Vendor Name",
+        header: "Vendor name",
         cell: ({ row }: { row: any }) => {
             const name = row.getValue("name") as string;
             const logoUrl = row.original.logoUrl as string;
+            const email = row.original.email as string;
 
             return (
                 <div className="flex items-center gap-3">
@@ -94,7 +85,14 @@ const vendorsColumns = [
                             className="object-cover"
                         />
                     </div>
-                    <span>{name}</span>
+                    <div>
+                        <div className="font-medium text-gray-900 dark:text-gray-50">
+                            {name}
+                        </div>
+                        <div className="hidden text-sm text-gray-500 md:block">
+                            {email}
+                        </div>
+                    </div>
                 </div>
             );
         },
@@ -102,18 +100,50 @@ const vendorsColumns = [
     {
         accessorKey: "category",
         header: "Category",
+        cell: ({ row }: { row: any }) => {
+            const category = row.getValue("category") as string;
+            return (
+                <div className="hidden md:block">
+                    {category}
+                </div>
+            );
+        },
     },
     {
         accessorKey: "contact",
-        header: "Contact Person",
+        header: "Contact person",
+        cell: ({ row }: { row: any }) => {
+            const contact = row.getValue("contact") as string;
+            return (
+                <div className="hidden lg:block">
+                    {contact}
+                </div>
+            );
+        },
     },
     {
         accessorKey: "email",
         header: "Email",
+        cell: ({ row }: { row: any }) => {
+            const email = row.getValue("email") as string;
+            return (
+                <div className="hidden md:block">
+                    {email}
+                </div>
+            );
+        },
     },
     {
         accessorKey: "phone",
         header: "Phone",
+        cell: ({ row }: { row: any }) => {
+            const phone = row.getValue("phone") as string;
+            return (
+                <div className="hidden lg:block">
+                    {phone}
+                </div>
+            );
+        },
     },
     {
         accessorKey: "buildings",
@@ -121,7 +151,7 @@ const vendorsColumns = [
         cell: ({ row }: { row: any }) => {
             const buildings = row.getValue("buildings") as string[]
             return (
-                <div>
+                <div className="hidden xl:block">
                     {buildings.map((building, index) => (
                         <span key={index} className="inline-block mr-1 last:mr-0">
                             {building}{index < buildings.length - 1 ? ", " : ""}
@@ -141,7 +171,7 @@ const vendorsColumns = [
                     ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
                     : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
                     }`}>
-                    {status}
+                    • {status}
                 </span>
             )
         },
@@ -149,34 +179,29 @@ const vendorsColumns = [
 ]
 
 export default function Vendors() {
-    const pathname = usePathname()
     const [data] = useState(vendorsData)
 
     return (
-        <div>
-            <div className="flex items-center justify-between">
-                <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
-                    Vendors
-                </h1>
-                <Button>
-                    <RiAddLine className="size-4 shrink-0 mr-1.5" aria-hidden="true" />
-                    Add Vendor
-                </Button>
+        <div className="flex flex-col gap-4 w-full">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                    <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
+                        Vendors
+                    </h1>
+                    <p className="mt-1 text-sm text-gray-500">Manage your vendors and service providers</p>
+                </div>
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+                    <Button variant="ghost" className="w-full border border-primary text-primary hover:bg-gray-50 hover:bg-opacity-30 sm:w-auto">
+                        Browse marketplace
+                    </Button>
+                    <Button className="w-full sm:w-auto">
+                        <RiAddLine className="size-4 shrink-0 mr-1.5" aria-hidden="true" />
+                        Add vendor
+                    </Button>
+                </div>
             </div>
 
-            <TabNavigation className="mt-4">
-                {tabs.map((tab) => (
-                    <TabNavigationLink
-                        key={tab.name}
-                        asChild
-                        active={pathname === tab.href}
-                    >
-                        <Link href={tab.href}>{tab.name}</Link>
-                    </TabNavigationLink>
-                ))}
-            </TabNavigation>
-
-            <div className="pt-6">
+            <div className="pt-4">
                 <DataTable columns={vendorsColumns} data={data} />
             </div>
         </div>

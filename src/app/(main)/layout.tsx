@@ -7,14 +7,14 @@ import { Sidebar } from "@/components/ui/navigation/Sidebar"
 import { createContext, useContext, useEffect, useState } from "react"
 
 // Create a context for the sidebar collapsed state
-type SidebarContextType = {
-  collapsed: boolean
-  toggleCollapsed: () => void
+interface SidebarContextType {
+  isCollapsed: boolean
+  setIsCollapsed: (value: boolean) => void
 }
 
-const SidebarContext = createContext<SidebarContextType>({
-  collapsed: false,
-  toggleCollapsed: () => { },
+export const SidebarContext = createContext<SidebarContextType>({
+  isCollapsed: false,
+  setIsCollapsed: () => { },
 })
 
 // Custom hook to use the sidebar context
@@ -25,32 +25,31 @@ export default function MainLayout({
 }: {
   children: React.ReactNode
 }) {
-  const [collapsed, setCollapsed] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(false)
 
   // Load collapsed state from localStorage on mount
   useEffect(() => {
     const savedCollapsed = localStorage.getItem("sidebarCollapsed")
     if (savedCollapsed) {
-      setCollapsed(savedCollapsed === "true")
+      setIsCollapsed(savedCollapsed === "true")
     }
   }, [])
 
   // Save collapsed state to localStorage when it changes
   useEffect(() => {
-    localStorage.setItem("sidebarCollapsed", collapsed.toString())
-  }, [collapsed])
-
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed)
-  }
+    localStorage.setItem("sidebarCollapsed", isCollapsed.toString())
+  }, [isCollapsed])
 
   return (
-    <SidebarContext.Provider value={{ collapsed, toggleCollapsed }}>
-      <div className="flex h-screen bg-gray-50 dark:bg-gray-950">
+    <SidebarContext.Provider value={{ isCollapsed, setIsCollapsed }}>
+      <div className="flex min-h-screen bg-gray-50 dark:bg-gray-950">
+        {/* Sidebar */}
         <Sidebar />
-        <div className="flex flex-col flex-1 w-0 overflow-hidden">
+
+        {/* Main content area */}
+        <div className={`main-content-wrapper flex flex-col flex-1 ${isCollapsed ? 'lg:pl-16' : 'lg:pl-56'} transition-all duration-300`}>
           <Header />
-          <main className="relative flex-1 overflow-y-auto focus:outline-none">
+          <main className="flex-1 overflow-y-auto focus:outline-none">
             <div className="py-6">
               <div className="px-4 sm:px-6 md:px-8">{children}</div>
             </div>

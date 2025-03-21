@@ -114,7 +114,7 @@ export function CommunicationsTab() {
                         >
                             <div className="flex items-center gap-2">
                                 <RiMessage2Line className="size-4 text-primary" />
-                                <span className="font-medium text-sm text-gray-900 dark:text-gray-50">Tenant contacts</span>
+                                <span className="font-medium text-sm text-gray-900 dark:text-gray-50">Property Manager Chat</span>
                             </div>
                             <div className="flex items-center gap-1">
                                 <button
@@ -143,7 +143,7 @@ export function CommunicationsTab() {
                     )}
                 >
                     <RiMessage2Line className="size-5" />
-                    <span className="font-medium">Tenant contacts</span>
+                    <span className="font-medium">Property Manager Chat</span>
                     {isOpen && isMinimized && (
                         <span className="ml-1 px-1.5 py-0.5 text-xs bg-red-500 text-white rounded-full">3</span>
                     )}

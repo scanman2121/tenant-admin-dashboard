@@ -15,11 +15,9 @@ import {
     RiCheckboxCircleLine,
     RiFileTextLine,
     RiMessage2Line,
-    RiTeamLine,
     RiToolsLine,
     RiUser2Line,
-    RiUserAddLine,
-    RiUserLine
+    RiUserAddLine
 } from "@remixicon/react"
 import Link from "next/link"
 import { useState } from "react"
@@ -36,22 +34,10 @@ export function CreatePopover() {
 
     const createOptions: CreateOption[] = [
         {
-            id: "add-audience",
-            label: "Add audience",
-            icon: <RiTeamLine className="size-5" />,
-            href: "/audiences/new"
-        },
-        {
             id: "add-building",
             label: "Add building",
             icon: <RiAddBoxLine className="size-5" />,
             href: "/buildings/new"
-        },
-        {
-            id: "add-tenant",
-            label: "Add tenant",
-            icon: <RiUserLine className="size-5" />,
-            href: "/tenants/new"
         },
         {
             id: "add-user",

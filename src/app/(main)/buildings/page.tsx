@@ -1,20 +1,10 @@
 "use client"
 
 import { Button } from "@/components/Button"
-import { TabNavigation, TabNavigationLink } from "@/components/TabNavigation"
 import { DataTable } from "@/components/ui/data-table/DataTable"
-import { RiAddLine } from "@remixicon/react"
+import { RiBuildingLine } from "@remixicon/react"
 import Image from "next/image"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { useState } from "react"
-
-// Define tabs for the Buildings page
-const tabs = [
-    { name: "All Buildings", href: "/buildings" },
-    { name: "Active", href: "/buildings/active" },
-    { name: "Inactive", href: "/buildings/inactive" },
-] as const
 
 // Mock data for buildings
 const buildingsData = [
@@ -39,40 +29,7 @@ const buildingsData = [
         tenants: 15,
         status: "Active",
         lastUpdated: "2023-11-20",
-    },
-    {
-        id: "3",
-        name: "75 State Street",
-        imageUrl: "https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?q=80&w=2674&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        location: "New York, NY",
-        type: "Retail",
-        floors: 3,
-        tenants: 5,
-        status: "Inactive",
-        lastUpdated: "2023-10-05",
-    },
-    {
-        id: "4",
-        name: "200 Congress Ave",
-        imageUrl: "https://images.unsplash.com/photo-1536697246787-1f7ae568d89a?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        location: "Austin, TX",
-        type: "Office",
-        floors: 18,
-        tenants: 12,
-        status: "Active",
-        lastUpdated: "2024-01-10",
-    },
-    {
-        id: "5",
-        name: "500 Boylston Street",
-        imageUrl: "https://images.unsplash.com/photo-1577985043696-8bd54d9f093f?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        location: "Boston, MA",
-        type: "Office",
-        floors: 15,
-        tenants: 10,
-        status: "Active",
-        lastUpdated: "2024-02-01",
-    },
+    }
 ]
 
 // Define columns for the buildings table
@@ -137,7 +94,6 @@ const buildingsColumns = [
 ]
 
 export default function Buildings() {
-    const pathname = usePathname()
     const [data] = useState(buildingsData)
 
     return (
@@ -146,27 +102,34 @@ export default function Buildings() {
                 <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
                     Buildings
                 </h1>
-                <Button>
-                    <RiAddLine className="size-4 shrink-0 mr-1.5" aria-hidden="true" />
-                    Add Building
-                </Button>
             </div>
 
-            <TabNavigation>
-                {tabs.map((tab) => (
-                    <TabNavigationLink
-                        key={tab.name}
-                        asChild
-                        active={pathname === tab.href}
-                    >
-                        <Link href={tab.href}>{tab.name}</Link>
-                    </TabNavigationLink>
-                ))}
-            </TabNavigation>
+            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-950">
+                <div className="flex items-center gap-4">
+                    <div className="flex-shrink-0">
+                        <span className="flex size-10 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary-400/10">
+                            <RiBuildingLine className="size-5 text-primary dark:text-primary-400" />
+                        </span>
+                    </div>
+                    <div className="flex-1">
+                        <h3 className="text-base font-medium text-gray-900 dark:text-gray-50">
+                            Do you have employees in other buildings?
+                        </h3>
+                        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                            See if they are on the HqO network. You will be able to manage all your employee workplace needs all in one place.
+                        </p>
+                    </div>
+                    <div className="flex-shrink-0">
+                        <Button variant="secondary">
+                            Search buildings
+                        </Button>
+                    </div>
+                </div>
+            </div>
 
             <div className="pt-4">
                 <DataTable columns={buildingsColumns} data={data} />
             </div>
-        </div>
+        </div >
     )
 } 

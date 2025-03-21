@@ -6,46 +6,30 @@ export const siteConfig = {
     home: "/",
     overview: "/my-hqo",
     resources: "/resources",
-    transactions: "/transactions",
-    credits: "/credits",
-    discounts: "/discounts",
     analytics: "/analytics",
-    users: "/users",
+    employees: "/employees",
     buildings: "/buildings",
-    tenants: "/tenants",
     vendors: "/vendors",
-    audiences: "/audiences",
+    visitors: "/visitors",
+    accessControl: "/access-control",
+    resourceBooking: "/resource-booking",
+    parking: "/parking",
+    workOrders: "/work-orders",
+    credits: "/credits",
     settings: {
       general: "/settings/general",
       billing: "/settings/billing",
     },
-    // Experience Manager section
-    experienceManager: {
+    // Communications section (formerly Experience Manager)
+    communications: {
       content: "/experience-manager/content",
-      amenityPosts: "/experience-manager/amenity-posts",
-      events: "/experience-manager/events",
+      notifications: "/experience-manager/notifications",
       surveys: "/experience-manager/surveys",
-      communityForum: "/experience-manager/community-forum",
-      communications: "/experience-manager/communications",
-    },
-    // Operations section
-    operations: {
-      accessControl: "/operations/access-control",
-      mobileAccess: "/operations/mobile-access",
-      visitorManagement: "/operations/visitor-management",
-      capacityManager: "/operations/capacity-manager",
-      resourceBooking: "/operations/resource-booking",
-      workOrders: "/operations/work-orders",
-      parking: "/operations/parking",
-      energyConsumption: "/operations/energy-consumption",
     },
     // Settings and setup section
     settingsAndSetup: {
       features: "/settings-and-setup/features",
-      ssoApps: "/settings-and-setup/sso-apps",
-      connectedApps: "/settings-and-setup/connected-apps",
       settings: "/settings-and-setup/settings",
-      theme: "/settings-and-setup/theme",
     },
     // Intelligence section
     intelligence: {

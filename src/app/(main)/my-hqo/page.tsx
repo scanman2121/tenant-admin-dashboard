@@ -1,8 +1,8 @@
 "use client"
 
 import { cx } from "@/lib/utils";
-import { RiArrowLeftSLine, RiArrowRightSLine, RiCalendarEventLine, RiDoorOpenLine, RiFilterLine, RiInformationLine, RiMapPinLine, RiSearchLine, RiShoppingBag3Line, RiUserAddLine } from "@remixicon/react";
-import { AreaChart, Badge, Button, Card, DonutChart, Grid, Icon, Select, SelectItem, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, TextInput, Title } from "@tremor/react";
+import { RiCalendarEventLine, RiDoorOpenLine, RiFilterLine, RiInformationLine, RiMapPinLine, RiSearchLine, RiShoppingBag3Line, RiUserAddLine } from "@remixicon/react";
+import { Badge, Button, Card, Grid, Icon, Select, SelectItem, Text, TextInput, Title } from "@tremor/react";
 import { useState } from "react";
 
 // Type definitions
@@ -263,6 +263,54 @@ const tenants = [
   { value: "Tech Innovators", label: "Tech Innovators" },
 ];
 
+// Mock data for upcoming visitors and vendors
+const upcomingVisitorsAndVendors = [
+  {
+    id: 1,
+    type: "Visitor",
+    name: "Sarah Johnson",
+    company: "Tech Solutions Inc",
+    time: "9:00 AM",
+    host: "Michael Chen",
+    purpose: "Client Meeting",
+    status: "Scheduled",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2864&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    id: 2,
+    type: "Vendor",
+    name: "John Smith",
+    company: "Office Supplies Co",
+    time: "10:30 AM",
+    host: "Emily Davis",
+    purpose: "Supply Delivery",
+    status: "En Route",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    id: 3,
+    type: "Visitor",
+    name: "Alex Wong",
+    company: "Innovate Design",
+    time: "2:00 PM",
+    host: "Rachel Green",
+    purpose: "Project Review",
+    status: "Scheduled",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    id: 4,
+    type: "Vendor",
+    name: "Maria Garcia",
+    company: "Cleaning Services Plus",
+    time: "3:30 PM",
+    host: "David Kim",
+    purpose: "Maintenance Work",
+    status: "Confirmed",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  }
+] as const;
+
 export default function MyHqO() {
   const [selectedTenant, setSelectedTenant] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -299,126 +347,15 @@ export default function MyHqO() {
   return (
     <div className="space-y-6">
       <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
-        Welcome back, Ellie
+        Welcome back, Tenny
       </h1>
-
-      {/* Area Charts Section */}
-      <section>
-        <Grid numItemsMd={1} numItemsLg={2} className="gap-6">
-          {/* Area Chart 1 */}
-          <Card>
-            <Title className="text-text-primary mb-2">Tenant Engagement</Title>
-            <Text className="text-text-secondary mb-4">Monthly trends over time</Text>
-            <AreaChart
-              className="h-72"
-              data={performanceData}
-              index="date"
-              categories={["Tenant Satisfaction", "Tenant Engagement"]}
-              colors={["primary", "indigo"]}
-              valueFormatter={(value) => `${value}%`}
-              showLegend={true}
-              showGridLines={false}
-              showAnimation={true}
-            />
-          </Card>
-
-          {/* Area Chart 2 */}
-          <Card>
-            <Title className="text-text-primary mb-2">Platform Usage</Title>
-            <Text className="text-text-secondary mb-4">Distribution by channel</Text>
-            <AreaChart
-              className="h-72"
-              data={usageData}
-              index="date"
-              categories={["Mobile App", "Web Portal", "Kiosk"]}
-              colors={["primary", "indigo", "cyan"]}
-              valueFormatter={(value) => `${value}%`}
-              showLegend={true}
-              showGridLines={false}
-              showAnimation={true}
-            />
-          </Card>
-        </Grid>
-      </section>
-
-      {/* Performance Insights Section */}
-      <section>
-        <Card>
-          <Title className="text-text-primary mb-4">Performance Insights</Title>
-          <TabGroup>
-            <TabList>
-              <Tab>Tenant Satisfaction</Tab>
-              <Tab>Platform Usage</Tab>
-              <Tab>Feature Breakdown</Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel>
-                <AreaChart
-                  className="mt-4 h-72"
-                  data={performanceData}
-                  index="date"
-                  categories={["Tenant Satisfaction", "Tenant Engagement"]}
-                  colors={["primary", "indigo"]}
-                  valueFormatter={(value) => `${value}%`}
-                  showLegend={true}
-                  showGridLines={false}
-                  showAnimation={true}
-                />
-              </TabPanel>
-              <TabPanel>
-                <AreaChart
-                  className="mt-4 h-72"
-                  data={usageData}
-                  index="date"
-                  categories={["Mobile App", "Web Portal", "Kiosk"]}
-                  colors={["primary", "indigo", "cyan"]}
-                  valueFormatter={(value) => `${value}%`}
-                  showLegend={true}
-                  showGridLines={false}
-                  showAnimation={true}
-                />
-              </TabPanel>
-              <TabPanel>
-                <Grid numItemsMd={2} className="gap-6 mt-4">
-                  <Card>
-                    <Title className="text-text-primary">Feature Usage</Title>
-                    <DonutChart
-                      className="mt-4 h-60"
-                      data={featureUsageData}
-                      category="value"
-                      index="name"
-                      colors={["primary", "indigo", "cyan", "violet", "slate"]}
-                      valueFormatter={(value) => `${value}%`}
-                      showLabel={true}
-                      showAnimation={true}
-                    />
-                  </Card>
-                  <Card>
-                    <Title className="text-text-primary">Tenant Breakdown</Title>
-                    <DonutChart
-                      className="mt-4 h-60"
-                      data={tenantBreakdownData}
-                      category="value"
-                      index="name"
-                      colors={["primary", "amber", "slate"]}
-                      valueFormatter={(value) => `${value}%`}
-                      showLabel={true}
-                      showAnimation={true}
-                    />
-                  </Card>
-                </Grid>
-              </TabPanel>
-            </TabPanels>
-          </TabGroup>
-        </Card>
-      </section>
 
       {/* Recent Activity Section */}
       <section>
         <Grid numItemsMd={1} numItemsLg={2} className="gap-6">
           {/* Activity Stream - Left Column */}
           <Card>
-            <Title className="text-text-primary mb-4">Tenant Activity Stream</Title>
+            <Title className="text-text-primary mb-4">Activity Stream</Title>
 
             {/* Filters and Search */}
             <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -553,103 +490,65 @@ export default function MyHqO() {
           {/* Day View Calendar - Right Column */}
           <Card>
             <div className="flex items-center justify-between mb-4">
-              <Title className="text-text-primary">Today's Schedule</Title>
-              <div className="flex items-center gap-2">
-                <Button variant="light" size="xs" icon={RiArrowLeftSLine} />
-                <Text className="text-text-primary font-medium">{new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</Text>
-                <Button variant="light" size="xs" icon={RiArrowRightSLine} />
-              </div>
+              <Title className="text-text-primary">Upcoming Visitors & Vendors</Title>
+              <Text className="text-text-primary font-medium">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</Text>
             </div>
 
-            {/* Time slots */}
-            <div className="space-y-1 max-h-[600px] overflow-y-auto pr-1">
-              {Array.from({ length: 12 }).map((_, index) => {
-                const hour = index + 8; // Start from 8 AM
-                const isPast = new Date().getHours() > hour;
-                const isCurrent = new Date().getHours() === hour;
-                const hasEvent = [9, 11, 14, 16].includes(hour);
-
-                return (
-                  <div key={hour} className={cx(
-                    "flex gap-3 py-3 border-l-2 pl-3 pr-2 rounded-r-md transition-colors",
-                    isPast ? "border-gray-200 dark:border-gray-800 text-gray-400 dark:text-gray-600" :
-                      isCurrent ? "border-primary bg-primary/5 dark:bg-primary/10" :
-                        "border-gray-300 dark:border-gray-700"
-                  )}>
-                    {/* Time */}
-                    <div className="w-16 flex-shrink-0">
-                      <Text className={cx(
-                        "font-medium",
-                        isPast ? "text-gray-400 dark:text-gray-600" :
-                          isCurrent ? "text-primary dark:text-primary-400" :
-                            "text-gray-700 dark:text-gray-300"
-                      )}>
-                        {hour > 12 ? `${hour - 12}:00 PM` : hour === 12 ? `12:00 PM` : `${hour}:00 AM`}
+            {/* Visitors and Vendors List */}
+            <div className="space-y-3 max-h-[600px] overflow-y-auto pr-1">
+              {upcomingVisitorsAndVendors.map((person) => (
+                <div
+                  key={person.id}
+                  className={cx(
+                    "flex items-start gap-3 p-3 rounded-lg border",
+                    person.type === "Visitor"
+                      ? "border-blue-100 bg-blue-50 dark:border-blue-800 dark:bg-blue-900/20"
+                      : "border-amber-100 bg-amber-50 dark:border-amber-800 dark:bg-amber-900/20"
+                  )}
+                >
+                  <img
+                    src={person.avatar}
+                    alt={person.name}
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <Text className="font-medium text-gray-900 dark:text-gray-50">
+                          {person.name}
+                        </Text>
+                        <Text className="text-sm text-gray-600 dark:text-gray-400">
+                          {person.company}
+                        </Text>
+                      </div>
+                      <Badge color={
+                        person.status === "Scheduled" ? "blue" :
+                          person.status === "En Route" ? "amber" :
+                            "green"
+                      }>
+                        {person.status}
+                      </Badge>
+                    </div>
+                    <div className="mt-1">
+                      <Text className="text-sm text-gray-600 dark:text-gray-400">
+                        <span className="font-medium">{person.time}</span> · {person.purpose}
+                      </Text>
+                      <Text className="text-sm text-gray-500 dark:text-gray-500">
+                        Host: {person.host}
                       </Text>
                     </div>
-
-                    {/* Event */}
-                    {hasEvent && (
-                      <div className={cx(
-                        "flex-1 rounded-md p-2 border",
-                        hour === 9 ? "bg-blue-50 border-blue-200 dark:bg-blue-900/20 dark:border-blue-800" :
-                          hour === 11 ? "bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-800" :
-                            hour === 14 ? "bg-amber-50 border-amber-200 dark:bg-amber-900/20 dark:border-amber-800" :
-                              "bg-violet-50 border-violet-200 dark:bg-violet-900/20 dark:border-violet-800"
-                      )}>
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <Text className={cx(
-                              "font-medium",
-                              hour === 9 ? "text-blue-700 dark:text-blue-400" :
-                                hour === 11 ? "text-green-700 dark:text-green-400" :
-                                  hour === 14 ? "text-amber-700 dark:text-amber-400" :
-                                    "text-violet-700 dark:text-violet-400"
-                            )}>
-                              {hour === 9 ? "Team Standup" :
-                                hour === 11 ? "Client Meeting" :
-                                  hour === 14 ? "Wellness Workshop" :
-                                    "Product Demo"}
-                            </Text>
-                            <Text className="text-xs text-gray-600 dark:text-gray-400">
-                              {hour === 9 ? "Conference Room B • 30 min" :
-                                hour === 11 ? "Zoom Call • 1 hour" :
-                                  hour === 14 ? "Yoga Studio • 45 min" :
-                                    "Main Auditorium • 1 hour"}
-                            </Text>
-                          </div>
-                          <div className="flex -space-x-2">
-                            <img
-                              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                              alt="Attendee"
-                              className="w-6 h-6 rounded-full border border-white dark:border-gray-900"
-                            />
-                            <img
-                              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                              alt="Attendee"
-                              className="w-6 h-6 rounded-full border border-white dark:border-gray-900"
-                            />
-                            {hour !== 9 && (
-                              <div className="w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-xs font-medium text-gray-600 dark:text-gray-300 border border-white dark:border-gray-900">
-                                +{hour === 11 ? 3 : hour === 14 ? 8 : 5}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    )}
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
 
             <div className="mt-6 flex justify-between">
               <Button variant="light" className="text-text-primary">
-                <RiCalendarEventLine className="size-4 mr-1" />
-                Add event
+                <RiUserAddLine className="size-4 mr-1" />
+                Add visitor
               </Button>
               <Button variant="light" className="text-text-primary">
-                View full calendar
+                View all visitors
               </Button>
             </div>
           </Card>

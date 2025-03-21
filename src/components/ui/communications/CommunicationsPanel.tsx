@@ -3,6 +3,7 @@
 import { cx } from "@/lib/utils"
 import {
     RiAddLine,
+    RiArrowDownLine,
     RiAttachmentLine,
     RiCalendarEventLine,
     RiCloseLine,
@@ -120,116 +121,106 @@ export function CommunicationsPanel({
     const tenants: Tenant[] = [
         {
             id: "1",
-            name: "Acme Inc",
-            building: "Empire State Building",
-            initials: "AI",
+            name: "John Smith",
+            building: "Property Manager",
+            initials: "JS",
             unread: 3,
             contacts: [
                 {
                     id: "1-1",
-                    name: "John Smith",
-                    role: "Office Manager",
-                    initials: "JS",
-                    email: "john.smith@acme.com"
+                    name: "Sarah Johnson",
+                    role: "Assistant Property Manager",
+                    initials: "SJ",
+                    email: "sarah.johnson@company.com"
                 },
                 {
                     id: "1-2",
-                    name: "Sarah Johnson",
-                    role: "Facilities Director",
-                    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    initials: "SJ",
-                    email: "sarah.johnson@acme.com"
-                },
-                {
-                    id: "1-3",
-                    name: "Robert Chen",
-                    role: "CEO",
-                    initials: "RC",
-                    email: "robert.chen@acme.com"
+                    name: "Michael Chen",
+                    role: "Maintenance Supervisor",
+                    initials: "MC",
+                    email: "michael.chen@company.com"
                 }
             ],
             lastMessage: {
-                text: "When will the elevator maintenance be completed?",
+                text: "I'll review the maintenance schedule and get back to you.",
                 time: "10:30 AM",
                 isFromTenant: true
             }
         },
         {
             id: "2",
-            name: "Global Tech",
-            building: "Rockefeller Center",
-            avatar: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            initials: "GT",
+            name: "Emily Davis",
+            building: "Senior Property Manager",
+            avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2576&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            initials: "ED",
             unread: 0,
             contacts: [
                 {
                     id: "2-1",
-                    name: "Emily Davis",
-                    role: "Office Administrator",
-                    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2576&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    initials: "ED",
-                    email: "emily.davis@globaltech.com"
+                    name: "David Wilson",
+                    role: "Leasing Manager",
+                    initials: "DW",
+                    email: "david.wilson@company.com"
                 },
                 {
                     id: "2-2",
-                    name: "Michael Wong",
-                    role: "IT Director",
-                    initials: "MW",
-                    email: "michael.wong@globaltech.com"
+                    name: "Lisa Park",
+                    role: "Operations Coordinator",
+                    initials: "LP",
+                    email: "lisa.park@company.com"
                 }
             ],
             lastMessage: {
-                text: "Thanks for addressing our concerns about the HVAC system.",
+                text: "The quarterly inspection report is ready for review.",
                 time: "Yesterday",
                 isFromTenant: true
             }
         },
         {
             id: "3",
-            name: "Innovate Solutions",
-            building: "One World Trade Center",
-            initials: "IS",
+            name: "Robert Martinez",
+            building: "Building Engineer",
+            initials: "RM",
             unread: 1,
             contacts: [
                 {
                     id: "3-1",
-                    name: "Jessica Martinez",
-                    role: "Office Manager",
-                    avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=2522&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    initials: "JM",
-                    email: "jessica.martinez@innovate.com"
+                    name: "James Thompson",
+                    role: "Assistant Engineer",
+                    initials: "JT",
+                    email: "james.thompson@company.com"
                 },
                 {
                     id: "3-2",
-                    name: "David Wilson",
-                    role: "Facilities Coordinator",
-                    initials: "DW",
-                    email: "david.wilson@innovate.com"
+                    name: "Anna Kim",
+                    role: "Maintenance Technician",
+                    initials: "AK",
+                    email: "anna.kim@company.com"
                 }
             ],
             lastMessage: {
-                text: "We've scheduled the tenant event for next Friday at 3 PM.",
+                text: "HVAC maintenance is scheduled for tomorrow morning.",
                 time: "Yesterday",
                 isFromTenant: false
             }
         },
         {
             id: "4",
-            name: "Creative Studios",
-            building: "Chrysler Building",
-            initials: "CS",
+            name: "Sarah Anderson",
+            building: "Tenant Relations Manager",
+            initials: "SA",
             unread: 0,
             contacts: [
                 {
                     id: "4-1",
-                    name: "Alex Thompson",
-                    role: "Studio Manager",
-                    initials: "AT",
-                    email: "alex.thompson@creative.com"
+                    name: "Mark Rodriguez",
+                    role: "Customer Service Representative",
+                    initials: "MR",
+                    email: "mark.rodriguez@company.com"
                 }
             ],
             lastMessage: {
-                text: "Our team would like to discuss the upcoming renovations.",
+                text: "Following up on the tenant satisfaction survey.",
                 time: "Jun 10",
                 isFromTenant: true
             }
@@ -431,7 +422,9 @@ export function CommunicationsPanel({
             <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
                 <div className="flex items-center gap-2">
                     <RiMessage2Line className="size-4 text-primary" />
-                    <span className="font-medium text-sm text-gray-900 dark:text-gray-50">Tenant contacts</span>
+                    <h2 className="text-sm font-medium text-gray-900 dark:text-gray-50">
+                        Property Manager Chat
+                    </h2>
                 </div>
                 <div className="flex items-center gap-1">
                     {isMobile && (
@@ -458,7 +451,7 @@ export function CommunicationsPanel({
                             onClick={onMinimize}
                             aria-label="Minimize"
                         >
-                            <RiFullscreenLine className="size-4 rotate-180" />
+                            <RiArrowDownLine className="size-4" />
                         </button>
                     ) : (
                         <button
@@ -466,7 +459,7 @@ export function CommunicationsPanel({
                             onClick={onMinimize}
                             aria-label="Minimize"
                         >
-                            <RiCloseLine className="size-4" />
+                            <RiArrowDownLine className="size-4" />
                         </button>
                     )}
                     <button
@@ -488,7 +481,7 @@ export function CommunicationsPanel({
                         <div className="relative">
                             <input
                                 type="text"
-                                placeholder="Search tenants..."
+                                placeholder="Search property team members..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 className={cx(
@@ -570,7 +563,7 @@ export function CommunicationsPanel({
                             ))
                         ) : (
                             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
-                                No tenants found
+                                No property team members found
                             </div>
                         )}
                     </div>
@@ -812,10 +805,10 @@ export function CommunicationsPanel({
                         <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
                             <RiMessage2Line className="size-12 text-gray-300 dark:text-gray-700 mb-4" />
                             <h3 className="text-lg font-medium text-gray-900 dark:text-gray-50 mb-2">
-                                Select a tenant to start messaging
+                                Select a property team member to start messaging
                             </h3>
                             <p className="text-sm text-gray-500 dark:text-gray-400 max-w-xs">
-                                Choose a tenant from the list to view your conversation history and send messages.
+                                Choose a property team member from the list to view your conversation history and send messages.
                             </p>
                         </div>
                     )}

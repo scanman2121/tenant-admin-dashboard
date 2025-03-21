@@ -9,15 +9,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/Dropdown"
-import { CustomSwitch } from "@/components/ui/CustomSwitch"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 import { cx, focusInput } from "@/lib/utils"
-import { RiBuildingLine, RiExpandUpDownLine, RiInformationLine } from "@remixicon/react"
+import { RiBuildingLine, RiExpandUpDownLine } from "@remixicon/react"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import React, { useEffect } from "react"
@@ -37,28 +30,7 @@ const buildings = [
     initials: "MS",
     color: "bg-primary dark:bg-primary-400",
     imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    value: "state-street",
-    name: "75 State Street",
-    initials: "SS",
-    color: "bg-primary dark:bg-primary-400",
-    imageUrl: "https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?q=80&w=2674&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    value: "congress-ave",
-    name: "200 Congress Ave",
-    initials: "CA",
-    color: "bg-primary dark:bg-primary-400",
-    imageUrl: "https://images.unsplash.com/photo-1536697246787-1f7ae568d89a?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    value: "boylston-street",
-    name: "500 Boylston Street",
-    initials: "BS",
-    color: "bg-primary dark:bg-primary-400",
-    imageUrl: "https://images.unsplash.com/photo-1577985043696-8bd54d9f093f?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
+  }
 ]
 
 // Function to check if portfolio view is allowed for the current page
@@ -289,51 +261,6 @@ export const BuildingsDropdownDesktop = () => {
             />
           </DropdownMenuContent>
         </DropdownMenu>
-      </div>
-
-      {/* Portfolio view toggle (desktop only) */}
-      <div className="hidden items-center whitespace-nowrap lg:flex">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className={cx(
-                "flex items-center transition-opacity duration-300",
-                !portfolioAllowed && !isAnimating ? "opacity-50 cursor-not-allowed" : "opacity-100"
-              )}>
-                <CustomSwitch
-                  checked={isPortfolioView}
-                  onCheckedChange={handlePortfolioToggle}
-                  size="small"
-                  disabled={!portfolioAllowed || isAnimating}
-                />
-                <span className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Portfolio view
-                </span>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent side="bottom" align="center">
-              {portfolioAllowed
-                ? `View data across all buildings in ${pageName}`
-                : `Portfolio view is not available for ${pageName}`}
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        <div className="ml-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="flex items-center">
-                  <RiInformationLine className="size-4 text-gray-400" />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent side="bottom" align="center">
-                {portfolioAllowed
-                  ? `Portfolio view allows you to see data across all buildings in ${pageName}`
-                  : `Portfolio view is not available for ${pageName}`}
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
       </div>
     </div>
   )

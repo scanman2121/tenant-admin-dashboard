@@ -110,7 +110,7 @@ export function FullScreenTenantContacts({
                         <RiArrowLeftLine className="size-5" />
                     </button>
                     <h2 className="text-sm sm:text-base font-medium text-gray-900 dark:text-gray-50 truncate max-w-[200px] sm:max-w-none">
-                        {currentTenant ? currentTenant.name : 'Tenant communications'}
+                        {currentTenant ? currentTenant.name : 'Property Manager Chat'}
                     </h2>
                     <div className="w-8"></div> {/* Spacer for alignment */}
                 </div>
