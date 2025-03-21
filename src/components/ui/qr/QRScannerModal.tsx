@@ -3,7 +3,7 @@
 import { Button } from "@/components/Button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/Dialog"
 import { useRouter } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 interface QRScannerModalProps {
     isOpen: boolean
@@ -106,7 +106,7 @@ export function QRScannerModal({ isOpen, onClose, isDemoMode }: QRScannerModalPr
             // In a real implementation, this would be replaced with actual QR code detection
             setTimeout(() => {
                 if (isOpen && !scannedUrl) {
-                    simulateQrDetection("https://example.com")
+                    simulateQrDetection("https://example.com/demo")
                 }
             }, 5000)
         }
@@ -121,10 +121,10 @@ export function QRScannerModal({ isOpen, onClose, isDemoMode }: QRScannerModalPr
     }, [isOpen, scannedUrl])
 
     // Simulate QR code detection (for demo purposes)
-    const simulateQrDetection = (url: string) => {
+    const simulateQrDetection = useCallback((url: string = "https://example.com/demo") => {
         setScannedUrl(url)
         cleanupScanner()
-    }
+    }, [])
 
     // Handle permission request
     const handleRequestPermission = () => {
@@ -172,9 +172,9 @@ export function QRScannerModal({ isOpen, onClose, isDemoMode }: QRScannerModalPr
 
     useEffect(() => {
         if (isOpen && isDemoMode) {
-            simulateQrDetection();
+            simulateQrDetection("https://example.com/demo")
         }
-    }, [isOpen, isDemoMode, simulateQrDetection]);
+    }, [isOpen, isDemoMode, simulateQrDetection])
 
     return (
         <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
