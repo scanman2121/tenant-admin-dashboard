@@ -1,8 +1,7 @@
 "use client"
 
 import { siteConfig } from "@/app/siteConfig"
-import { PageHeader } from "@/components/PageHeader"
-import { TabNavigation, TabNavigationLink } from "@/components/TabNavigation"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -18,20 +17,36 @@ export default function SettingsLayout({
 }>) {
     const pathname = usePathname()
     return (
-        <div>
-            <PageHeader title="Settings & setup" />
-            <TabNavigation className="mt-4">
-                {navigationSettings.map((item) => (
-                    <TabNavigationLink
-                        key={item.name}
-                        asChild
-                        active={pathname === item.href}
-                    >
-                        <Link href={item.href}>{item.name}</Link>
-                    </TabNavigationLink>
-                ))}
-            </TabNavigation>
-            <div className="pt-6">{children}</div>
+        <div className="container mx-auto px-4 py-6 lg:px-8 lg:py-8">
+            <div className="flex flex-col gap-6">
+                {/* Header */}
+                <div>
+                    <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
+                        Settings & Setup
+                    </h1>
+                    <p className="mt-1 text-sm text-gray-500">
+                        Manage your account settings and preferences
+                    </p>
+                </div>
+
+                {/* Tabs */}
+                <Tabs defaultValue={pathname} className="space-y-6">
+                    <TabsList>
+                        {navigationSettings.map((item) => (
+                            <TabsTrigger
+                                key={item.name}
+                                value={item.href}
+                                asChild
+                            >
+                                <Link href={item.href}>{item.name}</Link>
+                            </TabsTrigger>
+                        ))}
+                    </TabsList>
+                </Tabs>
+
+                {/* Content */}
+                <div>{children}</div>
+            </div>
         </div>
     )
 } 
