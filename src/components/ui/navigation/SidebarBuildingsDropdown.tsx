@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/Dropdown"
+import { Switch } from "@/components/ui/switch"
 import {
   Tooltip,
   TooltipContent,
@@ -272,6 +273,26 @@ export const BuildingsDropdownDesktop = () => {
               <DropdownMenuLabel>
                 Buildings ({buildings.length})
               </DropdownMenuLabel>
+              {portfolioAllowed && (
+                <>
+                  <div className="flex items-center justify-between px-2 py-1.5">
+                    <label
+                      htmlFor="portfolio-view"
+                      className="text-sm text-gray-700 dark:text-gray-300"
+                    >
+                      Portfolio view
+                    </label>
+                    <Switch
+                      id="portfolio-view"
+                      checked={isPortfolioView}
+                      onCheckedChange={handlePortfolioToggle}
+                      disabled={!portfolioAllowed}
+                      aria-label="Toggle portfolio view"
+                    />
+                  </div>
+                  <DropdownMenuSeparator />
+                </>
+              )}
               {buildings.map((building) => (
                 <DropdownMenuItem
                   key={building.value}
