@@ -22,7 +22,7 @@ export function QRScannerModal({ isOpen, onClose, isDemoMode }: QRScannerModalPr
     const scanIntervalRef = useRef<NodeJS.Timeout | null>(null)
 
     // Clean up function to stop all scanning operations
-    const cleanupScanner = () => {
+    const cleanupScanner = useCallback(() => {
         // Clear scan interval
         if (scanIntervalRef.current) {
             clearInterval(scanIntervalRef.current)
@@ -34,7 +34,7 @@ export function QRScannerModal({ isOpen, onClose, isDemoMode }: QRScannerModalPr
             streamRef.current.getTracks().forEach(track => track.stop())
             streamRef.current = null
         }
-    }
+    }, [])
 
     // Initialize camera when modal opens and permissions are granted
     useEffect(() => {
@@ -118,13 +118,13 @@ export function QRScannerModal({ isOpen, onClose, isDemoMode }: QRScannerModalPr
 
         // Clean up when component unmounts or modal closes
         return cleanupScanner
-    }, [isOpen, scannedUrl])
+    }, [isOpen, scannedUrl, cleanupScanner])
 
     // Simulate QR code detection (for demo purposes)
     const simulateQrDetection = useCallback((url: string = "https://example.com/demo") => {
         setScannedUrl(url)
         cleanupScanner()
-    }, [])
+    }, [cleanupScanner])
 
     // Handle permission request
     const handleRequestPermission = () => {

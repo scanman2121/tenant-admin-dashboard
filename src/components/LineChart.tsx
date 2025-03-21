@@ -431,7 +431,7 @@ const OverviewChartTooltip = ({
           </p>
           {evolution !== undefined && (
             <Badge variant={getBadgeType(evolution)}>
-              {percentageFormatter(evolution)}
+              {percentageFormatter.format(evolution)}
             </Badge>
           )}
         </div>
