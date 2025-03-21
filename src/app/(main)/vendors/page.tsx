@@ -1,7 +1,9 @@
 "use client"
 
-import { Button } from "@/components/Button"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/data-table/DataTable"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { RiAddLine } from "@remixicon/react"
 import Image from "next/image"
 import { useState } from "react"
@@ -17,7 +19,7 @@ const vendorsData = [
         email: "john@maintenancepro.com",
         phone: "617-555-1234",
         buildings: ["125 Highland Ave", "500 Boylston Street"],
-        status: "Active",
+        status: "active",
     },
     {
         id: "2",
@@ -28,7 +30,7 @@ const vendorsData = [
         email: "sarah@cleanteam.com",
         phone: "415-555-6789",
         buildings: ["400 Market Street", "200 Congress Ave"],
-        status: "Active",
+        status: "active",
     },
     {
         id: "3",
@@ -39,7 +41,7 @@ const vendorsData = [
         email: "michael@securitysolutions.com",
         phone: "212-555-4321",
         buildings: ["75 State Street"],
-        status: "Inactive",
+        status: "inactive",
     },
     {
         id: "4",
@@ -50,7 +52,7 @@ const vendorsData = [
         email: "lisa@greenlandscaping.com",
         phone: "512-555-8765",
         buildings: ["200 Congress Ave", "125 Highland Ave"],
-        status: "Active",
+        status: "active",
     },
     {
         id: "5",
@@ -61,7 +63,7 @@ const vendorsData = [
         email: "david@techsupport.com",
         phone: "617-555-9876",
         buildings: ["500 Boylston Street", "400 Market Street"],
-        status: "Active",
+        status: "active",
     },
 ]
 
@@ -165,14 +167,15 @@ const vendorsColumns = [
         accessorKey: "status",
         header: "Status",
         cell: ({ row }: { row: any }) => {
-            const status = row.getValue("status") as string
+            const status = row.getValue("status") as "active" | "inactive"
+            const variants = {
+                active: "default",
+                inactive: "secondary",
+            } as const
             return (
-                <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${status === "Active"
-                    ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
-                    : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
-                    }`}>
+                <Badge variant={variants[status]}>
                     • {status}
-                </span>
+                </Badge>
             )
         },
     },
@@ -180,30 +183,53 @@ const vendorsColumns = [
 
 export default function Vendors() {
     const [data] = useState(vendorsData)
+    const [selectedTab, setSelectedTab] = useState("all")
 
     return (
-        <div className="flex flex-col gap-4 w-full">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="space-y-6">
+            {/* Header */}
+            <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
-                        Vendors
-                    </h1>
+                    <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-50">Vendors</h1>
                     <p className="mt-1 text-sm text-gray-500">Manage your vendors and service providers</p>
                 </div>
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
-                    <Button variant="ghost" className="w-full border border-primary text-primary hover:bg-gray-50 hover:bg-opacity-30 sm:w-auto">
+                <div className="flex items-center gap-3">
+                    <Button variant="outline" size="lg">
                         Browse marketplace
                     </Button>
-                    <Button className="w-full sm:w-auto">
-                        <RiAddLine className="size-4 shrink-0 mr-1.5" aria-hidden="true" />
+                    <Button size="lg">
+                        <RiAddLine className="mr-1.5 h-5 w-5" />
                         Add vendor
                     </Button>
                 </div>
             </div>
 
-            <div className="pt-4">
-                <DataTable columns={vendorsColumns} data={data} />
-            </div>
+            {/* Tabs */}
+            <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
+                <TabsList>
+                    <TabsTrigger value="all">All</TabsTrigger>
+                    <TabsTrigger value="active">Active</TabsTrigger>
+                    <TabsTrigger value="inactive">Inactive</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="all">
+                    <DataTable columns={vendorsColumns} data={data} />
+                </TabsContent>
+
+                <TabsContent value="active">
+                    <DataTable
+                        columns={vendorsColumns}
+                        data={data.filter(vendor => vendor.status === "active")}
+                    />
+                </TabsContent>
+
+                <TabsContent value="inactive">
+                    <DataTable
+                        columns={vendorsColumns}
+                        data={data.filter(vendor => vendor.status === "inactive")}
+                    />
+                </TabsContent>
+            </Tabs>
         </div>
     )
 } 
