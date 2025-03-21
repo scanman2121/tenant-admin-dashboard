@@ -51,7 +51,7 @@ export function Sidebar() {
   // Use a single state for the open section
   const [openSection, setOpenSection] = useState<SectionId | null>(null)
   // Get collapsed state from context
-  const { isCollapsed, toggleCollapsed } = useContext(SidebarContext)
+  const { isCollapsed, setIsCollapsed } = useContext(SidebarContext)
 
   const isInCommunications = communicationsItems.some(item =>
     pathname === item.href || pathname.startsWith(item.href + "/")
