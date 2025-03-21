@@ -147,13 +147,19 @@ export const BuildingsDropdownDesktop = () => {
                 <div className="flex shrink-0 items-center">
                   {isPortfolioView ? (
                     <span
-                      className="flex aspect-square size-6 items-center justify-center rounded bg-primary p-1 text-xs font-medium text-white dark:bg-primary-400"
+                      className={cx(
+                        "flex aspect-square size-6 items-center justify-center rounded bg-primary p-1 text-xs font-medium text-white dark:bg-primary-400",
+                        isAnimating ? "opacity-50 transition-opacity duration-300" : ""
+                      )}
                       aria-hidden="true"
                     >
                       <RiBuildingLine className="size-4" />
                     </span>
                   ) : (
-                    <div className="relative size-6 overflow-hidden rounded">
+                    <div className={cx(
+                      "relative size-6 overflow-hidden rounded",
+                      isAnimating ? "opacity-50 transition-opacity duration-300" : ""
+                    )}>
                       <Image
                         src={selectedBuilding.imageUrl}
                         alt={selectedBuilding.name}
@@ -187,13 +193,19 @@ export const BuildingsDropdownDesktop = () => {
                 <div className="flex shrink-0 items-center gap-x-2.5">
                   {isPortfolioView ? (
                     <span
-                      className="flex aspect-square size-6 items-center justify-center rounded bg-primary p-1 text-xs font-medium text-white dark:bg-primary-400"
+                      className={cx(
+                        "flex aspect-square size-6 items-center justify-center rounded bg-primary p-1 text-xs font-medium text-white dark:bg-primary-400",
+                        isAnimating ? "opacity-50 transition-opacity duration-300" : ""
+                      )}
                       aria-hidden="true"
                     >
                       <RiBuildingLine className="size-4" />
                     </span>
                   ) : (
-                    <div className="relative size-6 overflow-hidden rounded">
+                    <div className={cx(
+                      "relative size-6 overflow-hidden rounded",
+                      isAnimating ? "opacity-50 transition-opacity duration-300" : ""
+                    )}>
                       <Image
                         src={selectedBuilding.imageUrl}
                         alt={selectedBuilding.name}
