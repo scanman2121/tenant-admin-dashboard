@@ -203,7 +203,7 @@ export default function MyHqO() {
             {/* Header */}
             <div className="flex items-start gap-6 mb-8">
               <div className="flex-1">
-                <Title className="text-text-primary text-2xl">Welcome to PENN 1</Title>
+                <Title className="text-text-primary text-2xl">Welcome to 125 Highland Ave</Title>
                 <Text className="text-text-secondary mt-2">Complete these steps to get started with your new space</Text>
                 <div className="mt-4">
                   <div className="flex items-center gap-3">
@@ -216,72 +216,70 @@ export default function MyHqO() {
               </div>
               <div className="relative w-24 h-24 rounded-2xl overflow-hidden shadow-lg flex-shrink-0">
                 <Image
-                  src="/penn1.jpg"
-                  alt="PENN 1 Building"
+                  src="/125-highland.jpg"
+                  alt="125 Highland Ave Building"
                   fill
                   className="object-cover"
                 />
               </div>
             </div>
 
-            {/* Checklist */}
-            <div className="space-y-4">
+            {/* Checklist - Horizontal Layout */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {/* Completed Step */}
-              <div className="flex items-start gap-4 p-4 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="flex items-center justify-center size-8 rounded-full bg-green-500 text-white">
-                    <RiCheckLine className="size-5" />
+              <div className="flex flex-col p-4 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center size-8 rounded-full bg-green-500 text-white">
+                      <RiCheckLine className="size-5" />
+                    </div>
                   </div>
+                  <Text className="font-semibold text-gray-900 dark:text-gray-50">Contact Information</Text>
                 </div>
-                <div>
-                  <Text className="font-semibold text-gray-900 dark:text-gray-50">Add your contact information</Text>
-                  <Text className="text-sm text-gray-600 dark:text-gray-400 mt-1">Your contact information has been added, you can always manage this in your profile</Text>
+                <Text className="text-sm text-gray-600 dark:text-gray-400">Your contact information has been added</Text>
+                <div className="mt-auto pt-3">
+                  <Button variant="light" size="xs" color="green" className="inline-flex items-center">
+                    View Profile
+                  </Button>
                 </div>
-                <Button variant="light" size="xs" color="green" className="flex-shrink-0 mt-1">
-                  View Profile
-                </Button>
               </div>
 
               {/* Pending Steps */}
-              <div className="flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors">
-                    <RiSettings4Line className="size-5" />
+              <div className="flex flex-col p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors">
+                      <RiSettings4Line className="size-5" />
+                    </div>
                   </div>
+                  <Text className="font-semibold text-gray-900 dark:text-gray-50">Company Details</Text>
                 </div>
-                <div>
-                  <Text className="font-semibold text-gray-900 dark:text-gray-50">Confirm your company information</Text>
-                  <Text className="text-sm text-gray-600 dark:text-gray-400 mt-1">Basic information like number of employees, domains, logo, etc.</Text>
+                <Text className="text-sm text-gray-600 dark:text-gray-400">Add employee count, domains, and logo</Text>
+                <div className="mt-auto pt-3">
+                  <Button variant="light" size="xs" className="inline-flex items-center">
+                    Start
+                    <RiArrowRightLine className="ml-1 size-4" />
+                  </Button>
                 </div>
-                <Button variant="light" size="xs" className="flex-shrink-0 mt-1">
-                  Start
-                  <RiArrowRightLine className="ml-1 size-4" />
-                </Button>
               </div>
 
-              <div className="flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors">
-                    <RiApps2Line className="size-5" />
+              <div className="flex flex-col p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors">
+                      <RiApps2Line className="size-5" />
+                    </div>
                   </div>
+                  <Text className="font-semibold text-gray-900 dark:text-gray-50">Configure Apps</Text>
                 </div>
-                <div>
-                  <Text className="font-semibold text-gray-900 dark:text-gray-50">Configure your apps</Text>
-                  <Text className="text-sm text-gray-600 dark:text-gray-400 mt-1">What features should your employees have access to</Text>
+                <Text className="text-sm text-gray-600 dark:text-gray-400">Set up employee app access</Text>
+                <div className="mt-auto pt-3">
+                  <Button variant="light" size="xs" className="inline-flex items-center">
+                    Start
+                    <RiArrowRightLine className="ml-1 size-4" />
+                  </Button>
                 </div>
-                <Button variant="light" size="xs" className="flex-shrink-0 mt-1">
-                  Start
-                  <RiArrowRightLine className="ml-1 size-4" />
-                </Button>
               </div>
-            </div>
-
-            {/* Action Button */}
-            <div className="mt-8 flex justify-end">
-              <Button variant="primary" size="lg" className="w-full sm:w-auto">
-                Continue Setup
-                <RiArrowRightLine className="ml-2 size-5" />
-              </Button>
             </div>
           </div>
         </Card>
@@ -326,9 +324,11 @@ export default function MyHqO() {
               </div>
 
               <div className="mt-8">
-                <Button variant="secondary" size="lg" className="w-full sm:w-auto">
-                  Add admin users
-                  <RiArrowRightLine className="ml-2 size-5" />
+                <Button variant="secondary" size="md" className="inline-flex items-center">
+                  <span className="flex items-center">
+                    Add admin users
+                    <RiArrowRightLine className="ml-2 size-4" />
+                  </span>
                 </Button>
               </div>
             </div>
