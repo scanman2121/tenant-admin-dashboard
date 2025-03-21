@@ -1,68 +1,87 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
 import { DataTable } from "@/components/ui/data-table/DataTable"
 import { visitorColumns } from "@/components/ui/data-table/visitorColumns"
-import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Visitor } from "@/data/schema"
 
 const tabs = [
     {
         value: "all",
-        label: "All visitors",
+        label: "All Visitors",
+        count: 0,
+    },
+    {
+        value: "checked-in",
+        label: "Checked In",
+        count: 0,
     },
     {
         value: "expected",
         label: "Expected",
-    },
-    {
-        value: "reports",
-        label: "Reports",
+        count: 0,
     },
 ]
 
 const mockVisitors: Visitor[] = [
     {
+        id: "V001",
         checkInTime: "9:30 AM",
         visitorName: "John Smith",
         company: "Acme Corp",
         hostName: "Sarah Johnson",
         purpose: "Client Meeting",
-        status: "Checked In",
+        status: "checked-in",
         checkOutTime: null,
-        badgeNumber: "V001"
+        badgeNumber: "V001",
+        email: "john.smith@acme.com",
+        phone: "+1 (555) 123-4567"
     },
     {
-        checkInTime: "10:15 AM",
+        id: "V002",
+        checkInTime: null,
         visitorName: "Emma Davis",
         company: "Tech Solutions",
         hostName: "Michael Brown",
         purpose: "Interview",
-        status: "Expected",
+        status: "expected",
         checkOutTime: null,
-        badgeNumber: "V002"
+        badgeNumber: "V002",
+        email: "emma.davis@techsolutions.com",
+        phone: "+1 (555) 234-5678"
     },
     {
+        id: "V003",
         checkInTime: "2:45 PM",
         visitorName: "Robert Wilson",
         company: "Global Services",
         hostName: "Jennifer Lee",
         purpose: "Vendor Meeting",
-        status: "Checked In",
+        status: "checked-out",
         checkOutTime: "4:30 PM",
-        badgeNumber: "V003"
+        badgeNumber: "V003",
+        email: "robert.wilson@globalservices.com",
+        phone: "+1 (555) 345-6789"
     }
 ]
 
 export default function Visitors() {
+    // Update tab counts
+    tabs.forEach(tab => {
+        if (tab.value === "all") {
+            tab.count = mockVisitors.length
+        } else {
+            tab.count = mockVisitors.filter(visitor => visitor.status === tab.value).length
+        }
+    })
+
     return (
         <div className="flex flex-col gap-8 p-8">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-semibold tracking-tight">Visitor Management</h1>
-                    <p className="text-sm text-muted-foreground">
+                    <h1 className="text-3xl font-semibold tracking-tight">Visitor Management</h1>
+                    <p className="text-sm text-muted-foreground mt-1">
                         Track and manage all visitors in your building
                     </p>
                 </div>
@@ -72,10 +91,13 @@ export default function Visitors() {
             </div>
 
             <Tabs defaultValue="all" className="w-full">
-                <TabsList>
+                <TabsList className="w-full justify-start">
                     {tabs.map((tab) => (
-                        <TabsTrigger key={tab.value} value={tab.value}>
-                            {tab.label}
+                        <TabsTrigger key={tab.value} value={tab.value} className="min-w-[120px]">
+                            <span className="flex flex-col items-start">
+                                <span>{tab.label}</span>
+                                <span className="text-xs text-muted-foreground">{tab.count} visitors</span>
+                            </span>
                         </TabsTrigger>
                     ))}
                 </TabsList>
@@ -85,42 +107,17 @@ export default function Visitors() {
                         data={mockVisitors}
                     />
                 </TabsContent>
+                <TabsContent value="checked-in" className="mt-4">
+                    <DataTable
+                        columns={visitorColumns}
+                        data={mockVisitors.filter(visitor => visitor.status === "checked-in")}
+                    />
+                </TabsContent>
                 <TabsContent value="expected" className="mt-4">
                     <DataTable
                         columns={visitorColumns}
-                        data={mockVisitors.filter(visitor => visitor.status === "Expected")}
+                        data={mockVisitors.filter(visitor => visitor.status === "expected")}
                     />
-                </TabsContent>
-                <TabsContent value="reports" className="mt-4">
-                    <div className="flex flex-col gap-4">
-                        <Card className="p-6">
-                            <h3 className="text-lg font-medium">Visitor reports</h3>
-                            <p className="text-sm text-muted-foreground mt-1">
-                                Download and analyze visitor data
-                            </p>
-                            <div className="mt-4 space-y-4">
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <h4 className="font-medium">Daily visitor log</h4>
-                                        <p className="text-sm text-muted-foreground">
-                                            Complete list of visitors for today
-                                        </p>
-                                    </div>
-                                    <Button variant="outline">Download</Button>
-                                </div>
-                                <Separator />
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <h4 className="font-medium">Weekly summary</h4>
-                                        <p className="text-sm text-muted-foreground">
-                                            Visitor trends and analytics
-                                        </p>
-                                    </div>
-                                    <Button variant="outline">Download</Button>
-                                </div>
-                            </div>
-                        </Card>
-                    </div>
                 </TabsContent>
             </Tabs>
         </div>

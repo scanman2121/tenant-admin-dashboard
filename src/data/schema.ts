@@ -35,15 +35,20 @@ export type Usage = {
   discountAppliedTo?: string
 }
 
-export type Visitor = {
-  checkInTime: string
+export type VisitorStatus = "checked-in" | "checked-out" | "expected"
+
+export interface Visitor {
+  id: string
+  checkInTime: string | null
+  checkOutTime: string | null
   visitorName: string
   company: string
   hostName: string
   purpose: string
-  status: string
-  checkOutTime: string | null
+  status: VisitorStatus
   badgeNumber: string
+  email?: string
+  phone?: string
 }
 
 export type OverviewData = {
