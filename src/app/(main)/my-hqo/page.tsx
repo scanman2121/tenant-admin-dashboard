@@ -287,50 +287,44 @@ export default function MyHqO() {
           {/* Background Pattern */}
           <div className="absolute right-0 top-0 h-full w-1/3 bg-gradient-to-l from-primary/5 to-transparent" />
 
-          <div className="relative flex items-start gap-6">
-            <div className="flex-1">
-              <Title className="text-text-primary">Add Team Members</Title>
-              <Text className="text-text-secondary mt-1">Invite your colleagues to help manage your space. They'll be able to:</Text>
-
-              <div className="mt-6 space-y-3">
-                <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
-                  <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary">
-                      <RiSettings4Line className="size-4" />
-                    </div>
-                  </div>
-                  <Text>Manage building settings and configurations</Text>
-                </div>
-
-                <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
-                  <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary">
-                      <RiTeamLine className="size-4" />
-                    </div>
-                  </div>
-                  <Text>Add and manage user accounts</Text>
-                </div>
-
-                <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
-                  <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary">
-                      <RiUserAddLine className="size-4" />
-                    </div>
-                  </div>
-                  <Text>Handle visitor management and access control</Text>
-                </div>
-              </div>
-
-              <div className="mt-6">
-                <Button variant="secondary" size="sm" className="inline-flex items-center gap-2">
-                  Add admin users
-                  <RiArrowRightLine className="size-4" />
-                </Button>
-              </div>
+          <div className="relative">
+            <div className="flex items-center justify-between mb-6">
+              <Title className="text-text-primary">Add team members</Title>
+              <Button variant="secondary" size="sm" className="inline-flex items-center gap-2">
+                Add admin users
+                <RiArrowRightLine className="size-4" />
+              </Button>
             </div>
 
-            <div className="hidden sm:flex items-center justify-center size-32 rounded-3xl bg-primary/10 text-primary flex-shrink-0">
-              <RiTeamLine className="size-16" />
+            <Text className="text-text-secondary">Invite your colleagues to help manage your space. They'll be able to:</Text>
+
+            <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0">
+                  <div className="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary">
+                    <RiSettings4Line className="size-4" />
+                  </div>
+                </div>
+                <Text className="text-gray-700 dark:text-gray-300">Manage building settings and configurations</Text>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0">
+                  <div className="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary">
+                    <RiTeamLine className="size-4" />
+                  </div>
+                </div>
+                <Text className="text-gray-700 dark:text-gray-300">Add and manage user accounts</Text>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0">
+                  <div className="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary">
+                    <RiUserAddLine className="size-4" />
+                  </div>
+                </div>
+                <Text className="text-gray-700 dark:text-gray-300">Handle visitor management and access control</Text>
+              </div>
             </div>
           </div>
         </Card>
@@ -341,7 +335,7 @@ export default function MyHqO() {
         <Grid numItemsMd={1} numItemsLg={2} className="gap-6">
           {/* Activity Stream Card */}
           <Card>
-            <Title className="text-text-primary mb-4">Activity Stream</Title>
+            <Title className="text-text-primary mb-4">Activity stream</Title>
 
             {/* Search */}
             <div className="mb-6">
@@ -440,7 +434,7 @@ export default function MyHqO() {
           {/* Visitors Card */}
           <Card>
             <div className="flex items-center justify-between mb-4">
-              <Title className="text-text-primary">Upcoming Visitors & Vendors</Title>
+              <Title className="text-text-primary">Upcoming visitors & vendors</Title>
               <Text className="text-text-primary font-medium">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</Text>
             </div>
 
