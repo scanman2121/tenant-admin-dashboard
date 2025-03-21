@@ -228,7 +228,8 @@ export function ConnectIdPModal({ isOpen, onClose }: ConnectIdPModalProps) {
                                 Connection Successful!
                             </h3>
                             <p className="mt-2 text-center text-gray-600 dark:text-gray-400">
-                                Your Identity Provider is connected. Now select groups or employees to sync.
+                                {selectedProvider && `${idpProviders.find(p => p.id === selectedProvider)?.name} is `}
+                                connected. Now select groups or employees to sync.
                             </p>
                             <Button
                                 className="mt-6"
@@ -319,9 +320,22 @@ export function ConnectIdPModal({ isOpen, onClose }: ConnectIdPModalProps) {
 
                     {currentStep === 'review' && (
                         <div>
-                            <p className="mb-4 text-gray-600 dark:text-gray-400">
-                                You are about to sync the following groups:
-                            </p>
+                            <div className="mb-4">
+                                <h3 className="font-medium text-gray-900 dark:text-gray-50">
+                                    Selected Provider
+                                </h3>
+                                <p className="text-gray-600 dark:text-gray-400">
+                                    {idpProviders.find(p => p.id === selectedProvider)?.name}
+                                </p>
+                            </div>
+                            <div className="mb-4">
+                                <h3 className="font-medium text-gray-900 dark:text-gray-50">
+                                    Selected Groups
+                                </h3>
+                                <p className="text-gray-600 dark:text-gray-400">
+                                    You are about to sync the following groups:
+                                </p>
+                            </div>
                             <div className="max-h-[300px] space-y-2 overflow-y-auto rounded-lg border border-gray-200 p-4 dark:border-gray-800">
                                 {mockGroups
                                     .filter(group => selectedGroups.includes(group.id))
