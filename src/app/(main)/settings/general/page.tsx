@@ -17,19 +17,14 @@ import { RiExternalLinkLine } from "@remixicon/react"
 
 import { roles } from "@/data/data"
 
-export default function General() {
+export default function GeneralPage() {
   return (
     <div className="space-y-10">
       <section aria-labelledby="personal-information">
         <form>
           <div className="grid grid-cols-1 gap-x-14 gap-y-8 md:grid-cols-3">
             <div>
-              <h2
-                id="personal-information"
-                className="text-lg font-medium"
-              >
-                Personal information
-              </h2>
+              <h2 id="personal-information" className="text-lg font-medium">Personal Information</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 Manage your personal information and role
               </p>
@@ -86,11 +81,7 @@ export default function General() {
                 <div className="col-span-full sm:col-span-3">
                   <Label htmlFor="role">Role</Label>
                   <Select defaultValue="member" disabled>
-                    <SelectTrigger
-                      name="role"
-                      id="role"
-                      className="mt-2"
-                    >
+                    <SelectTrigger name="role" id="role" className="mt-2">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -106,7 +97,7 @@ export default function General() {
                   </p>
                 </div>
                 <div className="col-span-full mt-6 flex justify-end">
-                  <Button>Save settings</Button>
+                  <Button>Save changes</Button>
                 </div>
               </div>
             </div>
@@ -120,74 +111,45 @@ export default function General() {
         <form>
           <div className="grid grid-cols-1 gap-x-14 gap-y-8 md:grid-cols-3">
             <div>
-              <h2
-                id="notification-settings"
-                className="text-lg font-medium"
-              >
-                Notification settings
-              </h2>
+              <h2 id="notification-settings" className="text-lg font-medium">Notification Settings</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 Configure the types of notifications you want to receive
               </p>
             </div>
             <div className="md:col-span-2">
               <fieldset>
-                <legend className="text-sm font-medium">
-                  Team
-                </legend>
+                <legend className="text-sm font-medium">Team</legend>
                 <p className="mt-1 text-sm text-muted-foreground">
                   Configure the types of team alerts you want to receive
                 </p>
-                <ul
-                  role="list"
-                  className="mt-4 divide-y"
-                >
+                <ul role="list" className="mt-4 divide-y">
                   <li className="flex items-center gap-x-3 py-3">
-                    <Checkbox
-                      id="team-requests"
-                      defaultChecked
-                    />
+                    <Checkbox id="team-requests" defaultChecked />
                     <Label htmlFor="team-requests">Team join requests</Label>
                   </li>
                   <li className="flex items-center gap-x-3 py-3">
                     <Checkbox id="team-activity-digest" />
-                    <Label htmlFor="team-activity-digest">
-                      Weekly team activity digest
-                    </Label>
+                    <Label htmlFor="team-activity-digest">Weekly team activity digest</Label>
                   </li>
                 </ul>
               </fieldset>
               <fieldset className="mt-6">
-                <legend className="text-sm font-medium">
-                  Usage
-                </legend>
+                <legend className="text-sm font-medium">Usage</legend>
                 <p className="mt-1 text-sm text-muted-foreground">
                   Configure the types of usage alerts you want to receive
                 </p>
-                <ul
-                  role="list"
-                  className="mt-4 divide-y"
-                >
+                <ul role="list" className="mt-4 divide-y">
                   <li className="flex items-center gap-x-3 py-3">
                     <Checkbox id="api-requests" />
                     <Label htmlFor="api-requests">API incidents</Label>
                   </li>
                   <li className="flex items-center gap-x-3 py-3">
-                    <Checkbox
-                      id="workspace-execution"
-                    />
-                    <Label htmlFor="workspace-execution">
-                      Platform incidents
-                    </Label>
+                    <Checkbox id="workspace-execution" />
+                    <Label htmlFor="workspace-execution">Platform incidents</Label>
                   </li>
                   <li className="flex items-center gap-x-3 py-3">
-                    <Checkbox
-                      id="query-caching"
-                      defaultChecked
-                    />
-                    <Label htmlFor="query-caching">
-                      Payment transactions
-                    </Label>
+                    <Checkbox id="query-caching" defaultChecked />
+                    <Label htmlFor="query-caching">Payment transactions</Label>
                   </li>
                   <li className="flex items-center gap-x-3 py-3">
                     <Checkbox id="storage" defaultChecked />
@@ -196,7 +158,7 @@ export default function General() {
                 </ul>
               </fieldset>
               <div className="col-span-full mt-6 flex justify-end">
-                <Button>Save settings</Button>
+                <Button>Save preferences</Button>
               </div>
             </div>
           </div>
@@ -209,24 +171,12 @@ export default function General() {
         <form>
           <div className="grid grid-cols-1 gap-x-14 gap-y-8 md:grid-cols-3">
             <div>
-              <h2
-                id="danger-zone"
-                className="text-lg font-medium"
-              >
-                Danger zone
-              </h2>
+              <h2 id="danger-zone" className="text-lg font-medium">Danger Zone</h2>
               <p className="mt-1 text-sm text-muted-foreground">
-                Manage general workspace. Contact system admin for more
-                information.{" "}
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-1 text-primary hover:underline hover:underline-offset-4"
-                >
+                Manage general workspace. Contact system admin for more information.{" "}
+                <a href="#" className="inline-flex items-center gap-1 text-primary hover:underline hover:underline-offset-4">
                   Learn more
-                  <RiExternalLinkLine
-                    className="size-4 shrink-0"
-                    aria-hidden="true"
-                  />
+                  <RiExternalLinkLine className="size-4 shrink-0" aria-hidden="true" />
                 </a>
               </p>
             </div>
@@ -234,40 +184,26 @@ export default function General() {
               <Card className="p-4">
                 <div className="flex items-start justify-between gap-10">
                   <div>
-                    <h4 className="text-sm font-medium">
-                      Leave workspace
-                    </h4>
+                    <h4 className="text-sm font-medium">Leave Workspace</h4>
                     <p className="mt-2 text-sm text-muted-foreground">
-                      Revoke your access to this team. Other people you have
-                      added to the workspace will remain.
+                      Revoke your access to this team. Other people you have added to the workspace will remain
                     </p>
                   </div>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    className="text-red-600"
-                  >
-                    Leave
+                  <Button variant="secondary" size="sm" className="text-red-600">
+                    Leave workspace
                   </Button>
                 </div>
               </Card>
               <Card className="p-4">
                 <div className="flex items-start justify-between gap-10">
                   <div>
-                    <h4 className="text-sm font-medium">
-                      Delete workspace
-                    </h4>
+                    <h4 className="text-sm font-medium">Delete Workspace</h4>
                     <p className="mt-2 text-sm text-muted-foreground">
-                      Permanently delete this workspace and all of its contents.
-                      This action cannot be undone.
+                      Permanently delete this workspace and all of its contents. This action cannot be undone
                     </p>
                   </div>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    className="text-red-600"
-                  >
-                    Delete
+                  <Button variant="secondary" size="sm" className="text-red-600">
+                    Delete workspace
                   </Button>
                 </div>
               </Card>

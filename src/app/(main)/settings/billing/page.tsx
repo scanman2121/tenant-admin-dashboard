@@ -13,58 +13,51 @@ import { cx } from "@/lib/utils"
 import { RiArrowRightUpLine } from "@remixicon/react"
 import React from "react"
 
-const data: {
-  name: string
-  description: string
-  value: string
-  capacity?: string
-  percentageValue?: number
-}[] = [
-    {
-      name: "Starter plan",
-      description: "Discounted plan for start-ups and growing companies",
-      value: "$90",
-    },
-    {
-      name: "Storage",
-      description: "Used 10.1 GB",
-      value: "$40",
-      capacity: "100 GB included",
-      percentageValue: 10.1,
-    },
-    {
-      name: "Bandwith",
-      description: "Used 2.9 GB",
-      value: "$10",
-      capacity: "5 GB included",
-      percentageValue: 58,
-    },
-    {
-      name: "Users",
-      description: "Used 9",
-      value: "$20",
-      capacity: "50 users included",
-      percentageValue: 18,
-    },
-    {
-      name: "Query super caching (EU-Central 1)",
-      description: "4 GB query cache, $120/mo",
-      value: "$120.00",
-    },
-  ]
+const billingData = [
+  {
+    name: "Starter Plan",
+    description: "Discounted plan for start-ups and growing companies",
+    value: "$90",
+  },
+  {
+    name: "Storage",
+    description: "Used 10.1 GB",
+    value: "$40",
+    capacity: "100 GB included",
+    percentageValue: 10.1,
+  },
+  {
+    name: "Bandwidth",
+    description: "Used 2.9 GB",
+    value: "$10",
+    capacity: "5 GB included",
+    percentageValue: 58,
+  },
+  {
+    name: "Users",
+    description: "Used 9",
+    value: "$20",
+    capacity: "50 users included",
+    percentageValue: 18,
+  },
+  {
+    name: "Query Super Caching (EU-Central 1)",
+    description: "4 GB query cache, $120/mo",
+    value: "$120.00",
+  },
+]
 
-export default function Billing() {
+export default function BillingPage() {
   const [isSpendMgmtEnabled, setIsSpendMgmtEnabled] = React.useState(true)
+
   return (
     <div className="space-y-10">
       <Card className="p-6">
         <div className="flex items-center justify-between">
           <div>
-            <h4 className="text-lg font-medium">
-              Free Plan
-            </h4>
+            <h4 className="text-lg font-medium">Free Plan</h4>
             <p className="mt-1 text-sm text-muted-foreground">
-              Boost your analytics and unlock advanced features with our premium plans.
+              Boost your analytics and unlock advanced features with our premium plans
             </p>
           </div>
           <Button variant="outline" className="flex items-center gap-1">
@@ -74,39 +67,26 @@ export default function Billing() {
         </div>
       </Card>
 
-      {/* Tremor Pricing Section */}
       <TremorPricingSection />
 
       <div className="space-y-10">
         <section aria-labelledby="billing-overview">
           <div className="grid grid-cols-1 gap-x-14 gap-y-8 md:grid-cols-3">
             <div>
-              <h2
-                id="billing-overview"
-                className="text-lg font-medium"
-              >
-                Billing
-              </h2>
+              <h2 id="billing-overview" className="text-lg font-medium">Billing Overview</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 Overview of current billing cycle based on fixed and on-demand charges
               </p>
             </div>
             <div className="md:col-span-2">
               <Card>
-                <ul
-                  role="list"
-                  className="w-full divide-y"
-                >
-                  {data.map((item) => (
+                <ul role="list" className="w-full divide-y">
+                  {billingData.map((item) => (
                     <li key={item.name} className="px-4 py-4 text-sm">
                       <div className="w-full">
                         <div className="flex items-center justify-between">
-                          <p className="font-medium">
-                            {item.name}
-                          </p>
-                          <p className="font-medium">
-                            {item.value}
-                          </p>
+                          <p className="font-medium">{item.name}</p>
+                          <p className="font-medium">{item.value}</p>
                         </div>
                         <div className="w-full md:w-2/3">
                           {item.percentageValue && (
@@ -138,12 +118,7 @@ export default function Billing() {
           <form>
             <div className="grid grid-cols-1 gap-x-14 gap-y-8 md:grid-cols-3">
               <div>
-                <h2
-                  id="cost-spend-control"
-                  className="text-lg font-medium"
-                >
-                  Cost spend control
-                </h2>
+                <h2 id="cost-spend-control" className="text-lg font-medium">Cost Spend Control</h2>
                 <p className="mt-1 text-sm text-muted-foreground">
                   Set hard caps for on-demand charges
                 </p>
@@ -156,25 +131,15 @@ export default function Billing() {
                       <div>
                         {isSpendMgmtEnabled ? (
                           <>
-                            <p className="text-sm font-medium">
-                              $280 / $350 (62.2%)
-                            </p>
-                            <Label
-                              htmlFor="spend-mgmt"
-                              className="text-muted-foreground"
-                            >
+                            <p className="text-sm font-medium">$280 / $350 (62.2%)</p>
+                            <Label htmlFor="spend-mgmt" className="text-muted-foreground">
                               Spend management enabled
                             </Label>
                           </>
                         ) : (
                           <>
-                            <p className="text-sm font-medium">
-                              $0 / $0 (0%)
-                            </p>
-                            <Label
-                              htmlFor="spend-mgmt"
-                              className="text-muted-foreground"
-                            >
+                            <p className="text-sm font-medium">$0 / $0 (0%)</p>
+                            <Label htmlFor="spend-mgmt" className="text-muted-foreground">
                               Spend management disabled
                             </Label>
                           </>
@@ -184,9 +149,7 @@ export default function Billing() {
                     <Switch
                       id="spend-mgmt"
                       checked={isSpendMgmtEnabled}
-                      onCheckedChange={() => {
-                        setIsSpendMgmtEnabled(!isSpendMgmtEnabled)
-                      }}
+                      onCheckedChange={() => setIsSpendMgmtEnabled(!isSpendMgmtEnabled)}
                     />
                   </div>
                   <div
@@ -224,9 +187,7 @@ export default function Billing() {
                           />
                         </div>
                         <div className="md:col-span-2">
-                          <Label>
-                            Provide email for notifications
-                          </Label>
+                          <Label>Provide email for notifications</Label>
                           <Input
                             id="email"
                             name="email"
@@ -237,7 +198,7 @@ export default function Billing() {
                         </div>
                       </div>
                       <div className="mt-6 flex justify-end">
-                        <Button>Update</Button>
+                        <Button>Update settings</Button>
                       </div>
                     </div>
                   </div>
@@ -252,12 +213,7 @@ export default function Billing() {
         <section aria-labelledby="add-ons">
           <div className="grid grid-cols-1 gap-x-14 gap-y-8 md:grid-cols-3">
             <div>
-              <h2
-                id="add-ons"
-                className="text-lg font-medium"
-              >
-                Add-ons
-              </h2>
+              <h2 id="add-ons" className="text-lg font-medium">Add-ons</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 Enhance your workspace with additional features
               </p>
@@ -267,37 +223,29 @@ export default function Billing() {
                 <div className="flex items-start justify-between gap-10">
                   <div>
                     <div className="flex items-center gap-2">
-                      <h4 className="text-sm font-medium">
-                        Query super caching
-                      </h4>
-                      <Badge variant="outline">New</Badge>
+                      <h4 className="text-sm font-medium">Query Super Caching</h4>
+                      <Badge variant="outline">• New</Badge>
                     </div>
                     <p className="mt-2 text-sm text-muted-foreground">
                       Improve query performance by caching results in memory.
                       Available in multiple regions.
                     </p>
                   </div>
-                  <Button variant="outline">
-                    Configure
-                  </Button>
+                  <Button variant="outline">Configure</Button>
                 </div>
               </Card>
               <Card className="p-4">
                 <div className="flex items-start justify-between gap-10">
                   <div>
                     <div className="flex items-center gap-2">
-                      <h4 className="text-sm font-medium">
-                        Advanced analytics
-                      </h4>
-                      <Badge variant="outline">Coming soon</Badge>
+                      <h4 className="text-sm font-medium">Advanced Analytics</h4>
+                      <Badge variant="outline">• Coming soon</Badge>
                     </div>
                     <p className="mt-2 text-sm text-muted-foreground">
-                      Get deeper insights with advanced analytics and reporting tools.
+                      Get deeper insights with advanced analytics and reporting tools
                     </p>
                   </div>
-                  <Button variant="outline" disabled>
-                    Configure
-                  </Button>
+                  <Button variant="outline" disabled>Configure</Button>
                 </div>
               </Card>
             </div>
