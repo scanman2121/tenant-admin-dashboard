@@ -810,33 +810,55 @@ export const visitorStatuses: { value: string; label: string; variant: string }[
 
 export const visitors = [
   {
-    checkInTime: "09:30 AM",
-    visitorName: "Sarah Johnson",
-    company: "Acme Corp",
-    hostName: "Michael Chen",
+    id: "V001",
+    checkInTime: "2024-03-19T09:30:00",
+    checkOutTime: "2024-03-19T16:45:00",
+    visitorName: "John Smith",
+    company: "Tech Solutions Inc",
+    hostName: "Sarah Johnson",
     purpose: "Client Meeting",
-    status: "Checked In",
+    status: "checked-out",
+    badgeNumber: "B1001",
+    email: "john.smith@techsolutions.com",
+    phone: "+1 (555) 123-4567"
+  },
+  {
+    id: "V002",
+    checkInTime: "2024-03-19T10:15:00",
     checkOutTime: null,
-    badgeNumber: "V1001",
-  },
-  {
-    checkInTime: "10:15 AM",
-    visitorName: "James Wilson",
-    company: "Tech Solutions",
-    hostName: "Emily Brown",
-    purpose: "Interview",
-    status: "Checked Out",
-    checkOutTime: "11:45 AM",
-    badgeNumber: "V1002",
-  },
-  {
-    checkInTime: "02:00 PM",
     visitorName: "Maria Garcia",
-    company: "Global Services",
-    hostName: "David Kim",
-    purpose: "Vendor Meeting",
-    status: "Expected",
-    checkOutTime: null,
-    badgeNumber: "V1003",
+    company: "Design Co",
+    hostName: "Thomas Palstein",
+    purpose: "Project Review",
+    status: "checked-in",
+    badgeNumber: "B1002",
+    email: "m.garcia@designco.com",
+    phone: "+1 (555) 234-5678"
   },
-]
+  {
+    id: "V003",
+    checkInTime: null,
+    checkOutTime: null,
+    visitorName: "David Lee",
+    company: "Global Innovations",
+    hostName: "Emily Luisa Bernacle",
+    purpose: "Interview",
+    status: "expected",
+    badgeNumber: "B1003",
+    email: "david.lee@globalinnovations.com",
+    phone: "+1 (555) 345-6789"
+  },
+  {
+    id: "V004",
+    checkInTime: null,
+    checkOutTime: null,
+    visitorName: "Rachel Chen",
+    company: "Marketing Pro",
+    hostName: "Aaron Wave",
+    purpose: "Presentation",
+    status: "expected",
+    badgeNumber: "B1004",
+    email: "r.chen@marketingpro.com",
+    phone: "+1 (555) 456-7890"
+  }
+] as const
