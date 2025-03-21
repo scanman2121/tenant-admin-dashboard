@@ -1,26 +1,80 @@
-# Tremor – Dashboard
+# Tenant Admin Dashboard
 
-`Dashboard` is a SaaS application template from [Tremor](https://tremor.so). It's built
-using [`Tremor Raw`](https://raw.tremor.so/docs/getting-started/installation)
-and [Next.js](https://nextjs.org).
+A modern admin dashboard for tenant management built with Next.js, Tailwind CSS, and TypeScript.
 
-## Getting started
+## Features
 
-1. Install the dependencies. We recommend using pnpm. If you want to use `npm`,
-   just replace `pnpm` with `npm`.
+- 🏢 Building Management
+- 👥 Employee Management
+- 🎫 Access Control
+- 📅 Resource Booking
+- 🚗 Parking Management
+- 🛠️ Work Orders
+- 💳 Credits System
+- 🔄 Vendor Management
+- 👋 Visitor Management
+- ⚙️ Settings & Setup
 
-```bash
-pnpm install
+## Tech Stack
+
+- [Next.js 14](https://nextjs.org/) - React Framework
+- [TypeScript](https://www.typescriptlang.org/) - Type Safety
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [Shadcn/ui](https://ui.shadcn.com/) - UI Components
+- [React Icons](https://react-icons.github.io/react-icons/) - Icons
+- [React Select](https://react-select.com/) - Select Components
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ 
+- pnpm (recommended) or npm
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/scanman2121/tenant-admin-dashboard.git
+   cd tenant-admin-dashboard
+   ```
+
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+
+3. Start the development server:
+   ```bash
+   pnpm dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Project Structure
+
+```
+src/
+├── app/                # Next.js app directory
+│   ├── (main)/        # Main application routes
+│   └── layout.tsx     # Root layout
+├── components/        # React components
+│   └── ui/           # UI components
+├── lib/              # Utility functions
+└── styles/           # Global styles
 ```
 
-2. Then, start the development server:
+## Contributing
 
-```bash
-pnpm run dev
-```
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-3. Visit [http://localhost:3000](http://localhost:3000) in your browser to view
-   the template.
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Notes
 
@@ -31,11 +85,6 @@ automatically optimize and load Inter, a custom Google Font.
 This project uses
 [`Tremor Raw`](https://raw.tremor.so/docs/getting-started/installation)
 components for the UI.
-
-## License
-
-This site template is a commercial product and is licensed under the
-[Tremor License](https://blocks.tremor.so/license).
 
 ## Learn more
 
