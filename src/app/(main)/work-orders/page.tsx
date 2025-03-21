@@ -1,18 +1,71 @@
-import { Button } from "@/components/Button"
-import { PageHeader } from "@/components/PageHeader"
-import { Badge } from "@/components/ui/badge"
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
-import { RiAddLine } from "@remixicon/react"
+"use client"
+
+import { DataTable } from "@/components/ui/data-table/DataTable"
+import { Button } from "@tremor/react"
+
+// Define columns for the work orders table
+const workOrderColumns = [
+    {
+        id: "id",
+        header: "ID",
+        accessorKey: "id",
+    },
+    {
+        id: "title",
+        header: "Title",
+        accessorKey: "title",
+    },
+    {
+        id: "status",
+        header: "Status",
+        accessorKey: "status",
+        cell: ({ row }: { row: any }) => {
+            const status = row.getValue("status") as string
+            return (
+                <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${status === "Completed" ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300" :
+                        status === "In Progress" ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300" :
+                            "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300"
+                    }`}>
+                    {status}
+                </span>
+            )
+        }
+    },
+    {
+        id: "priority",
+        header: "Priority",
+        accessorKey: "priority",
+        cell: ({ row }: { row: any }) => {
+            const priority = row.getValue("priority") as string
+            return (
+                <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${priority === "High" ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300" :
+                        priority === "Medium" ? "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300" :
+                            "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
+                    }`}>
+                    {priority}
+                </span>
+            )
+        }
+    },
+    {
+        id: "submittedBy",
+        header: "Submitted by",
+        accessorKey: "submittedBy",
+    },
+    {
+        id: "submittedDate",
+        header: "Submitted date",
+        accessorKey: "submittedDate",
+    },
+    {
+        id: "building",
+        header: "Building",
+        accessorKey: "building",
+    },
+]
 
 // Mock data for work orders
-const workOrders = [
+const mockWorkOrdersData = [
     {
         id: "WO-2024-001",
         title: "Broken AC in Meeting Room 3",
@@ -42,80 +95,33 @@ const workOrders = [
     },
 ]
 
-const getStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
-        case "completed":
-            return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
-        case "in progress":
-            return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300"
-        case "pending":
-            return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
-        default:
-            return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300"
-    }
-}
-
-const getPriorityColor = (priority: string) => {
-    switch (priority.toLowerCase()) {
-        case "high":
-            return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
-        case "medium":
-            return "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300"
-        case "low":
-            return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
-        default:
-            return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300"
-    }
-}
-
 export default function WorkOrdersPage() {
     return (
-        <div className="space-y-6">
-            <PageHeader
-                title="Work orders"
-                customButtons={
-                    <Button className="flex items-center gap-2">
-                        <RiAddLine className="size-5" />
-                        Create new work order
+        <div className="container mx-auto px-4 py-6 lg:px-8 lg:py-8">
+            <div className="flex flex-col gap-6">
+                {/* Header */}
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
+                            Work orders
+                        </h1>
+                        <p className="mt-1 text-sm text-gray-500">
+                            Manage and track maintenance requests
+                        </p>
+                    </div>
+                    <Button
+                        variant="primary"
+                        size="sm"
+                        className="whitespace-nowrap"
+                    >
+                        Create work order
                     </Button>
-                }
-            />
+                </div>
 
-            <div className="rounded-lg border bg-card">
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>ID</TableHead>
-                            <TableHead>Title</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead>Priority</TableHead>
-                            <TableHead>Submitted by</TableHead>
-                            <TableHead>Submitted date</TableHead>
-                            <TableHead>Building</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {workOrders.map((order) => (
-                            <TableRow key={order.id} className="cursor-pointer hover:bg-muted/50">
-                                <TableCell className="font-medium">{order.id}</TableCell>
-                                <TableCell>{order.title}</TableCell>
-                                <TableCell>
-                                    <Badge className={getStatusColor(order.status)} variant="secondary">
-                                        {order.status}
-                                    </Badge>
-                                </TableCell>
-                                <TableCell>
-                                    <Badge className={getPriorityColor(order.priority)} variant="secondary">
-                                        {order.priority}
-                                    </Badge>
-                                </TableCell>
-                                <TableCell>{order.submittedBy}</TableCell>
-                                <TableCell>{order.submittedDate}</TableCell>
-                                <TableCell>{order.building}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                {/* Table */}
+                <div className="rounded-lg border border-gray-200 dark:border-gray-800">
+                    <DataTable columns={workOrderColumns} data={mockWorkOrdersData} />
+                </div>
             </div>
         </div>
     )
