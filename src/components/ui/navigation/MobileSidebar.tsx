@@ -22,7 +22,6 @@ import {
   RiLineChartLine,
   RiMegaphoneLine,
   RiMenuLine,
-  RiParkingLine,
   RiSettings4Line,
   RiStore3Line,
   RiTeamLine,
@@ -44,7 +43,6 @@ const mainNavigation = [
   { name: "Visitors", href: siteConfig.baseLinks.visitors, icon: RiUserAddLine },
   { name: "Access control", href: siteConfig.baseLinks.accessControl, icon: RiDoorLockLine },
   { name: "Resource booking", href: siteConfig.baseLinks.resourceBooking, icon: RiCalendarLine },
-  { name: "Parking", href: siteConfig.baseLinks.parking, icon: RiParkingLine },
   { name: "Work orders", href: siteConfig.baseLinks.workOrders, icon: RiToolsLine },
   { name: "Credits", href: siteConfig.baseLinks.credits, icon: RiCoinLine },
 ] as const
