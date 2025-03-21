@@ -2,7 +2,7 @@
 
 import { cx } from "@/lib/utils";
 import { RiApps2Line, RiArrowRightLine, RiCalendarEventLine, RiCheckLine, RiDoorOpenLine, RiInformationLine, RiMapPinLine, RiSearchLine, RiSettings4Line, RiShoppingBag3Line, RiTeamLine, RiUserAddLine } from "@remixicon/react";
-import { Badge, Button, Card, Grid, Icon, Text, TextInput, Title } from "@tremor/react";
+import { Badge, Button, Card, Grid, Icon, ProgressBar, Text, TextInput, Title } from "@tremor/react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -153,6 +153,11 @@ const upcomingVisitorsAndVendors = [
 export default function MyHqO() {
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Calculate onboarding progress
+  const totalSteps = 3;
+  const completedSteps = 1;
+  const progressPercentage = (completedSteps / totalSteps) * 100;
+
   // Filter activities based on search query only
   const filteredActivities = recentActivityData.filter(activity => {
     const matchesSearch = searchQuery === "" ||
@@ -188,16 +193,28 @@ export default function MyHqO() {
       </h1>
 
       {/* Onboarding Cards */}
-      <section>
-        <Grid numItemsMd={2} numItemsLg={2} className="gap-6">
-          {/* Getting Started Card */}
-          <Card>
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <Title className="text-text-primary">Welcome to PENN 1</Title>
-                <Text className="text-text-secondary mt-1">Here's a checklist to get you started</Text>
+      <section className="space-y-6">
+        {/* Getting Started Card */}
+        <Card className="relative overflow-hidden">
+          {/* Background Pattern */}
+          <div className="absolute right-0 top-0 h-full w-1/3 bg-gradient-to-l from-primary/5 to-transparent" />
+
+          <div className="relative">
+            {/* Header */}
+            <div className="flex items-start gap-6 mb-8">
+              <div className="flex-1">
+                <Title className="text-text-primary text-2xl">Welcome to PENN 1</Title>
+                <Text className="text-text-secondary mt-2">Complete these steps to get started with your new space</Text>
+                <div className="mt-4">
+                  <div className="flex items-center gap-3">
+                    <ProgressBar value={progressPercentage} color="emerald" className="mt-2" />
+                    <Text className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">
+                      {completedSteps}/{totalSteps} completed
+                    </Text>
+                  </div>
+                </div>
               </div>
-              <div className="relative w-20 h-20 rounded-full overflow-hidden">
+              <div className="relative w-24 h-24 rounded-2xl overflow-hidden shadow-lg flex-shrink-0">
                 <Image
                   src="/penn1.jpg"
                   alt="PENN 1 Building"
@@ -207,74 +224,120 @@ export default function MyHqO() {
               </div>
             </div>
 
+            {/* Checklist */}
             <div className="space-y-4">
-              <div className="flex items-center gap-3 p-3 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800">
-                <div className="flex-shrink-0">
+              {/* Completed Step */}
+              <div className="flex items-start gap-4 p-4 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800">
+                <div className="flex-shrink-0 mt-1">
                   <div className="flex items-center justify-center size-8 rounded-full bg-green-500 text-white">
                     <RiCheckLine className="size-5" />
                   </div>
                 </div>
                 <div>
-                  <Text className="font-medium text-gray-900 dark:text-gray-50">Add your contact information</Text>
-                  <Text className="text-sm text-gray-600 dark:text-gray-400">Your contact information has been added, you can always manage this in your profile</Text>
+                  <Text className="font-semibold text-gray-900 dark:text-gray-50">Add your contact information</Text>
+                  <Text className="text-sm text-gray-600 dark:text-gray-400 mt-1">Your contact information has been added, you can always manage this in your profile</Text>
                 </div>
+                <Button variant="light" size="xs" color="green" className="flex-shrink-0 mt-1">
+                  View Profile
+                </Button>
               </div>
 
-              <div className="flex items-center gap-3 p-3 rounded-lg border border-gray-100 dark:border-gray-800">
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800">
-                    <RiSettings4Line className="size-5 text-gray-500 dark:text-gray-400" />
+              {/* Pending Steps */}
+              <div className="flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
+                <div className="flex-shrink-0 mt-1">
+                  <div className="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors">
+                    <RiSettings4Line className="size-5" />
                   </div>
                 </div>
                 <div>
-                  <Text className="font-medium text-gray-900 dark:text-gray-50">Confirm your company information</Text>
-                  <Text className="text-sm text-gray-600 dark:text-gray-400">Basic information like number of employees, domains, logo, etc.</Text>
+                  <Text className="font-semibold text-gray-900 dark:text-gray-50">Confirm your company information</Text>
+                  <Text className="text-sm text-gray-600 dark:text-gray-400 mt-1">Basic information like number of employees, domains, logo, etc.</Text>
                 </div>
+                <Button variant="light" size="xs" className="flex-shrink-0 mt-1">
+                  Start
+                  <RiArrowRightLine className="ml-1 size-4" />
+                </Button>
               </div>
 
-              <div className="flex items-center gap-3 p-3 rounded-lg border border-gray-100 dark:border-gray-800">
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800">
-                    <RiApps2Line className="size-5 text-gray-500 dark:text-gray-400" />
+              <div className="flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
+                <div className="flex-shrink-0 mt-1">
+                  <div className="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors">
+                    <RiApps2Line className="size-5" />
                   </div>
                 </div>
                 <div>
-                  <Text className="font-medium text-gray-900 dark:text-gray-50">Configure your apps</Text>
-                  <Text className="text-sm text-gray-600 dark:text-gray-400">What features should your employees have access to.</Text>
+                  <Text className="font-semibold text-gray-900 dark:text-gray-50">Configure your apps</Text>
+                  <Text className="text-sm text-gray-600 dark:text-gray-400 mt-1">What features should your employees have access to</Text>
                 </div>
-              </div>
-
-              <div className="mt-6">
-                <Button variant="primary" className="w-full sm:w-auto">
-                  Let's go
-                  <RiArrowRightLine className="ml-2 size-4" />
+                <Button variant="light" size="xs" className="flex-shrink-0 mt-1">
+                  Start
+                  <RiArrowRightLine className="ml-1 size-4" />
                 </Button>
               </div>
             </div>
-          </Card>
 
-          {/* Add Administrators Card */}
-          <Card>
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <Title className="text-text-primary">Need to add additional administrators?</Title>
-                <Text className="text-text-secondary mt-1">Add colleagues to manage building settings, add users, manage visitor management, and more.</Text>
-              </div>
-              <div className="flex-shrink-0">
-                <div className="flex items-center justify-center size-12 rounded-lg bg-primary/10 text-primary">
-                  <RiTeamLine className="size-6" />
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <Button variant="light" className="w-full sm:w-auto">
-                Add admin users
-                <RiArrowRightLine className="ml-2 size-4" />
+            {/* Action Button */}
+            <div className="mt-8 flex justify-end">
+              <Button variant="primary" size="lg" className="w-full sm:w-auto">
+                Continue Setup
+                <RiArrowRightLine className="ml-2 size-5" />
               </Button>
             </div>
-          </Card>
-        </Grid>
+          </div>
+        </Card>
+
+        {/* Add Administrators Card */}
+        <Card className="relative overflow-hidden">
+          {/* Background Pattern */}
+          <div className="absolute right-0 top-0 h-full w-1/3 bg-gradient-to-l from-primary/5 to-transparent" />
+
+          <div className="relative flex items-start gap-6">
+            <div className="flex-1">
+              <Title className="text-text-primary text-2xl">Add Team Members</Title>
+              <Text className="text-text-secondary mt-2">Invite your colleagues to help manage your space. They'll be able to:</Text>
+
+              <div className="mt-6 space-y-3">
+                <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary">
+                      <RiSettings4Line className="size-4" />
+                    </div>
+                  </div>
+                  <Text>Manage building settings and configurations</Text>
+                </div>
+
+                <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary">
+                      <RiTeamLine className="size-4" />
+                    </div>
+                  </div>
+                  <Text>Add and manage user accounts</Text>
+                </div>
+
+                <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary">
+                      <RiUserAddLine className="size-4" />
+                    </div>
+                  </div>
+                  <Text>Handle visitor management and access control</Text>
+                </div>
+              </div>
+
+              <div className="mt-8">
+                <Button variant="secondary" size="lg" className="w-full sm:w-auto">
+                  Add admin users
+                  <RiArrowRightLine className="ml-2 size-5" />
+                </Button>
+              </div>
+            </div>
+
+            <div className="hidden sm:flex items-center justify-center size-32 rounded-3xl bg-primary/10 text-primary flex-shrink-0">
+              <RiTeamLine className="size-16" />
+            </div>
+          </div>
+        </Card>
       </section>
 
       {/* Recent Activity Section */}
