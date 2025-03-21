@@ -201,11 +201,11 @@ export default function MyHqO() {
 
           <div className="relative">
             {/* Header */}
-            <div className="flex items-start gap-6 mb-8">
+            <div className="flex items-start gap-6 mb-6">
               <div className="flex-1">
-                <Title className="text-text-primary text-2xl">Welcome to 125 Highland Ave</Title>
-                <Text className="text-text-secondary mt-2">Complete these steps to get started with your new space</Text>
-                <div className="mt-4">
+                <Title className="text-text-primary">Welcome to 125 Highland Ave</Title>
+                <Text className="text-text-secondary mt-1">Complete these steps to get started with your new space</Text>
+                <div className="mt-3">
                   <div className="flex items-center gap-3">
                     <ProgressBar value={progressPercentage} color="emerald" className="mt-2" />
                     <Text className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">
@@ -214,9 +214,9 @@ export default function MyHqO() {
                   </div>
                 </div>
               </div>
-              <div className="relative w-24 h-24 rounded-2xl overflow-hidden shadow-lg flex-shrink-0">
+              <div className="relative w-20 h-20 rounded-xl overflow-hidden shadow-lg flex-shrink-0">
                 <Image
-                  src="/125-highland.jpg"
+                  src="/buildings/125-highland.jpg"
                   alt="125 Highland Ave Building"
                   fill
                   className="object-cover"
@@ -227,58 +227,56 @@ export default function MyHqO() {
             {/* Checklist - Horizontal Layout */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {/* Completed Step */}
-              <div className="flex flex-col p-4 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800">
-                <div className="flex items-center gap-3 mb-3">
+              <div className="flex items-center justify-between p-3 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800">
+                <div className="flex items-center gap-3">
                   <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center size-8 rounded-full bg-green-500 text-white">
-                      <RiCheckLine className="size-5" />
+                    <div className="flex items-center justify-center size-7 rounded-full bg-green-500 text-white">
+                      <RiCheckLine className="size-4" />
                     </div>
                   </div>
-                  <Text className="font-semibold text-gray-900 dark:text-gray-50">Contact Information</Text>
+                  <div>
+                    <Text className="font-medium text-gray-900 dark:text-gray-50">Contact Information</Text>
+                    <Text className="text-xs text-gray-600 dark:text-gray-400">Added to your profile</Text>
+                  </div>
                 </div>
-                <Text className="text-sm text-gray-600 dark:text-gray-400">Your contact information has been added</Text>
-                <div className="mt-auto pt-3">
-                  <Button variant="light" size="xs" color="green" className="inline-flex items-center">
-                    View Profile
-                  </Button>
-                </div>
+                <Button variant="light" size="xs" color="green" className="p-1.5">
+                  <RiArrowRightLine className="size-4" />
+                </Button>
               </div>
 
               {/* Pending Steps */}
-              <div className="flex flex-col p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
-                <div className="flex items-center gap-3 mb-3">
+              <div className="flex items-center justify-between p-3 rounded-lg bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
+                <div className="flex items-center gap-3">
                   <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors">
-                      <RiSettings4Line className="size-5" />
+                    <div className="flex items-center justify-center size-7 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors">
+                      <RiSettings4Line className="size-4" />
                     </div>
                   </div>
-                  <Text className="font-semibold text-gray-900 dark:text-gray-50">Company Details</Text>
+                  <div>
+                    <Text className="font-medium text-gray-900 dark:text-gray-50">Company Details</Text>
+                    <Text className="text-xs text-gray-600 dark:text-gray-400">Add basic information</Text>
+                  </div>
                 </div>
-                <Text className="text-sm text-gray-600 dark:text-gray-400">Add employee count, domains, and logo</Text>
-                <div className="mt-auto pt-3">
-                  <Button variant="light" size="xs" className="inline-flex items-center">
-                    Start
-                    <RiArrowRightLine className="ml-1 size-4" />
-                  </Button>
-                </div>
+                <Button variant="light" size="xs" className="p-1.5">
+                  <RiArrowRightLine className="size-4" />
+                </Button>
               </div>
 
-              <div className="flex flex-col p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
-                <div className="flex items-center gap-3 mb-3">
+              <div className="flex items-center justify-between p-3 rounded-lg bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
+                <div className="flex items-center gap-3">
                   <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors">
-                      <RiApps2Line className="size-5" />
+                    <div className="flex items-center justify-center size-7 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors">
+                      <RiApps2Line className="size-4" />
                     </div>
                   </div>
-                  <Text className="font-semibold text-gray-900 dark:text-gray-50">Configure Apps</Text>
+                  <div>
+                    <Text className="font-medium text-gray-900 dark:text-gray-50">Configure Apps</Text>
+                    <Text className="text-xs text-gray-600 dark:text-gray-400">Set up employee access</Text>
+                  </div>
                 </div>
-                <Text className="text-sm text-gray-600 dark:text-gray-400">Set up employee app access</Text>
-                <div className="mt-auto pt-3">
-                  <Button variant="light" size="xs" className="inline-flex items-center">
-                    Start
-                    <RiArrowRightLine className="ml-1 size-4" />
-                  </Button>
-                </div>
+                <Button variant="light" size="xs" className="p-1.5">
+                  <RiArrowRightLine className="size-4" />
+                </Button>
               </div>
             </div>
           </div>
@@ -291,8 +289,8 @@ export default function MyHqO() {
 
           <div className="relative flex items-start gap-6">
             <div className="flex-1">
-              <Title className="text-text-primary text-2xl">Add Team Members</Title>
-              <Text className="text-text-secondary mt-2">Invite your colleagues to help manage your space. They'll be able to:</Text>
+              <Title className="text-text-primary">Add Team Members</Title>
+              <Text className="text-text-secondary mt-1">Invite your colleagues to help manage your space. They'll be able to:</Text>
 
               <div className="mt-6 space-y-3">
                 <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
@@ -323,12 +321,10 @@ export default function MyHqO() {
                 </div>
               </div>
 
-              <div className="mt-8">
-                <Button variant="secondary" size="md" className="inline-flex items-center">
-                  <span className="flex items-center">
-                    Add admin users
-                    <RiArrowRightLine className="ml-2 size-4" />
-                  </span>
+              <div className="mt-6">
+                <Button variant="secondary" size="sm" className="inline-flex items-center gap-2">
+                  Add admin users
+                  <RiArrowRightLine className="size-4" />
                 </Button>
               </div>
             </div>
@@ -343,7 +339,7 @@ export default function MyHqO() {
       {/* Recent Activity Section */}
       <section>
         <Grid numItemsMd={1} numItemsLg={2} className="gap-6">
-          {/* Activity Stream - Left Column */}
+          {/* Activity Stream Card */}
           <Card>
             <Title className="text-text-primary mb-4">Activity Stream</Title>
 
@@ -441,7 +437,7 @@ export default function MyHqO() {
             )}
           </Card>
 
-          {/* Day View Calendar - Right Column */}
+          {/* Visitors Card */}
           <Card>
             <div className="flex items-center justify-between mb-4">
               <Title className="text-text-primary">Upcoming Visitors & Vendors</Title>
@@ -516,3 +512,4 @@ export default function MyHqO() {
 
 {/* Add extra spacing at the bottom of the page */ }
 <div className="h-24"></div>
+
