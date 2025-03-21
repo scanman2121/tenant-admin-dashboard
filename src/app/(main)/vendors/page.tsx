@@ -4,12 +4,13 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/data-table/DataTable"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Vendor } from "@/data/schema"
 import { RiAddLine } from "@remixicon/react"
+import { Row } from "@tanstack/react-table"
 import Image from "next/image"
 import { useState } from "react"
 
-// Mock data for vendors
-const vendorsData = [
+const vendorsData: Vendor[] = [
     {
         id: "1",
         name: "Maintenance Pro",
@@ -67,15 +68,14 @@ const vendorsData = [
     },
 ]
 
-// Define columns for the vendors table
 const vendorsColumns = [
     {
         accessorKey: "name",
         header: "Vendor name",
-        cell: ({ row }: { row: any }) => {
+        cell: ({ row }: { row: Row<Vendor> }) => {
             const name = row.getValue("name") as string;
-            const logoUrl = row.original.logoUrl as string;
-            const email = row.original.email as string;
+            const logoUrl = row.original.logoUrl;
+            const email = row.original.email;
 
             return (
                 <div className="flex items-center gap-3">
@@ -88,21 +88,24 @@ const vendorsColumns = [
                         />
                     </div>
                     <div>
-                        <div className="font-medium text-gray-900 dark:text-gray-50">
+                        <div className="font-medium">
                             {name}
                         </div>
-                        <div className="hidden text-sm text-gray-500 md:block">
+                        <div className="hidden text-sm text-muted-foreground md:block">
                             {email}
                         </div>
                     </div>
                 </div>
             );
         },
+        meta: {
+            displayName: "Vendor name",
+        },
     },
     {
         accessorKey: "category",
         header: "Category",
-        cell: ({ row }: { row: any }) => {
+        cell: ({ row }: { row: Row<Vendor> }) => {
             const category = row.getValue("category") as string;
             return (
                 <div className="hidden md:block">
@@ -110,11 +113,14 @@ const vendorsColumns = [
                 </div>
             );
         },
+        meta: {
+            displayName: "Category",
+        },
     },
     {
         accessorKey: "contact",
         header: "Contact person",
-        cell: ({ row }: { row: any }) => {
+        cell: ({ row }: { row: Row<Vendor> }) => {
             const contact = row.getValue("contact") as string;
             return (
                 <div className="hidden lg:block">
@@ -122,38 +128,32 @@ const vendorsColumns = [
                 </div>
             );
         },
-    },
-    {
-        accessorKey: "email",
-        header: "Email",
-        cell: ({ row }: { row: any }) => {
-            const email = row.getValue("email") as string;
-            return (
-                <div className="hidden md:block">
-                    {email}
-                </div>
-            );
+        meta: {
+            displayName: "Contact person",
         },
     },
     {
         accessorKey: "phone",
         header: "Phone",
-        cell: ({ row }: { row: any }) => {
+        cell: ({ row }: { row: Row<Vendor> }) => {
             const phone = row.getValue("phone") as string;
             return (
-                <div className="hidden lg:block">
+                <div className="hidden lg:block text-muted-foreground">
                     {phone}
                 </div>
             );
+        },
+        meta: {
+            displayName: "Phone",
         },
     },
     {
         accessorKey: "buildings",
         header: "Buildings",
-        cell: ({ row }: { row: any }) => {
+        cell: ({ row }: { row: Row<Vendor> }) => {
             const buildings = row.getValue("buildings") as string[]
             return (
-                <div className="hidden xl:block">
+                <div className="hidden xl:block text-muted-foreground">
                     {buildings.map((building, index) => (
                         <span key={index} className="inline-block mr-1 last:mr-0">
                             {building}{index < buildings.length - 1 ? ", " : ""}
@@ -162,11 +162,14 @@ const vendorsColumns = [
                 </div>
             )
         },
+        meta: {
+            displayName: "Buildings",
+        },
     },
     {
         accessorKey: "status",
         header: "Status",
-        cell: ({ row }: { row: any }) => {
+        cell: ({ row }: { row: Row<Vendor> }) => {
             const status = row.getValue("status") as "active" | "inactive"
             const variants = {
                 active: "default",
@@ -178,6 +181,24 @@ const vendorsColumns = [
                 </Badge>
             )
         },
+        meta: {
+            displayName: "Status",
+        },
+    },
+]
+
+const tabs = [
+    {
+        value: "all",
+        label: "All vendors",
+    },
+    {
+        value: "active",
+        label: "Active",
+    },
+    {
+        value: "inactive",
+        label: "Inactive",
     },
 ]
 
@@ -186,44 +207,46 @@ export default function Vendors() {
     const [selectedTab, setSelectedTab] = useState("all")
 
     return (
-        <div className="space-y-6">
-            {/* Header */}
+        <div className="flex flex-col gap-8 p-8">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-50">Vendors</h1>
-                    <p className="mt-1 text-sm text-gray-500">Manage your vendors and service providers</p>
+                    <h1 className="text-2xl font-semibold tracking-tight">Vendors</h1>
+                    <p className="text-sm text-muted-foreground">
+                        Manage your vendors and service providers
+                    </p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <Button variant="outline" size="lg">
+                    <Button variant="outline">
                         Browse marketplace
                     </Button>
-                    <Button size="lg">
+                    <Button>
                         <RiAddLine className="mr-1.5 h-5 w-5" />
                         Add vendor
                     </Button>
                 </div>
             </div>
 
-            {/* Tabs */}
-            <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
+            <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
                 <TabsList>
-                    <TabsTrigger value="all">All</TabsTrigger>
-                    <TabsTrigger value="active">Active</TabsTrigger>
-                    <TabsTrigger value="inactive">Inactive</TabsTrigger>
+                    {tabs.map((tab) => (
+                        <TabsTrigger key={tab.value} value={tab.value}>
+                            {tab.label}
+                        </TabsTrigger>
+                    ))}
                 </TabsList>
 
-                <TabsContent value="all">
+                <TabsContent value="all" className="mt-4">
                     <DataTable columns={vendorsColumns} data={data} />
                 </TabsContent>
 
-                <TabsContent value="active">
+                <TabsContent value="active" className="mt-4">
                     <DataTable
                         columns={vendorsColumns}
                         data={data.filter(vendor => vendor.status === "active")}
                     />
                 </TabsContent>
 
-                <TabsContent value="inactive">
+                <TabsContent value="inactive" className="mt-4">
                     <DataTable
                         columns={vendorsColumns}
                         data={data.filter(vendor => vendor.status === "inactive")}

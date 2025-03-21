@@ -68,3 +68,15 @@ export type User = {
   avatarUrl?: string
   initials: string
 }
+
+export type Vendor = {
+  id: string
+  name: string
+  logoUrl: string
+  category: string
+  contact: string
+  email: string
+  phone: string
+  buildings: string[]
+  status: "active" | "inactive"
+}
