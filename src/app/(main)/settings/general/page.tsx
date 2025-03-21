@@ -1,4 +1,6 @@
 "use client"
+
+import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
@@ -12,7 +14,6 @@ import {
 } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { RiExternalLinkLine } from "@remixicon/react"
-import { Button } from "@tremor/react"
 
 import { roles } from "@/data/data"
 
@@ -25,12 +26,12 @@ export default function General() {
             <div>
               <h2
                 id="personal-information"
-                className="text-lg font-medium text-gray-900 dark:text-gray-50"
+                className="text-lg font-medium"
               >
                 Personal information
               </h2>
-              <p className="mt-1 text-sm leading-6 text-gray-500">
-                Manage your personal information and role.
+              <p className="mt-1 text-sm text-muted-foreground">
+                Manage your personal information and role
               </p>
             </div>
             <div className="md:col-span-2">
@@ -42,7 +43,7 @@ export default function General() {
                     id="first-name"
                     name="first-name"
                     autoComplete="given-name"
-                    placeholder="Emma"
+                    placeholder="Enter your first name"
                     className="mt-2"
                   />
                 </div>
@@ -53,7 +54,7 @@ export default function General() {
                     id="last-name"
                     name="last-name"
                     autoComplete="family-name"
-                    placeholder="Stone"
+                    placeholder="Enter your last name"
                     className="mt-2"
                   />
                 </div>
@@ -64,7 +65,7 @@ export default function General() {
                     id="email"
                     name="email"
                     autoComplete="email"
-                    placeholder="emma@acme.com"
+                    placeholder="Enter your email"
                     className="mt-2"
                   />
                 </div>
@@ -75,7 +76,7 @@ export default function General() {
                     id="birthyear"
                     name="year"
                     type="number"
-                    placeholder="1994"
+                    placeholder="Enter your birth year"
                     className="mt-2"
                     min="1900"
                     max={new Date().getFullYear()}
@@ -100,44 +101,46 @@ export default function General() {
                       ))}
                     </SelectContent>
                   </Select>
-                  <p className="mt-2 text-xs text-gray-500">
-                    Roles can only be changed by system admin.
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    Roles can only be changed by system admin
                   </p>
                 </div>
                 <div className="col-span-full mt-6 flex justify-end">
-                  <Button variant="primary" size="sm">Save settings</Button>
+                  <Button>Save settings</Button>
                 </div>
               </div>
             </div>
           </div>
         </form>
       </section>
+
       <Separator />
+
       <section aria-labelledby="notification-settings">
         <form>
           <div className="grid grid-cols-1 gap-x-14 gap-y-8 md:grid-cols-3">
             <div>
               <h2
                 id="notification-settings"
-                className="text-lg font-medium text-gray-900 dark:text-gray-50"
+                className="text-lg font-medium"
               >
                 Notification settings
               </h2>
-              <p className="mt-1 text-sm leading-6 text-gray-500">
-                Configure the types of notifications you want to receive.
+              <p className="mt-1 text-sm text-muted-foreground">
+                Configure the types of notifications you want to receive
               </p>
             </div>
             <div className="md:col-span-2">
               <fieldset>
-                <legend className="text-sm font-medium text-gray-900 dark:text-gray-50">
+                <legend className="text-sm font-medium">
                   Team
                 </legend>
-                <p className="mt-1 text-sm leading-6 text-gray-500">
-                  Configure the types of team alerts you want to receive.
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Configure the types of team alerts you want to receive
                 </p>
                 <ul
                   role="list"
-                  className="mt-4 divide-y divide-gray-200 dark:divide-gray-800"
+                  className="mt-4 divide-y"
                 >
                   <li className="flex items-center gap-x-3 py-3">
                     <Checkbox
@@ -155,15 +158,15 @@ export default function General() {
                 </ul>
               </fieldset>
               <fieldset className="mt-6">
-                <legend className="text-sm font-medium text-gray-900 dark:text-gray-50">
+                <legend className="text-sm font-medium">
                   Usage
                 </legend>
-                <p className="mt-1 text-sm leading-6 text-gray-500">
-                  Configure the types of usage alerts you want to receive.
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Configure the types of usage alerts you want to receive
                 </p>
                 <ul
                   role="list"
-                  className="mt-4 divide-y divide-gray-200 dark:divide-gray-800"
+                  className="mt-4 divide-y"
                 >
                   <li className="flex items-center gap-x-3 py-3">
                     <Checkbox id="api-requests" />
@@ -193,29 +196,31 @@ export default function General() {
                 </ul>
               </fieldset>
               <div className="col-span-full mt-6 flex justify-end">
-                <Button variant="primary" size="sm">Save settings</Button>
+                <Button>Save settings</Button>
               </div>
             </div>
           </div>
         </form>
       </section>
+
       <Separator />
+
       <section aria-labelledby="danger-zone">
         <form>
           <div className="grid grid-cols-1 gap-x-14 gap-y-8 md:grid-cols-3">
             <div>
               <h2
                 id="danger-zone"
-                className="text-lg font-medium text-gray-900 dark:text-gray-50"
+                className="text-lg font-medium"
               >
                 Danger zone
               </h2>
-              <p className="mt-1 text-sm leading-6 text-gray-500">
+              <p className="mt-1 text-sm text-muted-foreground">
                 Manage general workspace. Contact system admin for more
                 information.{" "}
                 <a
                   href="#"
-                  className="inline-flex items-center gap-1 text-blue-600 hover:underline hover:underline-offset-4 dark:text-blue-400"
+                  className="inline-flex items-center gap-1 text-primary hover:underline hover:underline-offset-4"
                 >
                   Learn more
                   <RiExternalLinkLine
@@ -229,10 +234,10 @@ export default function General() {
               <Card className="p-4">
                 <div className="flex items-start justify-between gap-10">
                   <div>
-                    <h4 className="text-sm font-medium text-gray-900 dark:text-gray-50">
+                    <h4 className="text-sm font-medium">
                       Leave workspace
                     </h4>
-                    <p className="mt-2 text-sm leading-6 text-gray-500">
+                    <p className="mt-2 text-sm text-muted-foreground">
                       Revoke your access to this team. Other people you have
                       added to the workspace will remain.
                     </p>
@@ -240,37 +245,30 @@ export default function General() {
                   <Button
                     variant="secondary"
                     size="sm"
-                    className="text-red-600 dark:text-red-500"
+                    className="text-red-600"
                   >
                     Leave
                   </Button>
                 </div>
               </Card>
-              <Card className="overflow-hidden p-0">
-                <div className="flex items-start justify-between gap-10 p-4">
+              <Card className="p-4">
+                <div className="flex items-start justify-between gap-10">
                   <div>
-                    <h4 className="text-sm font-medium text-gray-400 dark:text-gray-600">
+                    <h4 className="text-sm font-medium">
                       Delete workspace
                     </h4>
-                    <p className="mt-2 text-sm leading-6 text-gray-400 dark:text-gray-600">
-                      Revoke your access to this team. Other people you have
-                      added to the workspace will remain.
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      Permanently delete this workspace and all of its contents.
+                      This action cannot be undone.
                     </p>
                   </div>
                   <Button
                     variant="secondary"
                     size="sm"
-                    disabled
-                    className="whitespace-nowrap text-red-600 disabled:text-red-300 disabled:opacity-50 dark:text-red-500 disabled:dark:text-red-700"
+                    className="text-red-600"
                   >
-                    Delete workspace
+                    Delete
                   </Button>
-                </div>
-                <div className="border-t border-gray-200 bg-gray-50 p-4 dark:border-gray-900 dark:bg-gray-900">
-                  <p className="text-sm text-gray-500">
-                    You cannot delete the workspace because you are not the
-                    system admin.
-                  </p>
                 </div>
               </Card>
             </div>

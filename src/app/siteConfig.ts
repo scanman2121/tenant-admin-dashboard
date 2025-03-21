@@ -19,6 +19,7 @@ export const siteConfig = {
     settings: {
       general: "/settings/general",
       billing: "/settings/billing",
+      users: "/settings/users",
     },
     // Communications section (formerly Experience Manager)
     communications: {

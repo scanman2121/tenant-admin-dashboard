@@ -1,13 +1,15 @@
 "use client"
 
 import { siteConfig } from "@/app/siteConfig"
+import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 const navigationSettings = [
-    { name: "General", href: siteConfig.baseLinks.settings.general },
+    { name: "General Settings", href: siteConfig.baseLinks.settings.general },
     { name: "Billing & Usage", href: siteConfig.baseLinks.settings.billing },
+    { name: "User Management", href: siteConfig.baseLinks.settings.users },
 ]
 
 export default function SettingsLayout({
@@ -17,35 +19,33 @@ export default function SettingsLayout({
 }>) {
     const pathname = usePathname()
     return (
-        <div className="container mx-auto px-4 py-6 lg:px-8 lg:py-8">
-            <div className="flex flex-col gap-6">
-                {/* Header */}
-                <div>
-                    <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
-                        Settings & Setup
-                    </h1>
-                    <p className="mt-1 text-sm text-gray-500">
-                        Manage your account settings and preferences
-                    </p>
-                </div>
+        <div className="flex flex-col gap-8 p-8">
+            <div>
+                <h1 className="text-3xl font-semibold tracking-tight">Settings & Setup</h1>
+                <p className="text-sm text-muted-foreground mt-1">
+                    Manage your account settings and preferences
+                </p>
+            </div>
 
-                {/* Tabs */}
-                <Tabs defaultValue={pathname} className="space-y-6">
-                    <TabsList>
-                        {navigationSettings.map((item) => (
-                            <TabsTrigger
-                                key={item.name}
-                                value={item.href}
-                                asChild
-                            >
-                                <Link href={item.href}>{item.name}</Link>
-                            </TabsTrigger>
-                        ))}
-                    </TabsList>
-                </Tabs>
+            <Separator />
 
-                {/* Content */}
-                <div>{children}</div>
+            <Tabs defaultValue={pathname} className="space-y-6">
+                <TabsList className="w-full justify-start">
+                    {navigationSettings.map((item) => (
+                        <TabsTrigger
+                            key={item.name}
+                            value={item.href}
+                            asChild
+                            className="min-w-[120px]"
+                        >
+                            <Link href={item.href}>{item.name}</Link>
+                        </TabsTrigger>
+                    ))}
+                </TabsList>
+            </Tabs>
+
+            <div className="space-y-6">
+                {children}
             </div>
         </div>
     )
