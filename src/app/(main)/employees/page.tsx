@@ -1,8 +1,12 @@
 "use client"
 
-import { Checkbox } from "@/components/Checkbox"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { DataTable } from "@/components/ui/data-table/DataTable"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { roles, users } from "@/data/data"
+import { RiUserAddLine } from "@remixicon/react"
 import { Row, Table } from "@tanstack/react-table"
 import Image from "next/image"
 import { useState } from "react"
@@ -128,11 +132,17 @@ const employeesColumns = [
     {
         accessorKey: "status",
         header: "Status",
-        cell: () => {
+        cell: ({ row }: { row: any }) => {
+            const status = row.getValue("status") as "active" | "inactive" | "invited"
+            const variants = {
+                active: "default",
+                inactive: "secondary",
+                invited: "outline",
+            } as const
             return (
-                <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
-                    Active
-                </span>
+                <Badge variant={variants[status]}>
+                    • {status}
+                </Badge>
             );
         },
         meta: {
@@ -145,5 +155,53 @@ const employeesColumns = [
 
 export default function Employees() {
     const [data] = useState(users)
-    return <DataTable columns={employeesColumns} data={data} />
+    const [selectedTab, setSelectedTab] = useState("all")
+
+    return (
+        <div className="space-y-6">
+            {/* Header */}
+            <div className="flex items-center justify-between">
+                <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-50">Team Members</h1>
+                <Button size="lg" onClick={() => { }}>
+                    <RiUserAddLine className="mr-1.5 h-5 w-5" />
+                    Add team member
+                </Button>
+            </div>
+
+            {/* Tabs */}
+            <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
+                <TabsList>
+                    <TabsTrigger value="all">All</TabsTrigger>
+                    <TabsTrigger value="active">Active</TabsTrigger>
+                    <TabsTrigger value="inactive">Inactive</TabsTrigger>
+                    <TabsTrigger value="invited">Invited</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="all">
+                    <DataTable columns={employeesColumns} data={data} />
+                </TabsContent>
+
+                <TabsContent value="active">
+                    <DataTable
+                        columns={employeesColumns}
+                        data={data.filter(user => user.status === "active")}
+                    />
+                </TabsContent>
+
+                <TabsContent value="inactive">
+                    <DataTable
+                        columns={employeesColumns}
+                        data={data.filter(user => user.status === "inactive")}
+                    />
+                </TabsContent>
+
+                <TabsContent value="invited">
+                    <DataTable
+                        columns={employeesColumns}
+                        data={data.filter(user => user.status === "invited")}
+                    />
+                </TabsContent>
+            </Tabs>
+        </div>
+    )
 } 
