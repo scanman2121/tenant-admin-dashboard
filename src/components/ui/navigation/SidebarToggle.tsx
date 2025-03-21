@@ -7,12 +7,12 @@ import { RiMenuFoldLine, RiMenuUnfoldLine } from "@remixicon/react"
 import { useContext } from "react"
 
 export function SidebarToggle() {
-    const { isCollapsed, toggleCollapsed } = useContext(SidebarContext)
+    const { isCollapsed, setIsCollapsed } = useContext(SidebarContext)
 
     return (
         <Button
             variant="ghost"
-            onClick={toggleCollapsed}
+            onClick={() => setIsCollapsed(!isCollapsed)}
             className={cx(
                 "flex items-center justify-center rounded-md p-1.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 hover:dark:text-gray-50 hover:dark:bg-gray-900",
                 focusRing,
