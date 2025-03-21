@@ -1,7 +1,6 @@
 "use client"
 
 import { CommunicationsTab } from "@/components/ui/communications/CommunicationsTab"
-import { FloatingActionBar } from "@/components/ui/navigation/FloatingActionBar"
 import { Header } from "@/components/ui/navigation/Header"
 import { Sidebar } from "@/components/ui/navigation/Sidebar"
 import { createContext, useContext, useEffect, useState } from "react"
@@ -55,7 +54,6 @@ export default function MainLayout({
             </div>
           </main>
           <CommunicationsTab />
-          <FloatingActionBar />
         </div>
       </div>
     </SidebarContext.Provider>
