@@ -97,27 +97,27 @@ export default function AccessControl() {
             <div className="flex flex-col gap-6">
                 {/* Header */}
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-6">
-                        <div>
-                            <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
-                                Access control
-                            </h1>
-                            <p className="mt-1 text-sm text-gray-500">
-                                Manage credentials and access points
-                            </p>
-                        </div>
-                        <Text className="text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full">
+                    <div>
+                        <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
+                            Access control
+                        </h1>
+                        <p className="mt-1 text-sm text-gray-500">
+                            Manage credentials and access points
+                        </p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <Text className="text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full whitespace-nowrap">
                             {dashboardMetrics.availableCredentials} credentials available
                         </Text>
+                        <Button
+                            variant="primary"
+                            size="sm"
+                            className="inline-flex items-center gap-1.5 whitespace-nowrap"
+                        >
+                            <RiAddLine className="size-4" />
+                            <span>Assign credentials</span>
+                        </Button>
                     </div>
-                    <Button
-                        variant="primary"
-                        size="sm"
-                        className="inline-flex items-center gap-2"
-                    >
-                        <RiAddLine className="size-4" />
-                        Assign credentials
-                    </Button>
                 </div>
 
                 {/* Tabs */}
