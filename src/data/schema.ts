@@ -95,3 +95,22 @@ export type WorkOrder = {
   submittedDate: string
   building: string
 }
+
+export type BuildingStatus = "active" | "inactive" | "maintenance"
+export type BuildingType = "office" | "mixed-use" | "residential" | "retail"
+
+export interface Building {
+  id: string
+  name: string
+  imageUrl: string
+  location: string
+  type: BuildingType
+  floors: number
+  tenants: number
+  status: BuildingStatus
+  lastUpdated: string
+  description?: string
+  amenities?: string[]
+  totalSquareFeet?: number
+  yearBuilt?: number
+}
