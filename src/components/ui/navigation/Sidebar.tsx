@@ -10,7 +10,6 @@ import {
   RiCoinLine,
   RiDoorLockLine,
   RiMegaphoneLine,
-  RiParkingLine,
   RiSettings4Line,
   RiStore3Line,
   RiTeamLine,
@@ -308,32 +307,6 @@ export function Sidebar() {
                         aria-hidden="true"
                       />
                       {!isCollapsed && <span>Resource booking</span>}
-                    </Link>
-                  </li>
-
-                  {/* Parking */}
-                  <li>
-                    <Link
-                      href={siteConfig.baseLinks.parking}
-                      className={cx(
-                        "group flex items-center gap-x-3 rounded-md py-2 text-[13px] transition",
-                        isCollapsed ? "px-2 justify-center" : "px-3",
-                        isActive(siteConfig.baseLinks.parking)
-                          ? "bg-gray-100 dark:bg-gray-800 text-primary dark:text-primary-400 shadow-sm mx-1"
-                          : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
-                        focusRing,
-                      )}
-                    >
-                      <RiParkingLine
-                        className={cx(
-                          "size-4 shrink-0",
-                          isActive(siteConfig.baseLinks.parking)
-                            ? "text-primary dark:text-primary-400"
-                            : "text-[#696E72] group-hover:text-gray-500 dark:group-hover:text-gray-400",
-                        )}
-                        aria-hidden="true"
-                      />
-                      {!isCollapsed && <span>Parking</span>}
                     </Link>
                   </li>
 
