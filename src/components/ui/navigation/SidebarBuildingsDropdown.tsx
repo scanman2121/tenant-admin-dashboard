@@ -9,6 +9,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/Dropdown"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { cx, focusInput } from "@/lib/utils"
 import { RiBuildingLine, RiExpandUpDownLine } from "@remixicon/react"
 import Image from "next/image"
@@ -136,96 +142,118 @@ export const BuildingsDropdownDesktop = () => {
         >
           {/* Mobile trigger (compact) */}
           <div className="lg:hidden">
-            <DropdownMenuTrigger asChild>
-              <button
-                className={cx(
-                  "inline-flex items-center gap-x-1 rounded-md border border-gray-300 bg-white p-1.5 text-sm shadow-sm transition-all hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-950 hover:dark:bg-gray-900",
-                  focusInput,
-                )}
-                ref={dropdownTriggerRef}
-              >
-                <div className="flex shrink-0 items-center">
-                  {isPortfolioView ? (
-                    <span
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <DropdownMenuTrigger asChild>
+                    <button
                       className={cx(
-                        "flex aspect-square size-6 items-center justify-center rounded bg-primary p-1 text-xs font-medium text-white dark:bg-primary-400",
-                        isAnimating ? "opacity-50 transition-opacity duration-300" : ""
+                        "inline-flex items-center gap-x-1 rounded-md border border-gray-300 bg-white p-1.5 text-sm shadow-sm transition-all hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-950 hover:dark:bg-gray-900",
+                        focusInput,
                       )}
-                      aria-hidden="true"
+                      ref={dropdownTriggerRef}
                     >
-                      <RiBuildingLine className="size-4" />
-                    </span>
-                  ) : (
-                    <div className={cx(
-                      "relative size-6 overflow-hidden rounded",
-                      isAnimating ? "opacity-50 transition-opacity duration-300" : ""
-                    )}>
-                      <Image
-                        src={selectedBuilding.imageUrl}
-                        alt={selectedBuilding.name}
-                        fill
-                        className="object-cover"
+                      <div className="flex shrink-0 items-center">
+                        {isPortfolioView ? (
+                          <span
+                            className={cx(
+                              "flex aspect-square size-6 items-center justify-center rounded bg-primary p-1 text-xs font-medium text-white dark:bg-primary-400",
+                              isAnimating ? "opacity-50 transition-opacity duration-300" : ""
+                            )}
+                            aria-hidden="true"
+                          >
+                            <RiBuildingLine className="size-4" />
+                          </span>
+                        ) : (
+                          <div className={cx(
+                            "relative size-6 overflow-hidden rounded",
+                            isAnimating ? "opacity-50 transition-opacity duration-300" : ""
+                          )}>
+                            <Image
+                              src={selectedBuilding.imageUrl}
+                              alt={selectedBuilding.name}
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                        )}
+                      </div>
+                      <RiExpandUpDownLine
+                        className="size-4 shrink-0 text-gray-500"
+                        aria-hidden="true"
                       />
-                    </div>
-                  )}
-                </div>
-                <RiExpandUpDownLine
-                  className="size-4 shrink-0 text-gray-500"
-                  aria-hidden="true"
-                />
-                <span className="sr-only">
-                  {isPortfolioView ? "All buildings" : selectedBuilding.name}
-                </span>
-              </button>
-            </DropdownMenuTrigger>
+                      <span className="sr-only">
+                        {isPortfolioView ? "All buildings" : selectedBuilding.name}
+                      </span>
+                    </button>
+                  </DropdownMenuTrigger>
+                </TooltipTrigger>
+                <TooltipContent>
+                  {portfolioAllowed
+                    ? `Portfolio view is available for ${pageName}`
+                    : `Portfolio view is not available for ${pageName}`}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
 
           {/* Desktop trigger (full) */}
           <div className="hidden lg:block">
-            <DropdownMenuTrigger asChild>
-              <button
-                className={cx(
-                  "flex w-full items-center gap-x-2.5 rounded-md border border-gray-300 bg-white p-1.5 text-sm shadow-sm transition-all hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-950 hover:dark:bg-gray-900",
-                  focusInput,
-                )}
-                ref={dropdownTriggerRef}
-              >
-                <div className="flex shrink-0 items-center gap-x-2.5">
-                  {isPortfolioView ? (
-                    <span
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <DropdownMenuTrigger asChild>
+                    <button
                       className={cx(
-                        "flex aspect-square size-6 items-center justify-center rounded bg-primary p-1 text-xs font-medium text-white dark:bg-primary-400",
-                        isAnimating ? "opacity-50 transition-opacity duration-300" : ""
+                        "flex w-full items-center gap-x-2.5 rounded-md border border-gray-300 bg-white p-1.5 text-sm shadow-sm transition-all hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-950 hover:dark:bg-gray-900",
+                        focusInput,
                       )}
-                      aria-hidden="true"
+                      ref={dropdownTriggerRef}
                     >
-                      <RiBuildingLine className="size-4" />
-                    </span>
-                  ) : (
-                    <div className={cx(
-                      "relative size-6 overflow-hidden rounded",
-                      isAnimating ? "opacity-50 transition-opacity duration-300" : ""
-                    )}>
-                      <Image
-                        src={selectedBuilding.imageUrl}
-                        alt={selectedBuilding.name}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  )}
-                </div>
-                <div className="flex min-w-0 flex-1 items-center justify-between gap-x-2">
-                  <p className="truncate text-sm font-medium text-gray-900 dark:text-gray-50">
-                    {isPortfolioView ? "All buildings" : selectedBuilding.name}
-                  </p>
-                  <RiExpandUpDownLine
-                    className="size-4 shrink-0 text-gray-500"
-                    aria-hidden="true"
-                  />
-                </div>
-              </button>
-            </DropdownMenuTrigger>
+                      <div className="flex shrink-0 items-center gap-x-2.5">
+                        {isPortfolioView ? (
+                          <span
+                            className={cx(
+                              "flex aspect-square size-6 items-center justify-center rounded bg-primary p-1 text-xs font-medium text-white dark:bg-primary-400",
+                              isAnimating ? "opacity-50 transition-opacity duration-300" : ""
+                            )}
+                            aria-hidden="true"
+                          >
+                            <RiBuildingLine className="size-4" />
+                          </span>
+                        ) : (
+                          <div className={cx(
+                            "relative size-6 overflow-hidden rounded",
+                            isAnimating ? "opacity-50 transition-opacity duration-300" : ""
+                          )}>
+                            <Image
+                              src={selectedBuilding.imageUrl}
+                              alt={selectedBuilding.name}
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex min-w-0 flex-1 items-center justify-between gap-x-2">
+                        <p className="truncate text-sm font-medium text-gray-900 dark:text-gray-50">
+                          {isPortfolioView ? "All buildings" : selectedBuilding.name}
+                        </p>
+                        <RiExpandUpDownLine
+                          className="size-4 shrink-0 text-gray-500"
+                          aria-hidden="true"
+                        />
+                      </div>
+                    </button>
+                  </DropdownMenuTrigger>
+                </TooltipTrigger>
+                <TooltipContent>
+                  {portfolioAllowed
+                    ? `Portfolio view is available for ${pageName}`
+                    : `Portfolio view is not available for ${pageName}`}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
 
           {/* Dropdown content (shared between mobile and desktop) */}
