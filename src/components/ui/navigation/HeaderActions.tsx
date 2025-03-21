@@ -10,7 +10,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { RiNotification3Line, RiSparkling2Line } from "@remixicon/react"
+import { RiMoonLine, RiNotification3Line, RiSparkling2Line, RiSunLine } from "@remixicon/react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import { AIAssistantDrawer } from "../ai/AIAssistantDrawer"
@@ -119,7 +119,12 @@ export function HeaderActions() {
                     size="sm"
                     onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                 >
-                    <RiSparkling2Line className="size-5" aria-hidden="true" />
+                    {theme === "dark" ? (
+                        <RiSunLine className="size-5" aria-hidden="true" />
+                    ) : (
+                        <RiMoonLine className="size-5" aria-hidden="true" />
+                    )}
+                    <span className="sr-only">Toggle theme</span>
                 </Button>
             </div>
 

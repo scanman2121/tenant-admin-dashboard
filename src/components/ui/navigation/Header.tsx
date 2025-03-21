@@ -2,7 +2,6 @@
 
 import { cx } from "@/lib/utils"
 import { useEffect, useState } from "react"
-import { FloatingActionBar } from "./FloatingActionBar"
 import { HeaderActions } from "./HeaderActions"
 import { BuildingsDropdownDesktop } from "./SidebarBuildingsDropdown"
 import { SidebarToggle } from "./SidebarToggle"
@@ -13,19 +12,19 @@ export function Header() {
 
     // Check if screen is mobile (under 1024px)
     useEffect(() => {
-        const checkScreenSize = () => {
+        const checkIfMobile = () => {
             setIsMobile(window.innerWidth < 1024)
         }
 
         // Initial check
-        checkScreenSize()
+        checkIfMobile()
 
         // Add event listener for window resize
-        window.addEventListener('resize', checkScreenSize)
+        window.addEventListener('resize', checkIfMobile)
 
         // Cleanup
         return () => {
-            window.removeEventListener('resize', checkScreenSize)
+            window.removeEventListener('resize', checkIfMobile)
         }
     }, [])
 
@@ -60,9 +59,6 @@ export function Header() {
                 </div>
             </div>
             <HeaderActions />
-
-            {/* Floating Action Bar for Mobile */}
-            {isMobile && <FloatingActionBar />}
         </header>
     )
 } 
