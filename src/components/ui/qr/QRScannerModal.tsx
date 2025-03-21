@@ -8,9 +8,10 @@ import { useEffect, useRef, useState } from "react"
 interface QRScannerModalProps {
     isOpen: boolean
     onClose: () => void
+    isDemoMode: boolean
 }
 
-export function QRScannerModal({ isOpen, onClose }: QRScannerModalProps) {
+export function QRScannerModal({ isOpen, onClose, isDemoMode }: QRScannerModalProps) {
     const router = useRouter()
     const [error, setError] = useState<string | null>(null)
     const [permissionGranted, setPermissionGranted] = useState(false)
@@ -168,6 +169,12 @@ export function QRScannerModal({ isOpen, onClose }: QRScannerModalProps) {
     const handleRescan = () => {
         setScannedUrl(null)
     }
+
+    useEffect(() => {
+        if (isOpen && isDemoMode) {
+            simulateQrDetection();
+        }
+    }, [isOpen, isDemoMode, simulateQrDetection]);
 
     return (
         <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>

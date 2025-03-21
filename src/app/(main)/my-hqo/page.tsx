@@ -3,6 +3,7 @@
 import { cx } from "@/lib/utils";
 import { RiCalendarEventLine, RiDoorOpenLine, RiFilterLine, RiInformationLine, RiMapPinLine, RiSearchLine, RiShoppingBag3Line, RiUserAddLine } from "@remixicon/react";
 import { Badge, Button, Card, Grid, Icon, Select, SelectItem, Text, TextInput, Title } from "@tremor/react";
+import Image from "next/image";
 import { useState } from "react";
 
 // Type definitions
@@ -408,9 +409,11 @@ export default function MyHqO() {
                           )}></div>
 
                           {/* User avatar */}
-                          <img
+                          <Image
                             src={activity.user.avatar}
                             alt={activity.user.name}
+                            width={40}
+                            height={40}
                             className="w-10 h-10 rounded-full object-cover border-2 border-white dark:border-gray-900 z-10"
                           />
 
@@ -506,10 +509,12 @@ export default function MyHqO() {
                       : "border-amber-100 bg-amber-50 dark:border-amber-800 dark:bg-amber-900/20"
                   )}
                 >
-                  <img
+                  <Image
                     src={person.avatar}
                     alt={person.name}
-                    className="w-10 h-10 rounded-full object-cover"
+                    width={64}
+                    height={64}
+                    className="h-16 w-16 rounded-lg object-cover"
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-start">

@@ -1,16 +1,18 @@
-import { cx, focusRing } from "@/lib/utils"
+import { cn, focusRing } from "@/lib/utils"
+import { Slot } from "@radix-ui/react-slot"
 import { ButtonHTMLAttributes, forwardRef } from "react"
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outline" | "ghost"
   size?: "sm" | "md" | "lg"
   isLoading?: boolean
+  asChild?: boolean
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "primary", size = "md", isLoading, children, disabled, ...props }, ref) => {
+  ({ className, variant = "primary", size = "md", isLoading, children, disabled, asChild = false, ...props }, ref) => {
     const baseStyles = "inline-flex items-center justify-center font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-    
+
     const variants = {
       primary: "bg-primary text-white hover:bg-primary/90",
       secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-50 dark:hover:bg-gray-700",
@@ -24,10 +26,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       lg: "text-base px-6 py-3 rounded-lg"
     }
 
+    const Comp = asChild ? Slot : "button"
+
     return (
-      <button
+      <Comp
         ref={ref}
-        className={cx(
+        className={cn(
           baseStyles,
           variants[variant],
           sizes[size],
@@ -64,7 +68,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ) : (
           children
         )}
-      </button>
+      </Comp>
     )
   }
 )
+
+Button.displayName = "Button"
