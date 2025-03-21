@@ -5,63 +5,6 @@ import { RiAddLine, RiDoorLockLine, RiKey2Line, RiTeamLine } from "@remixicon/re
 import { Button, Card, Grid, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, Title } from "@tremor/react"
 import { useState } from "react"
 
-// Define columns for the access control table
-const accessControlColumns = [
-    {
-        id: "name",
-        header: "Name",
-        accessorKey: "name",
-    },
-    {
-        id: "type",
-        header: "Type",
-        accessorKey: "type",
-    },
-    {
-        id: "location",
-        header: "Location",
-        accessorKey: "location",
-    },
-    {
-        id: "status",
-        header: "Status",
-        accessorKey: "status",
-        cell: ({ row }: { row: any }) => {
-            const status = row.getValue("status") as string
-            return (
-                <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
-                    {status}
-                </span>
-            )
-        }
-    }
-]
-
-// Mock data for access control
-const mockAccessControlData = [
-    {
-        id: "1",
-        name: "Main Entrance",
-        type: "Door",
-        location: "Ground Floor",
-        status: "Active",
-    },
-    {
-        id: "2",
-        name: "Parking Gate",
-        type: "Gate",
-        location: "Basement",
-        status: "Active",
-    },
-    {
-        id: "3",
-        name: "Office Area",
-        type: "Door",
-        location: "2nd Floor",
-        status: "Active",
-    },
-]
-
 // Define columns for the credentials table
 const credentialsColumns = [
     {
@@ -147,7 +90,6 @@ const dashboardMetrics = {
 }
 
 export default function AccessControl() {
-    const [data] = useState(mockAccessControlData)
     const [selectedTab, setSelectedTab] = useState(0)
 
     return (
