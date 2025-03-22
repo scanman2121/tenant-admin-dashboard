@@ -9,15 +9,6 @@ import { useDebouncedCallback } from "use-debounce"
 import { DataTableFilter } from "./DataTableFilter"
 import { ViewOptions } from "./DataTableViewOptions"
 
-interface ColumnMeta {
-  displayName: string
-  className?: string
-  filterOptions?: {
-    label: string
-    value: string
-  }[]
-}
-
 interface FilterbarProps<TData> {
   table: Table<TData>
 }
