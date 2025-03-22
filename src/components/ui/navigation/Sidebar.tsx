@@ -164,7 +164,7 @@ export function Sidebar() {
                     </Link>
                   </li>
 
-                  {/* Users */}
+                  {/* Employees */}
                   <li>
                     <Link
                       href={siteConfig.baseLinks.employees}
@@ -187,6 +187,32 @@ export function Sidebar() {
                         aria-hidden="true"
                       />
                       {!isCollapsed && <span>Employees</span>}
+                    </Link>
+                  </li>
+
+                  {/* Access Control */}
+                  <li>
+                    <Link
+                      href={siteConfig.baseLinks.accessControl}
+                      className={cx(
+                        "group flex items-center gap-x-3 rounded-md py-2 text-[13px] transition",
+                        isCollapsed ? "px-2 justify-center" : "px-3",
+                        isActive(siteConfig.baseLinks.accessControl)
+                          ? "bg-gray-100 dark:bg-gray-800 text-primary dark:text-primary-400 shadow-sm mx-1"
+                          : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
+                        focusRing,
+                      )}
+                    >
+                      <RiDoorLockLine
+                        className={cx(
+                          "size-4 shrink-0",
+                          isActive(siteConfig.baseLinks.accessControl)
+                            ? "text-primary dark:text-primary-400"
+                            : "text-[#696E72] group-hover:text-gray-500 dark:group-hover:text-gray-400",
+                        )}
+                        aria-hidden="true"
+                      />
+                      {!isCollapsed && <span>Access control</span>}
                     </Link>
                   </li>
 
@@ -239,32 +265,6 @@ export function Sidebar() {
                         aria-hidden="true"
                       />
                       {!isCollapsed && <span>Visitors</span>}
-                    </Link>
-                  </li>
-
-                  {/* Access Control */}
-                  <li>
-                    <Link
-                      href={siteConfig.baseLinks.accessControl}
-                      className={cx(
-                        "group flex items-center gap-x-3 rounded-md py-2 text-[13px] transition",
-                        isCollapsed ? "px-2 justify-center" : "px-3",
-                        isActive(siteConfig.baseLinks.accessControl)
-                          ? "bg-gray-100 dark:bg-gray-800 text-primary dark:text-primary-400 shadow-sm mx-1"
-                          : "text-[#696E72] hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 hover:bg-gray-50 hover:dark:bg-gray-900",
-                        focusRing,
-                      )}
-                    >
-                      <RiDoorLockLine
-                        className={cx(
-                          "size-4 shrink-0",
-                          isActive(siteConfig.baseLinks.accessControl)
-                            ? "text-primary dark:text-primary-400"
-                            : "text-[#696E72] group-hover:text-gray-500 dark:group-hover:text-gray-400",
-                        )}
-                        aria-hidden="true"
-                      />
-                      {!isCollapsed && <span>Access control</span>}
                     </Link>
                   </li>
 

@@ -1,99 +1,183 @@
 "use client"
 
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/data-table/DataTable"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { DataTableColumnHeader } from "@/components/ui/data-table/DataTableColumnHeader"
 import { RiAddLine, RiDoorLockLine, RiKey2Line, RiTeamLine } from "@remixicon/react"
+import { ColumnDef, createColumnHelper } from "@tanstack/react-table"
 import { Card, Grid, Text, Title } from "@tremor/react"
-import { useState } from "react"
 
-// Define columns for the credentials table
-const credentialsColumns = [
-    {
-        id: "name",
-        header: "Name",
-        accessorKey: "name",
-    },
-    {
-        id: "type",
-        header: "Type",
-        accessorKey: "type",
-    },
-    {
-        id: "assignedTo",
-        header: "Assigned to",
-        accessorKey: "assignedTo",
-    },
-    {
-        id: "location",
-        header: "Location",
-        accessorKey: "location",
-    },
-    {
-        id: "status",
-        header: "Status",
-        accessorKey: "status",
-        cell: ({ row }: { row: any }) => {
-            const status = row.getValue("status") as string
-            return (
-                <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${status === "Active" ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300" :
-                    status === "Inactive" ? "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300" :
-                        "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300"
-                    }`}>
-                    {status}
-                </span>
-            )
-        }
-    }
-]
-
-// Mock data for credentials
-const mockCredentialsData = [
-    {
-        id: "1",
-        name: "Key Card #A1234",
-        type: "Key Card",
-        assignedTo: "John Smith",
-        location: "All Access",
-        status: "Active",
-    },
-    {
-        id: "2",
-        name: "Mobile Pass #M5678",
-        type: "Mobile",
-        assignedTo: "Sarah Johnson",
-        location: "Main Entrance, Office Area",
-        status: "Active",
-    },
-    {
-        id: "3",
-        name: "Key Fob #F9012",
-        type: "Key Fob",
-        assignedTo: "-",
-        location: "Parking Gate",
-        status: "Inactive",
-    },
-    {
-        id: "4",
-        name: "Key Card #A5678",
-        type: "Key Card",
-        assignedTo: "Emily Davis",
-        location: "Limited Access",
-        status: "Pending",
-    },
-]
-
-// Mock data for dashboard metrics
-const dashboardMetrics = {
-    totalCredentials: 50,
-    availableCredentials: 12,
-    activeUsers: 38,
-    accessPoints: 15,
+interface AccessControl {
+    user: string
+    userStatus: string
+    lastScan: string
+    activationDate: string
+    credentialStatus: string
+    credential: string
 }
 
-export default function AccessControl() {
-    const [selectedTab, setSelectedTab] = useState("all")
+// Mock data for access control
+const mockAccessData: AccessControl[] = [
+    {
+        user: "John Doe",
+        userStatus: "Active",
+        lastScan: "2024-03-15 10:30 AM",
+        activationDate: "2024-01-01",
+        credentialStatus: "Activated",
+        credential: "CARD-001",
+    },
+    {
+        user: "Jane Smith",
+        userStatus: "Deactivated",
+        lastScan: "2024-03-14 2:15 PM",
+        activationDate: "2024-01-02",
+        credentialStatus: "Deactivated",
+        credential: "CARD-002",
+    },
+    {
+        user: "Bob Johnson",
+        userStatus: "Active",
+        lastScan: "2024-03-15 9:45 AM",
+        activationDate: "2024-01-03",
+        credentialStatus: "Activated",
+        credential: "CARD-003",
+    },
+]
 
+const getUserStatusBadge = (status: string) => {
+    switch (status) {
+        case "Active":
+            return <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">Active</Badge>
+        case "Deactivated":
+            return <Badge variant="outline" className="bg-orange-50 text-orange-700 border-orange-200">Deactivated</Badge>
+        case "Deleted":
+            return <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">Deleted</Badge>
+        case "Invited":
+            return <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">Invited</Badge>
+        default:
+            return <Badge variant="outline">{status}</Badge>
+    }
+}
+
+const getCredentialStatusBadge = (status: string) => {
+    switch (status) {
+        case "Activated":
+            return <span className="text-gray-700">Activated</span>
+        case "Deactivated":
+            return <span className="text-gray-700">Deactivated</span>
+        case "Revoked":
+            return <span className="text-red-600">Revoked</span>
+        case "Generate":
+            return <span className="text-blue-600 cursor-pointer">Generate</span>
+        case "Approve":
+            return <span className="text-gray-700">Approve</span>
+        case "Invited":
+            return <span className="text-gray-700">Invited</span>
+        default:
+            return <span className="text-gray-700">{status}</span>
+    }
+}
+
+// Filter options
+const userStatusOptions = [
+    { label: "Active", value: "Active" },
+    { label: "Deactivated", value: "Deactivated" },
+    { label: "Deleted", value: "Deleted" },
+    { label: "Invited", value: "Invited" },
+]
+
+const credentialStatusOptions = [
+    { label: "Activated", value: "Activated" },
+    { label: "Deactivated", value: "Deactivated" },
+    { label: "Revoked", value: "Revoked" },
+    { label: "Generate", value: "Generate" },
+    { label: "Approve", value: "Approve" },
+    { label: "Invited", value: "Invited" },
+]
+
+const columnHelper = createColumnHelper<AccessControl>()
+
+const accessControlColumns = [
+    columnHelper.accessor("user", {
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="User" />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        filterFn: "includesString" as const,
+        meta: {
+            className: "text-left",
+            displayName: "User",
+        },
+    }),
+    columnHelper.accessor("userStatus", {
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="User status" />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        filterFn: "equals" as const,
+        meta: {
+            className: "text-left",
+            displayName: "User Status",
+            filterOptions: userStatusOptions,
+        },
+        cell: ({ row }) => getUserStatusBadge(row.getValue("userStatus")),
+    }),
+    columnHelper.accessor("lastScan", {
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Last scan" />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        filterFn: "includesString" as const,
+        meta: {
+            className: "text-left",
+            displayName: "Last Scan",
+        },
+    }),
+    columnHelper.accessor("activationDate", {
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Activation date" />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        filterFn: "includesString" as const,
+        meta: {
+            className: "text-left",
+            displayName: "Activation Date",
+        },
+    }),
+    columnHelper.accessor("credentialStatus", {
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Credential status" />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        filterFn: "equals" as const,
+        meta: {
+            className: "text-left",
+            displayName: "Credential Status",
+            filterOptions: credentialStatusOptions,
+        },
+        cell: ({ row }) => getCredentialStatusBadge(row.getValue("credentialStatus")),
+    }),
+    columnHelper.accessor("credential", {
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Credential" />
+        ),
+        enableSorting: true,
+        enableColumnFilter: true,
+        filterFn: "includesString" as const,
+        meta: {
+            className: "text-left",
+            displayName: "Credential",
+        },
+    }),
+] as ColumnDef<AccessControl>[]
+
+export default function AccessControl() {
     return (
         <div className="container mx-auto px-4 py-6 lg:px-8 lg:py-8">
             <div className="flex flex-col gap-8">
@@ -109,7 +193,7 @@ export default function AccessControl() {
                     </div>
                     <div className="flex items-center gap-3">
                         <Text className="text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full whitespace-nowrap">
-                            {dashboardMetrics.availableCredentials} credentials available
+                            {mockAccessData.filter(item => item.credential).length} credentials available
                         </Text>
                         <Button size="md" className="inline-flex items-center">
                             <RiAddLine className="size-4 shrink-0 mr-1.5" aria-hidden="true" />
@@ -117,39 +201,6 @@ export default function AccessControl() {
                         </Button>
                     </div>
                 </div>
-
-                {/* Tabs */}
-                <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
-                    <TabsList>
-                        <TabsTrigger value="all">All access points</TabsTrigger>
-                        <TabsTrigger value="active">Active</TabsTrigger>
-                        <TabsTrigger value="inactive">Inactive</TabsTrigger>
-                    </TabsList>
-
-                    <TabsContent value="all">
-                        <div className="rounded-lg border border-gray-200 dark:border-gray-800">
-                            <DataTable columns={credentialsColumns} data={mockCredentialsData} />
-                        </div>
-                    </TabsContent>
-
-                    <TabsContent value="active">
-                        <div className="rounded-lg border border-gray-200 dark:border-gray-800">
-                            <DataTable
-                                columns={credentialsColumns}
-                                data={mockCredentialsData.filter(cred => cred.status === "Active")}
-                            />
-                        </div>
-                    </TabsContent>
-
-                    <TabsContent value="inactive">
-                        <div className="rounded-lg border border-gray-200 dark:border-gray-800">
-                            <DataTable
-                                columns={credentialsColumns}
-                                data={mockCredentialsData.filter(cred => cred.status === "Inactive")}
-                            />
-                        </div>
-                    </TabsContent>
-                </Tabs>
 
                 {/* Stats Grid */}
                 <Grid numItemsMd={2} numItemsLg={4} className="gap-6">
@@ -160,7 +211,7 @@ export default function AccessControl() {
                             </div>
                             <Text>Total credentials</Text>
                         </div>
-                        <Title>{dashboardMetrics.totalCredentials}</Title>
+                        <Title>{mockAccessData.filter(item => item.credential).length}</Title>
                     </Card>
 
                     <Card className="space-y-3">
@@ -170,7 +221,7 @@ export default function AccessControl() {
                             </div>
                             <Text>Active users</Text>
                         </div>
-                        <Title>{dashboardMetrics.activeUsers}</Title>
+                        <Title>{mockAccessData.filter(item => item.userStatus === "Active").length}</Title>
                     </Card>
 
                     <Card className="space-y-3">
@@ -180,7 +231,7 @@ export default function AccessControl() {
                             </div>
                             <Text>Available credentials</Text>
                         </div>
-                        <Title>{dashboardMetrics.availableCredentials}</Title>
+                        <Title>{mockAccessData.filter(item => item.credential).length}</Title>
                     </Card>
 
                     <Card className="space-y-3">
@@ -190,9 +241,17 @@ export default function AccessControl() {
                             </div>
                             <Text>Access points</Text>
                         </div>
-                        <Title>{dashboardMetrics.accessPoints}</Title>
+                        <Title>{mockAccessData.length}</Title>
                     </Card>
                 </Grid>
+
+                {/* Table */}
+                <div className="rounded-lg border border-gray-200 dark:border-gray-800">
+                    <DataTable
+                        columns={accessControlColumns}
+                        data={mockAccessData}
+                    />
+                </div>
             </div>
         </div>
     )
