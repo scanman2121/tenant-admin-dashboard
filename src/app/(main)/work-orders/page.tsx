@@ -74,9 +74,9 @@ export default function WorkOrdersPage() {
             <PageHeader
                 title="Work orders"
                 customButtons={
-                    <Button className="flex items-center gap-2">
-                        <RiAddLine className="size-5" />
-                        Create new work order
+                    <Button size="md" className="inline-flex items-center">
+                        <RiAddLine className="size-4 shrink-0 mr-1.5" aria-hidden="true" />
+                        Create work order
                     </Button>
                 }
             />

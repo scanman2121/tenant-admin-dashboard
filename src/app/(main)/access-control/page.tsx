@@ -1,9 +1,10 @@
 "use client"
 
+import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/data-table/DataTable"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { RiDoorLockLine, RiKey2Line, RiTeamLine } from "@remixicon/react"
-import { Button, Card, Grid, Text, Title } from "@tremor/react"
+import { RiAddLine, RiDoorLockLine, RiKey2Line, RiTeamLine } from "@remixicon/react"
+import { Card, Grid, Text, Title } from "@tremor/react"
 import { useState } from "react"
 
 // Define columns for the credentials table
@@ -91,11 +92,11 @@ const dashboardMetrics = {
 }
 
 export default function AccessControl() {
-    const [selectedTab, setSelectedTab] = useState("overview")
+    const [selectedTab, setSelectedTab] = useState("all")
 
     return (
         <div className="container mx-auto px-4 py-6 lg:px-8 lg:py-8">
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-8">
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>
@@ -110,11 +111,8 @@ export default function AccessControl() {
                         <Text className="text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full whitespace-nowrap">
                             {dashboardMetrics.availableCredentials} credentials available
                         </Text>
-                        <Button
-                            variant="primary"
-                            size="sm"
-                            className="whitespace-nowrap"
-                        >
+                        <Button size="md" className="inline-flex items-center">
+                            <RiAddLine className="size-4 shrink-0 mr-1.5" aria-hidden="true" />
                             Assign credentials
                         </Button>
                     </div>
@@ -123,60 +121,78 @@ export default function AccessControl() {
                 {/* Tabs */}
                 <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
                     <TabsList>
-                        <TabsTrigger value="overview">Overview</TabsTrigger>
-                        <TabsTrigger value="credentials">Credentials</TabsTrigger>
+                        <TabsTrigger value="all">All access points</TabsTrigger>
+                        <TabsTrigger value="active">Active</TabsTrigger>
+                        <TabsTrigger value="inactive">Inactive</TabsTrigger>
                     </TabsList>
 
-                    <TabsContent value="overview">
-                        <Grid numItemsMd={2} numItemsLg={4} className="gap-6">
-                            <Card className="space-y-3">
-                                <div className="flex items-center gap-3">
-                                    <div className="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary">
-                                        <RiKey2Line className="size-4" />
-                                    </div>
-                                    <Text>Total credentials</Text>
-                                </div>
-                                <Title>{dashboardMetrics.totalCredentials}</Title>
-                            </Card>
-
-                            <Card className="space-y-3">
-                                <div className="flex items-center gap-3">
-                                    <div className="flex items-center justify-center size-8 rounded-full bg-green-500/10 text-green-500">
-                                        <RiTeamLine className="size-4" />
-                                    </div>
-                                    <Text>Active users</Text>
-                                </div>
-                                <Title>{dashboardMetrics.activeUsers}</Title>
-                            </Card>
-
-                            <Card className="space-y-3">
-                                <div className="flex items-center gap-3">
-                                    <div className="flex items-center justify-center size-8 rounded-full bg-amber-500/10 text-amber-500">
-                                        <RiKey2Line className="size-4" />
-                                    </div>
-                                    <Text>Available credentials</Text>
-                                </div>
-                                <Title>{dashboardMetrics.availableCredentials}</Title>
-                            </Card>
-
-                            <Card className="space-y-3">
-                                <div className="flex items-center gap-3">
-                                    <div className="flex items-center justify-center size-8 rounded-full bg-blue-500/10 text-blue-500">
-                                        <RiDoorLockLine className="size-4" />
-                                    </div>
-                                    <Text>Access points</Text>
-                                </div>
-                                <Title>{dashboardMetrics.accessPoints}</Title>
-                            </Card>
-                        </Grid>
-                    </TabsContent>
-
-                    <TabsContent value="credentials">
+                    <TabsContent value="all">
                         <div className="rounded-lg border border-gray-200 dark:border-gray-800">
                             <DataTable columns={credentialsColumns} data={mockCredentialsData} />
                         </div>
                     </TabsContent>
+
+                    <TabsContent value="active">
+                        <div className="rounded-lg border border-gray-200 dark:border-gray-800">
+                            <DataTable
+                                columns={credentialsColumns}
+                                data={mockCredentialsData.filter(cred => cred.status === "Active")}
+                            />
+                        </div>
+                    </TabsContent>
+
+                    <TabsContent value="inactive">
+                        <div className="rounded-lg border border-gray-200 dark:border-gray-800">
+                            <DataTable
+                                columns={credentialsColumns}
+                                data={mockCredentialsData.filter(cred => cred.status === "Inactive")}
+                            />
+                        </div>
+                    </TabsContent>
                 </Tabs>
+
+                {/* Stats Grid */}
+                <Grid numItemsMd={2} numItemsLg={4} className="gap-6">
+                    <Card className="space-y-3">
+                        <div className="flex items-center gap-3">
+                            <div className="flex items-center justify-center size-8 rounded-full bg-primary/10 text-primary">
+                                <RiKey2Line className="size-4" />
+                            </div>
+                            <Text>Total credentials</Text>
+                        </div>
+                        <Title>{dashboardMetrics.totalCredentials}</Title>
+                    </Card>
+
+                    <Card className="space-y-3">
+                        <div className="flex items-center gap-3">
+                            <div className="flex items-center justify-center size-8 rounded-full bg-green-500/10 text-green-500">
+                                <RiTeamLine className="size-4" />
+                            </div>
+                            <Text>Active users</Text>
+                        </div>
+                        <Title>{dashboardMetrics.activeUsers}</Title>
+                    </Card>
+
+                    <Card className="space-y-3">
+                        <div className="flex items-center gap-3">
+                            <div className="flex items-center justify-center size-8 rounded-full bg-amber-500/10 text-amber-500">
+                                <RiKey2Line className="size-4" />
+                            </div>
+                            <Text>Available credentials</Text>
+                        </div>
+                        <Title>{dashboardMetrics.availableCredentials}</Title>
+                    </Card>
+
+                    <Card className="space-y-3">
+                        <div className="flex items-center gap-3">
+                            <div className="flex items-center justify-center size-8 rounded-full bg-blue-500/10 text-blue-500">
+                                <RiDoorLockLine className="size-4" />
+                            </div>
+                            <Text>Access points</Text>
+                        </div>
+                        <Title>{dashboardMetrics.accessPoints}</Title>
+                    </Card>
+                </Grid>
             </div>
         </div>
     )
