@@ -2,7 +2,6 @@
 
 import { Checkbox } from "@/components/Checkbox"
 import { DataTable } from "@/components/ui/data-table/DataTable"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { roles, users } from "@/data/data"
 import { Row, Table } from "@tanstack/react-table"
 import Image from "next/image"
@@ -146,53 +145,11 @@ const employeesColumns = [
 
 export default function Employees() {
     const [data] = useState(users)
-    const [selectedTab, setSelectedTab] = useState("all")
 
     return (
-        <div className="container mx-auto px-4 py-6 lg:px-8 lg:py-8">
-            <div className="flex flex-col gap-8">
-                {/* Header */}
-                <div>
-                    <h1 className="text-[24px] font-medium text-gray-900 dark:text-gray-50">
-                        Employees
-                    </h1>
-                    <p className="mt-1 text-sm text-gray-500">
-                        Manage employee access and permissions
-                    </p>
-                </div>
-
-                {/* Tabs */}
-                <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
-                    <TabsList>
-                        <TabsTrigger value="all">All employees</TabsTrigger>
-                        <TabsTrigger value="active">Active</TabsTrigger>
-                        <TabsTrigger value="inactive">Inactive</TabsTrigger>
-                    </TabsList>
-
-                    <TabsContent value="all">
-                        <div className="rounded-lg border border-gray-200 dark:border-gray-800">
-                            <DataTable columns={employeesColumns} data={data} />
-                        </div>
-                    </TabsContent>
-
-                    <TabsContent value="active">
-                        <div className="rounded-lg border border-gray-200 dark:border-gray-800">
-                            <DataTable
-                                columns={employeesColumns}
-                                data={data.filter(user => user.status === "active")}
-                            />
-                        </div>
-                    </TabsContent>
-
-                    <TabsContent value="inactive">
-                        <div className="rounded-lg border border-gray-200 dark:border-gray-800">
-                            <DataTable
-                                columns={employeesColumns}
-                                data={data.filter(user => user.status === "inactive")}
-                            />
-                        </div>
-                    </TabsContent>
-                </Tabs>
+        <div className="container mx-auto px-4 lg:px-8">
+            <div className="rounded-lg border border-gray-200 dark:border-gray-800">
+                <DataTable columns={employeesColumns} data={data} />
             </div>
         </div>
     )

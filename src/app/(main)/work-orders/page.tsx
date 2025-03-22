@@ -1,18 +1,27 @@
+"use client"
+
 import { Button } from "@/components/Button"
+import { Checkbox } from "@/components/Checkbox"
 import { PageHeader } from "@/components/PageHeader"
 import { Badge } from "@/components/ui/badge"
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
+import { DataTable } from "@/components/ui/data-table/DataTable"
 import { RiAddLine } from "@remixicon/react"
+import { Row, Table } from "@tanstack/react-table"
+import { useState } from "react"
+
+// Define the WorkOrder type based on the data structure
+type WorkOrder = {
+    id: string
+    title: string
+    status: string
+    priority: string
+    submittedBy: string
+    submittedDate: string
+    building: string
+}
 
 // Mock data for work orders
-const workOrders = [
+const workOrders: WorkOrder[] = [
     {
         id: "WO-2024-001",
         title: "Broken AC in Meeting Room 3",
@@ -68,7 +77,156 @@ const getPriorityColor = (priority: string) => {
     }
 }
 
+// Define columns for the work orders table
+const workOrderColumns = [
+    {
+        id: "select",
+        header: ({ table }: { table: Table<WorkOrder> }) => (
+            <Checkbox
+                checked={
+                    table.getIsAllPageRowsSelected()
+                        ? true
+                        : table.getIsSomePageRowsSelected()
+                            ? "indeterminate"
+                            : false
+                }
+                onCheckedChange={(value) => {
+                    table.toggleAllPageRowsSelected(!!value)
+                }}
+                aria-label="Select all"
+            />
+        ),
+        cell: ({ row }: { row: Row<WorkOrder> }) => (
+            <Checkbox
+                checked={row.getIsSelected()}
+                onCheckedChange={(value) => {
+                    row.toggleSelected(!!value)
+                }}
+                onClick={(e) => {
+                    e.stopPropagation()
+                }}
+                aria-label="Select row"
+            />
+        ),
+        enableSorting: false,
+        enableHiding: false,
+        meta: {
+            displayName: "Select",
+        },
+    },
+    {
+        accessorKey: "id",
+        header: "ID",
+        cell: ({ row }: { row: Row<WorkOrder> }) => (
+            <span className="font-medium text-gray-900 dark:text-gray-50">
+                {row.getValue("id")}
+            </span>
+        ),
+        meta: {
+            displayName: "ID",
+        },
+    },
+    {
+        accessorKey: "title",
+        header: "Title",
+        cell: ({ row }: { row: Row<WorkOrder> }) => (
+            <span className="text-gray-900 dark:text-gray-50">
+                {row.getValue("title")}
+            </span>
+        ),
+        meta: {
+            displayName: "Title",
+        },
+        enableColumnFilter: true,
+    },
+    {
+        accessorKey: "status",
+        header: "Status",
+        cell: ({ row }: { row: Row<WorkOrder> }) => {
+            const status = row.getValue("status") as string;
+            return (
+                <Badge className={getStatusColor(status)} variant="secondary">
+                    {status}
+                </Badge>
+            );
+        },
+        meta: {
+            displayName: "Status",
+            filterOptions: [
+                { label: "Completed", value: "Completed" },
+                { label: "In Progress", value: "In Progress" },
+                { label: "Pending", value: "Pending" },
+            ],
+        },
+        filterFn: "equals" as const,
+        enableColumnFilter: true,
+    },
+    {
+        accessorKey: "priority",
+        header: "Priority",
+        cell: ({ row }: { row: Row<WorkOrder> }) => {
+            const priority = row.getValue("priority") as string;
+            return (
+                <Badge className={getPriorityColor(priority)} variant="secondary">
+                    {priority}
+                </Badge>
+            );
+        },
+        meta: {
+            displayName: "Priority",
+            filterOptions: [
+                { label: "High", value: "High" },
+                { label: "Medium", value: "Medium" },
+                { label: "Low", value: "Low" },
+            ],
+        },
+        filterFn: "equals" as const,
+        enableColumnFilter: true,
+    },
+    {
+        accessorKey: "submittedBy",
+        header: "Submitted by",
+        cell: ({ row }: { row: Row<WorkOrder> }) => (
+            <span className="text-gray-600 dark:text-gray-400">
+                {row.getValue("submittedBy")}
+            </span>
+        ),
+        meta: {
+            displayName: "Submitted by",
+        },
+        enableColumnFilter: true,
+    },
+    {
+        accessorKey: "submittedDate",
+        header: "Submitted date",
+        cell: ({ row }: { row: Row<WorkOrder> }) => (
+            <span className="text-gray-600 dark:text-gray-400">
+                {row.getValue("submittedDate")}
+            </span>
+        ),
+        meta: {
+            displayName: "Submitted date",
+        },
+    },
+    {
+        accessorKey: "building",
+        header: "Building",
+        cell: ({ row }: { row: Row<WorkOrder> }) => (
+            <span className="text-gray-600 dark:text-gray-400">
+                {row.getValue("building")}
+            </span>
+        ),
+        meta: {
+            displayName: "Building",
+        },
+        filterFn: "equals" as const,
+        enableColumnFilter: true,
+    },
+]
+
 export default function WorkOrdersPage() {
+    const [data] = useState<WorkOrder[]>(workOrders)
+
     return (
         <div className="space-y-6">
             <PageHeader
@@ -81,41 +239,8 @@ export default function WorkOrdersPage() {
                 }
             />
 
-            <div className="rounded-lg border bg-card">
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>ID</TableHead>
-                            <TableHead>Title</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead>Priority</TableHead>
-                            <TableHead>Submitted by</TableHead>
-                            <TableHead>Submitted date</TableHead>
-                            <TableHead>Building</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {workOrders.map((order) => (
-                            <TableRow key={order.id} className="cursor-pointer hover:bg-muted/50">
-                                <TableCell className="font-medium">{order.id}</TableCell>
-                                <TableCell>{order.title}</TableCell>
-                                <TableCell>
-                                    <Badge className={getStatusColor(order.status)} variant="secondary">
-                                        {order.status}
-                                    </Badge>
-                                </TableCell>
-                                <TableCell>
-                                    <Badge className={getPriorityColor(order.priority)} variant="secondary">
-                                        {order.priority}
-                                    </Badge>
-                                </TableCell>
-                                <TableCell>{order.submittedBy}</TableCell>
-                                <TableCell>{order.submittedDate}</TableCell>
-                                <TableCell>{order.building}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+            <div className="rounded-lg border border-gray-200 dark:border-gray-800">
+                <DataTable columns={workOrderColumns} data={data} />
             </div>
         </div>
     )
